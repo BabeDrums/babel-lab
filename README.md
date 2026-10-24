@@ -2,40 +2,56 @@
 
 Experimental sandbox for Babel ecosystem concepts, interaction prototypes, and visual systems.
 
-Before substantive work, read `BABEL_TRUTH.md` → `START_HERE.md` → this file. Shared cross-app rules come from the pinned Babel Truth commit; Lab may intentionally diverge only when the experiment is explicitly testing an alternative.
+Before substantive work, read `BABEL_TRUTH.md` → Babel Truth at the pinned commit → `START_HERE.md` → this file.
 
-This repository is intentionally isolated from `BabeDrums/babel-fire`. It does not read or write FIRE runtime data, schemas, storage, or product code.
+Babel Lab is intentionally isolated from `BabeDrums/babel-fire` production runtime/data. It can host FIRE-bound and World-bound experiments without implying those experiments belong to one final app.
 
-## Prototype 02 — Fire + Achievements
+## Current experiments
 
-Prototype 01 proved that surfacing skills, domains, lore, evidence, and source architecture all at once was too dense. Prototype 02 intentionally narrows the visible experiment to two ecosystem objects:
+### Fire Lab — `/fire/`
 
-- **Fire** — a generated personal artifact driven by simulated state for visual experimentation.
-- **Achievements** — a single collection containing normal and hidden/lore achievements.
+Tests the Fire visualization primitive:
 
-### What Prototype 02 tests
+- flat particle renderer
+- Mixed / Square / Diamond / Circle shape experiments
+- time-based particle emission
+- Free Particles / Rigid Grid rendering from one simulation
+- developer intensity / turbulence / diversity controls
+- fake `Evolve` presets
+- Reduce Motion behavior
 
-- A simplified World surface with only Fire and Achievements.
-- Achievements begin locked and can be manually earned/locked through developer controls.
-- Hidden/lore achievements live inside the same achievement collection instead of a separate Lore section.
-- FIRE source marks remain supporting provenance UI rather than a separate navigation system.
-- Fire uses flat 2D particles only: no blur, glow, gradient plume, or fake light emission.
-- Particle style can be Mixed, Square, Diamond, or Circle for visual testing.
-- Fire emission is time-based rather than frame-based so lower frame rates do not change particle density.
-- Free-particle and rigid-grid views render the same underlying simulation logic.
-- Rigid-grid mode remains animated; it is not a static pixel image.
+If promoted, validated Fire semantics move deliberately into `BabeDrums/babel-fire` rather than making Lab a production dependency.
 
-### Important boundaries
+### World Lab — `/world/`
 
-- Fake prototype state only.
-- Developer controls do not define the final evidence-to-visual mapping.
-- `Evolve` is a simulation control, not a final progression mechanic.
-- Achievement earning logic is deliberately not implemented yet.
-- No global Babel XP/level is implied.
-- Fire does not grow from taps, streaks, elapsed days, or page completion.
-- Mature decisions belong in the owning app/Babel Truth authority, not here by default.
-- A Babel World prototype may live in Lab; Babel Lab itself is not the Babel World product.
+Tests the achievement collection system:
 
-### Run
+- locked silhouettes
+- manual developer Earn / Lock state
+- normal + hidden/lore achievements in one collection
+- mysterious locked-text presentation
+- temporary source/origin mark behavior
+- no production earning logic
 
-Open `index.html` in a modern browser, or use the GitHub Pages deployment. No build step or dependencies are required.
+If Babel World becomes a real product, it earns its own repository later. Lab is not Babel World.
+
+## Shared Lab foundation
+
+The repository root is a lightweight experiment launcher. `shared/lab.css` contains only basic Lab shell/tokens/accessibility defaults that genuinely help multiple experiments. Fire and World keep their own experiment-specific CSS and JavaScript.
+
+Do not infer shared product semantics from shared Lab code.
+
+## Run
+
+Open `index.html` or the GitHub Pages deployment, then choose Fire Lab or World Lab.
+
+No build step or dependencies are required.
+
+## Important boundaries
+
+- fake prototype state only
+- no global Babel XP/level
+- developer controls are not final mechanics
+- app-local meaning stays with the owning product
+- mature cross-app lessons may be promoted to Babel Truth after review
+- validated semantics move forward; prototype implementation does not automatically move with them

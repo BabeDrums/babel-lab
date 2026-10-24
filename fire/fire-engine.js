@@ -2,9 +2,8 @@
   const TAU = Math.PI * 2;
 
   class FireSimulation {
-    constructor(getConfig, compact) {
+    constructor(getConfig) {
       this.getConfig = getConfig;
-      this.compact = compact;
       this.particles = [];
       this.emissionCarry = 0;
       this.time = 0;
@@ -18,24 +17,31 @@
       this.height = Math.max(1, h);
     }
 
+    reset() {
+      this.particles = [];
+      this.emissionCarry = 0;
+      this.time = 0;
+      this.seedWarmStart();
+    }
+
     seedWarmStart() {
-      for (let i = 0; i < (this.compact ? 55 : 90); i++) {
+      for (let i = 0; i < 90; i++) {
         const p = this.makeParticle();
         p.age = Math.random() * p.life * 0.9;
         const q = p.age / p.life;
-        p.y -= q * (this.compact ? 105 : 145) * (0.7 + Math.random() * 0.5);
-        p.x += (Math.random() - 0.5) * q * (this.compact ? 38 : 54);
+        p.y -= q * 145 * (0.7 + Math.random() * 0.5);
+        p.x += (Math.random() - 0.5) * q * 54;
         this.particles.push(p);
       }
     }
 
     makeParticle() {
       const c = this.getConfig();
-      const baseY = this.height * (this.compact ? 0.84 : 0.88);
+      const baseY = this.height * 0.88;
       const baseX = this.width * 0.5;
-      const spread = (this.compact ? 24 : 36) * (0.72 + c.intensity * 0.4);
+      const spread = 36 * (0.72 + c.intensity * 0.4);
       const life = 0.62 + Math.random() * (0.65 + c.intensity * 0.45);
-      const speed = (this.compact ? 62 : 78) * (0.72 + c.intensity * 0.58);
+      const speed = 78 * (0.72 + c.intensity * 0.58);
       return {
         x: baseX + (Math.random() - 0.5) * spread,
         y: baseY + Math.random() * 8,
@@ -43,7 +49,7 @@
         vy: -speed * (0.72 + Math.random() * 0.52),
         age: 0,
         life,
-        size: (this.compact ? 4.2 : 5.3) + Math.random() * (this.compact ? 4.5 : 6.2),
+        size: 5.3 + Math.random() * 6.2,
         rotation: Math.random() * TAU,
         spin: (Math.random() - 0.5) * 2.4,
         shapeRoll: Math.random(),
@@ -54,7 +60,7 @@
     step(dt) {
       const c = this.getConfig();
       this.time += dt;
-      const perSecond = (this.compact ? 60 : 82) + c.intensity * (this.compact ? 100 : 145);
+      const perSecond = 82 + c.intensity * 145;
       this.emissionCarry += perSecond * dt;
       const spawnCount = Math.min(24, Math.floor(this.emissionCarry));
       this.emissionCarry -= spawnCount;
@@ -125,10 +131,10 @@
     }
   }
 
-  function drawGrid(ctx, sim, config, width, height, compact) {
+  function drawGrid(ctx, sim, config, width, height) {
     ctx.clearRect(0, 0, width, height);
-    const cols = compact ? 14 : 18;
-    const rows = compact ? 18 : 24;
+    const cols = 18;
+    const rows = 24;
     const cell = Math.min(width / cols, height / rows);
     const gridW = cols * cell;
     const gridH = rows * cell;
@@ -163,10 +169,8 @@
         const i = y * cols + x;
         if (energy[i] < 0.17) continue;
         const h = heat[i];
-        const color = h > 0.72 ? '#ffd36a' : h > 0.42 ? '#ff8a2d' : '#d84c22';
-        const alpha = Math.min(1, 0.34 + energy[i] * 0.72);
-        ctx.globalAlpha = alpha;
-        ctx.fillStyle = color;
+        ctx.globalAlpha = Math.min(1, 0.34 + energy[i] * 0.72);
+        ctx.fillStyle = h > 0.72 ? '#ffd36a' : h > 0.42 ? '#ff8a2d' : '#d84c22';
         ctx.fillRect(offX + x * cell + gap, offY + y * cell + gap, cell - gap * 2, cell - gap * 2);
       }
     }
@@ -175,25 +179,63 @@
 
   window.createFireController = function(canvas, getConfig, options) {
     const ctx = canvas.getContext('2d');
-    const compact = !!options.compact;
     let renderer = options.renderer || 'particles';
     let destroyed = false;
     let raf = 0;
     let last = performance.now();
-    const sim = new FireSimulation(getConfig, compact);
+    let rect = null;
+    const sim = new FireSimulation(getConfig);
+    const motionQuery = window.matchMedia ? window.matchMedia('(prefers-reduced-motion: reduce)') : null;
 
-    function resize() {
-      const rect = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = Math.max(1, Math.round(rect.width * dpr));
-      canvas.height = Math.max(1, Math.round(rect.height * dpr));
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      sim.resize(rect.width, rect.height);
-      return rect;
+    function isReduced() {
+      return !!(motionQuery && motionQuery.matches);
     }
 
-    let rect = resize();
-    const onResize = () => { rect = resize(); };
+    function draw() {
+      const config = getConfig();
+      if (renderer === 'grid') drawGrid(ctx, sim, config, rect.width, rect.height);
+      else drawParticles(ctx, sim, config, rect.width, rect.height);
+    }
+
+    function resize() {
+      const next = canvas.getBoundingClientRect();
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.max(1, Math.round(next.width * dpr));
+      canvas.height = Math.max(1, Math.round(next.height * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      sim.resize(next.width, next.height);
+      rect = next;
+      draw();
+    }
+
+    function frame(now) {
+      if (destroyed) return;
+      if (isReduced()) {
+        draw();
+        return;
+      }
+      const dt = Math.min(0.08, Math.max(0.001, (now - last) / 1000));
+      last = now;
+      sim.step(dt);
+      draw();
+      raf = requestAnimationFrame(frame);
+    }
+
+    function restartForMotionPreference() {
+      cancelAnimationFrame(raf);
+      last = performance.now();
+      if (isReduced()) {
+        draw();
+      } else {
+        raf = requestAnimationFrame(frame);
+      }
+    }
+
+    resize();
+    if (isReduced()) draw();
+    else raf = requestAnimationFrame(frame);
+
+    const onResize = () => resize();
     let ro = null;
     if ('ResizeObserver' in window) {
       ro = new ResizeObserver(onResize);
@@ -202,30 +244,32 @@
       window.addEventListener('resize', onResize, { passive: true });
     }
 
-    function frame(now) {
-      if (destroyed) return;
-      const dt = Math.min(0.08, Math.max(0.001, (now - last) / 1000));
-      last = now;
-      sim.step(dt);
-      const config = getConfig();
-      if (renderer === 'grid') drawGrid(ctx, sim, config, rect.width, rect.height, compact);
-      else drawParticles(ctx, sim, config, rect.width, rect.height);
-      raf = requestAnimationFrame(frame);
+    if (motionQuery) {
+      if (motionQuery.addEventListener) motionQuery.addEventListener('change', restartForMotionPreference);
+      else if (motionQuery.addListener) motionQuery.addListener(restartForMotionPreference);
     }
 
-    raf = requestAnimationFrame(frame);
-
     return {
-      setRenderer(next) { renderer = next; },
-      updateConfig() {},
+      setRenderer(next) {
+        renderer = next;
+        draw();
+      },
+      updateConfig() {
+        if (isReduced()) {
+          sim.reset();
+          draw();
+        }
+      },
       destroy() {
         destroyed = true;
         cancelAnimationFrame(raf);
         if (ro) ro.disconnect();
         else window.removeEventListener('resize', onResize);
+        if (motionQuery) {
+          if (motionQuery.removeEventListener) motionQuery.removeEventListener('change', restartForMotionPreference);
+          else if (motionQuery.removeListener) motionQuery.removeListener(restartForMotionPreference);
+        }
       }
     };
   };
-
-  window.dispatchEvent(new Event('fire-engine-ready'));
 })();
