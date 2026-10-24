@@ -9,32 +9,26 @@ Babel Lab is intentionally isolated from production runtime/data. It can host co
 ## Current experiments
 
 ### Fire Lab — `/fire/`
-
 Tests the Fire visualization primitive. Existing renderer, shape, emission, simulation, developer-control, fake Evolve, and Reduce Motion behavior remain preserved.
 
 ### World Lab — `/world/`
-
 Tests the achievement collection system. Existing locked-state, developer Earn/Lock, hidden/lore, source-mark, and fake-state behavior remain preserved.
 
-### Visual Lab — `/visual/`
+### Visual experiments
 
-Visual Lab is for bounded visual/interaction specimens: modal treatments, row systems, selection controls, navigation ideas, motion, surfaces, and other questions that can be judged without rebuilding a whole product.
+There is currently no permanent Visual Lab app or FIRE shell replica. The retired `/visual/` replica remains available through Git history only.
 
-The full FIRE shell replica/parity approach is retired. It produced duplicate implementation work and reconstruction differences that made shell review less trustworthy. Git history preserves that experiment; do not keep repairing it as another FIRE app.
-
-When the complete FIRE context is necessary, use FIRE's isolated G7 successor directly. A promising bounded Lab idea can be implemented into G7 for real in-context physical review.
+When useful, add small bounded specimens for modal treatments, row systems, selection controls, navigation ideas, motion, surfaces, or other focused questions. When complete FIRE context is necessary, use FIRE's isolated G7 successor directly.
 
 ## Shared Lab foundation
 
-The repository root is a lightweight experiment launcher. `shared/lab.css` contains provisional workspace chrome/tokens/accessibility defaults that help navigate the Lab comfortably.
+The repository root is a lightweight experiment launcher. `shared/lab.css` contains the current calm early-Babel workspace chrome/tokens/accessibility defaults. Keep this Lab styling while experiments come and go.
 
-That shared Lab chrome may feel like an early Babel product, but it is not an approved Babel shell. Do not infer shared product semantics from shared Lab code.
+That shared Lab chrome is provisional workspace styling, not an approved Babel product shell.
 
 ## Run
 
-Open `index.html` or the GitHub Pages deployment, then choose an experiment.
-
-No build step or dependencies are required.
+Open `index.html` or the GitHub Pages deployment, then choose an active experiment. No build step or dependencies are required.
 
 ## Important boundaries
 
