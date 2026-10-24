@@ -22,9 +22,15 @@ If Babel World becomes a real product, it earns its own repository later. Lab is
 
 ### Visual Lab / FIRE Shell Lab — `/visual/`
 
-Tests unresolved FIRE shell visuals and interactions in an isolated harness. Shell harness 01 now includes representative Projects, project Home, Setup, Structure, Tracks, toolbar/actions, selection states, fake form state, project/section/track dialogs, and adaptive phone-sheet / wide-dialog presentation.
+Tests unresolved FIRE shell visuals and interactions against a **parity-first current-G7 baseline**.
 
-The Structure dialog carries forward the prior modal study as one specimen inside the larger system. The harness intentionally uses fake state and compact fixture behavior; it is broad enough to judge coordinated shell changes without copying FIRE production runtime/data.
+The ordinary FIRE canvas should behave like FIRE rather than like a component gallery: Projects, project Home, Setup, Structure, Tracks, toolbar actions, project management, editing, creation, selection, verification, confirmation, responsive sheets/dialogs, focus/input behavior, and navigation are expected to be clickable for the surfaces under review.
+
+Lab uses its own isolated local fixture key and never reads or writes FIRE production/G7 storage. The fork boundary is ownership and data authority, not intentionally missing interactions.
+
+Harness-only navigation pills and explanatory footer copy do not belong inside the judged FIRE canvas. Lab developer utilities may exist outside that canvas; the current baseline keeps only a small collapsible reset control outside the shell.
+
+After parity is verified, visual candidates may intentionally diverge. Those divergences are experiments, not automatic FIRE changes.
 
 It is not a FIRE fork and it is not a Babel design-system authority.
 
@@ -44,9 +50,9 @@ No build step or dependencies are required.
 
 - **Lab is evidence, never authority**
 - contradictory experiments are allowed
-- fake prototype state by default
+- fake/isolated prototype state by default
 - no production FIRE data/runtime in Lab
-- developer controls are not final mechanics
+- developer controls stay outside the judged product canvas when possible
+- FIRE Shell workflow is current G7 → faithful functional Lab baseline → parity verification → visual experiments → physical test → FIRE implementation → FIRE physical validation → Truth for genuinely transferable rules
 - app-local meaning stays with the owning product
-- shell/visual promotion runs Lab → physical test → FIRE implementation → FIRE physical validation → Truth for genuinely transferable rules
 - validated semantics move forward; prototype implementation does not automatically move with them
