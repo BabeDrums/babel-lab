@@ -37,26 +37,40 @@ If Babel World becomes a real product, it earns its own repository later. Babel 
 
 ### Visual Lab / FIRE Shell Lab — `visual/`
 
-Experimental visual-interaction harness for the unresolved FIRE generic shell.
+Experimental visual-interaction environment for the unresolved FIRE generic shell.
 
-Purpose:
+The FIRE Shell Lab uses a **parity-first baseline**. Before creative shell exploration, its ordinary user-facing canvas should reproduce the current G7 shell closely enough that Babel can judge a visual change without also judging harness artifacts.
 
-- stress-test candidate shell ideas across representative pages, rows, controls, forms, sheets/dialogs, menus, states, focus/keyboard behavior, and responsive iPhone/iPad presentation
-- compare alternatives without turning production FIRE into a sketchbook
-- preserve contradictory variants when comparison is useful
-- use fake/prototype state only
+Parity means the observable shell is functionally complete for the surfaces under review:
 
-Boundaries:
+- Projects → project Home → Setup / Structure / Tracks
+- visible toolbar and row actions work
+- project create/edit/delete/management flows exist where G7 exposes them
+- Setup inputs/toggles behave like the G7 fixture
+- Structure add/edit/delete/reorder/verification behavior is represented
+- Tracks selection/custom creation/Done behavior is represented
+- Back/history behavior is represented
+- sheets/dialogs, menus, focus/keyboard behavior, empty/selected/completed/long-content states, and iPhone/iPad adaptation are available when relevant
 
-- this is **not** a fork of FIRE
-- it does not own FIRE product behavior, runtime, or data
-- it does not define Babel Truth
-- a polished Lab result is still only evidence
-- the current Structure modal study is the first specimen, not the definition of the whole shell
+The Lab may use isolated fake/local fixture data, but incompleteness must not be used as the mechanism that prevents a fork.
+
+### The fork boundary
+
+The protection against creating a second FIRE product is **authority and data ownership**, not deliberately broken behavior.
+
+- FIRE remains product authority for doctrine, runtime, data, specs, tests, and shipping implementation.
+- Visual Lab may reproduce FIRE's observable shell behavior completely for experimentation.
+- Visual Lab must not read/write FIRE production or G7 storage, depend on FIRE runtime at execution time, or become the source of product truth.
+- Lab-only developer controls may exist, but they must be visually outside the FIRE canvas or deliberately hidden/collapsible so they do not contaminate physical shell judgment.
+- Lab explanatory copy must not be inserted into the FIRE canvas merely to remind reviewers that it is a prototype.
+
+Once baseline parity is verified, candidate visual systems may intentionally diverge. Contradictory candidates are allowed and should be labeled as experiments rather than silently becoming a new baseline.
 
 Default shell promotion path:
 
-**Lab experiment → physical-device testing → candidate → FIRE implementation → FIRE physical validation → transferable rules promoted to Babel Truth.**
+**Current G7 → faithful functional Lab baseline → parity verification → visual experiments → physical-device testing → candidate → FIRE implementation → FIRE physical validation → transferable rules promoted to Babel Truth.**
+
+Promote validated decisions/semantics, not prototype code by default.
 
 ## Product-boundary rule
 
@@ -76,7 +90,15 @@ For nontrivial Lab work use:
 
 **Observe → Diagnose → Shape → Contract → Build → Verify → Consolidate**
 
-Promote validated semantics/decisions, not prototype code by default.
+For FIRE Shell Lab specifically:
+
+1. **Observe** the current owning FIRE implementation and physical-device behavior.
+2. **Diagnose** whether a problem belongs to the baseline replica, a candidate visual system, or FIRE itself.
+3. **Shape** the experiment without inventing unrelated product behavior.
+4. **Contract** the parity target and intentional divergences before styling broadly.
+5. **Build** against isolated Lab data with complete observable shell interactions for the tested surfaces.
+6. **Verify parity first**, then verify the candidate on physical iPhone and iPad states.
+7. **Consolidate** the winning decision back into FIRE for real-product validation; only later promote genuinely transferable rules to Truth.
 
 ## Continuity
 
@@ -86,4 +108,4 @@ Do not create a repository commit for every brainstorm sentence. Mature experime
 
 ## Current next action
 
-Use Visual Lab to continue the FIRE shell exploration, beginning with the Structure modal specimen and then expanding to enough representative shell surfaces/states to judge the system rather than one component. Keep Fire Lab and World Lab intact.
+Replace the simplified Visual Lab harness with a faithful, fully clickable current-G7 baseline using isolated Lab state. Remove harness-only navigation pills and explanatory footer text from the FIRE canvas; keep any developer controls outside the judged shell. Verify behavioral/visual parity before beginning the next visual redesign pass. Keep Fire Lab and World Lab intact.
