@@ -2,6 +2,8 @@
 
 Experimental sandbox for Babel ecosystem concepts, interaction prototypes, and visual systems.
 
+Before substantive work, read `BABEL_TRUTH.md` → `START_HERE.md` → this file. Shared cross-app rules come from the pinned Babel Truth commit; Lab may intentionally diverge only when the experiment is explicitly testing an alternative.
+
 This repository is intentionally isolated from `BabeDrums/babel-fire`. It does not read or write FIRE runtime data, schemas, storage, or product code.
 
 ## Prototype 02 — Fire + Achievements
@@ -31,7 +33,8 @@ Prototype 01 proved that surfacing skills, domains, lore, evidence, and source a
 - Achievement earning logic is deliberately not implemented yet.
 - No global Babel XP/level is implied.
 - Fire does not grow from taps, streaks, elapsed days, or page completion.
-- Mature decisions still belong in the appropriate Babel/FIRE authority docs, not here by default.
+- Mature decisions belong in the owning app/Babel Truth authority, not here by default.
+- A Babel World prototype may live in Lab; Babel Lab itself is not the Babel World product.
 
 ### Run
 
