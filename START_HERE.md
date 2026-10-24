@@ -17,9 +17,7 @@ Babel Lab is the experimental sandbox/incubator for Babel ecosystem concepts. It
 
 > **Lab is evidence, never authority.**
 
-Lab is intentionally allowed to contain mutually contradictory visual systems, component shapes, controls, interactions, product concepts, and prototypes. Never make another product "match the Lab." There is no canonical Lab design system.
-
-A Lab experiment may begin from current Babel foundations for convenience, but it can intentionally diverge. Label the experiment and judge it on its own question.
+Lab may contain contradictory visual systems, controls, interactions, product concepts, and prototypes. Never make another product "match the Lab." There is no canonical Lab design system.
 
 ## Current Lab structure
 
@@ -27,62 +25,40 @@ A Lab experiment may begin from current Babel foundations for convenience, but i
 
 FIRE-bound visualization/progression-expression experiment. Existing behavior and fake state remain preserved.
 
-If the experiment is promoted into a real product, its destination is `BabeDrums/babel-fire`.
-
 ### World Lab — `world/`
 
 World-bound achievement-collection experiment. Existing behavior and fake state remain preserved.
 
-If Babel World becomes a real product, it earns its own repository later. Babel Lab itself does not become World.
+### Visual Lab — `visual/`
 
-### Visual Lab / FIRE Shell Lab — `visual/`
+Visual Lab is a **test bench / sketchbook for isolated questions**, not a second implementation of FIRE.
 
-Experimental visual-interaction environment for the unresolved FIRE generic shell.
+Use it when an idea benefits from being explored away from product complexity: a modal treatment, row language, selection control, navigation concept, motion idea, surface/material treatment, or another bounded visual/interaction hypothesis.
 
-The FIRE Shell Lab uses a **parity-first baseline**. Before creative shell exploration, its ordinary user-facing canvas should reproduce the current G7 shell closely enough that Babel can judge a visual change without also judging harness artifacts.
+Do not rebuild the whole FIRE shell in Lab just to experiment on it. If an experiment requires the complete real shell, real navigation, real state relationships, and all product interactions to judge correctly, test it in FIRE's isolated G7 successor instead.
 
-Parity means the observable shell is functionally complete for the surfaces under review:
+The former full-shell parity/replica approach is rejected evidence. It introduced reconstruction bugs and visual differences that obscured the design question and created duplicate implementation work. Preserve that history in Git; do not continue repairing the replica as though it were a second FIRE app.
 
-- Projects → project Home → Setup / Structure / Tracks
-- visible toolbar and row actions work
-- project create/edit/delete/management flows exist where G7 exposes them
-- Setup inputs/toggles behave like the G7 fixture
-- Structure add/edit/delete/reorder/verification behavior is represented
-- Tracks selection/custom creation/Done behavior is represented
-- Back/history behavior is represented
-- sheets/dialogs, menus, focus/keyboard behavior, empty/selected/completed/long-content states, and iPhone/iPad adaptation are available when relevant
+A Lab specimen does not need production-complete behavior unless that behavior is the thing being tested. It does need enough context to answer its explicit experiment question honestly.
 
-The Lab may use isolated fake/local fixture data, but incompleteness must not be used as the mechanism that prevents a fork.
+## Product boundary
 
-### The fork boundary
+- FIRE owns FIRE product behavior, runtime, data, specs, tests, and the in-context shell.
+- G7 is already isolated from V6 and is the correct place for coordinated FIRE shell iteration.
+- Lab owns experiments only.
+- Babel Truth owns validated shared principles/contracts after owning-product validation.
 
-The protection against creating a second FIRE product is **authority and data ownership**, not deliberately broken behavior.
+Default visual flow:
 
-- FIRE remains product authority for doctrine, runtime, data, specs, tests, and shipping implementation.
-- Visual Lab may reproduce FIRE's observable shell behavior completely for experimentation.
-- Visual Lab must not read/write FIRE production or G7 storage, depend on FIRE runtime at execution time, or become the source of product truth.
-- Lab-only developer controls may exist, but they must be visually outside the FIRE canvas or deliberately hidden/collapsible so they do not contaminate physical shell judgment.
-- Lab explanatory copy must not be inserted into the FIRE canvas merely to remind reviewers that it is a prototype.
+**bounded Lab experiment when useful → promising decision tried in G7 → physical-device review → iterate in G7 → explicit shell approval/freeze → transferable principles promoted to Babel Truth.**
 
-Once baseline parity is verified, candidate visual systems may intentionally diverge. Contradictory candidates are allowed and should be labeled as experiments rather than silently becoming a new baseline.
-
-Default shell promotion path:
-
-**Current G7 → faithful functional Lab baseline → parity verification → visual experiments → physical-device testing → candidate → FIRE implementation → FIRE physical validation → transferable rules promoted to Babel Truth.**
-
-Promote validated decisions/semantics, not prototype code by default.
-
-## Product-boundary rule
-
-Fire Lab, World Lab, and Visual Lab share a repository only because Lab is the experiment chamber. Co-location does not merge their product meanings.
-
-The repository root is a Lab launcher, not a production home screen.
+A Lab step is optional. Do not route work through Lab merely because the question is visual.
 
 ## Visual treatment of the Lab itself
 
-The Lab launcher/shared chrome may use a calm, current early-Babel treatment so the workspace is pleasant to use. That treatment is **provisional workspace chrome**, not an approved Babel shell and not evidence by itself.
+The Lab launcher/shared chrome may use a calm early-Babel treatment so the workspace is pleasant to use. That treatment is provisional workspace chrome, not an approved Babel shell.
 
-Do not let refreshing Lab chrome rewrite experiment-specific visuals or behavior. Preserve experiment content and state unless that experiment is explicitly being changed.
+Do not let refreshing Lab chrome rewrite experiment-specific visuals or behavior.
 
 ## Process
 
@@ -90,22 +66,22 @@ For nontrivial Lab work use:
 
 **Observe → Diagnose → Shape → Contract → Build → Verify → Consolidate**
 
-For FIRE Shell Lab specifically:
+For visual experiments:
 
-1. **Observe** the current owning FIRE implementation and physical-device behavior.
-2. **Diagnose** whether a problem belongs to the baseline replica, a candidate visual system, or FIRE itself.
-3. **Shape** the experiment without inventing unrelated product behavior.
-4. **Contract** the parity target and intentional divergences before styling broadly.
-5. **Build** against isolated Lab data with complete observable shell interactions for the tested surfaces.
-6. **Verify parity first**, then verify the candidate on physical iPhone and iPad states.
-7. **Consolidate** the winning decision back into FIRE for real-product validation; only later promote genuinely transferable rules to Truth.
+1. Observe the owning product and physical-device problem.
+2. Decide whether the question is bounded enough for Lab or requires real-product context.
+3. If bounded, define the exact hypothesis and build only enough specimen context to test it.
+4. If product context matters, work in the owning product's isolated successor/preview instead of reconstructing it in Lab.
+5. Verify on the relevant physical device.
+6. Move the winning decision into the owning product deliberately.
+7. Promote genuinely transferable principles to Truth only after owning-product validation.
 
 ## Continuity
 
 New unresolved durable Lab findings go to Babel Truth Issue #1 under the persist-before-reply threshold.
 
-Do not create a repository commit for every brainstorm sentence. Mature experimental conclusions should be documented locally; genuinely cross-app lessons may be promoted to Babel Truth after owning-product validation and review.
+Git history preserves rejected experiments. Active docs should describe the current method rather than keep superseded approaches alive.
 
 ## Current next action
 
-Replace the simplified Visual Lab harness with a faithful, fully clickable current-G7 baseline using isolated Lab state. Remove harness-only navigation pills and explanatory footer text from the FIRE canvas; keep any developer controls outside the judged shell. Verify behavioral/visual parity before beginning the next visual redesign pass. Keep Fire Lab and World Lab intact.
+Stop development of the FIRE full-shell replica. Return coordinated shell iteration to FIRE G7. Keep existing Fire Lab and World Lab experiments intact. Use Visual Lab only for bounded specimens when they can answer a design question faster or more clearly than changing G7 directly.
