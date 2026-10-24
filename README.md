@@ -22,7 +22,9 @@ If Babel World becomes a real product, it earns its own repository later. Lab is
 
 ### Visual Lab / FIRE Shell Lab — `/visual/`
 
-Tests unresolved FIRE shell visuals and interactions in an isolated harness. It begins with the current Structure modal study and expands to representative shell surfaces/states before any shell candidate is considered proven.
+Tests unresolved FIRE shell visuals and interactions in an isolated harness. Shell harness 01 now includes representative Projects, project Home, Setup, Structure, Tracks, toolbar/actions, selection states, fake form state, project/section/track dialogs, and adaptive phone-sheet / wide-dialog presentation.
+
+The Structure dialog carries forward the prior modal study as one specimen inside the larger system. The harness intentionally uses fake state and compact fixture behavior; it is broad enough to judge coordinated shell changes without copying FIRE production runtime/data.
 
 It is not a FIRE fork and it is not a Babel design-system authority.
 
