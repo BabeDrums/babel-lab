@@ -12,27 +12,17 @@ Babel Lab is intentionally isolated from production runtime/data. It can host co
 
 Tests the Fire visualization primitive. Existing renderer, shape, emission, simulation, developer-control, fake Evolve, and Reduce Motion behavior remain preserved.
 
-If promoted, validated Fire semantics move deliberately into `BabeDrums/babel-fire` rather than making Lab a production dependency.
-
 ### World Lab — `/world/`
 
 Tests the achievement collection system. Existing locked-state, developer Earn/Lock, hidden/lore, source-mark, and fake-state behavior remain preserved.
 
-If Babel World becomes a real product, it earns its own repository later. Lab is not Babel World.
+### Visual Lab — `/visual/`
 
-### Visual Lab / FIRE Shell Lab — `/visual/`
+Visual Lab is for bounded visual/interaction specimens: modal treatments, row systems, selection controls, navigation ideas, motion, surfaces, and other questions that can be judged without rebuilding a whole product.
 
-Tests unresolved FIRE shell visuals and interactions against a **parity-first current-G7 baseline**.
+The full FIRE shell replica/parity approach is retired. It produced duplicate implementation work and reconstruction differences that made shell review less trustworthy. Git history preserves that experiment; do not keep repairing it as another FIRE app.
 
-The ordinary FIRE canvas should behave like FIRE rather than like a component gallery: Projects, project Home, Setup, Structure, Tracks, toolbar actions, project management, editing, creation, selection, verification, confirmation, responsive sheets/dialogs, focus/input behavior, and navigation are expected to be clickable for the surfaces under review.
-
-Lab uses its own isolated local fixture key and never reads or writes FIRE production/G7 storage. The fork boundary is ownership and data authority, not intentionally missing interactions.
-
-Harness-only navigation pills and explanatory footer copy do not belong inside the judged FIRE canvas. Lab developer utilities may exist outside that canvas; the current baseline keeps only a small collapsible reset control outside the shell.
-
-After parity is verified, visual candidates may intentionally diverge. Those divergences are experiments, not automatic FIRE changes.
-
-It is not a FIRE fork and it is not a Babel design-system authority.
+When the complete FIRE context is necessary, use FIRE's isolated G7 successor directly. A promising bounded Lab idea can be implemented into G7 for real in-context physical review.
 
 ## Shared Lab foundation
 
@@ -50,9 +40,9 @@ No build step or dependencies are required.
 
 - **Lab is evidence, never authority**
 - contradictory experiments are allowed
-- fake/isolated prototype state by default
-- no production FIRE data/runtime in Lab
-- developer controls stay outside the judged product canvas when possible
-- FIRE Shell workflow is current G7 → faithful functional Lab baseline → parity verification → visual experiments → physical test → FIRE implementation → FIRE physical validation → Truth for genuinely transferable rules
+- do not rebuild an owning app merely to test its shell
+- use Lab when the question is bounded; use the owning product preview when full context matters
+- FIRE G7 owns coordinated FIRE shell iteration
 - app-local meaning stays with the owning product
-- validated semantics move forward; prototype implementation does not automatically move with them
+- a Lab step is optional
+- after owning-product physical validation, genuinely transferable principles may be promoted to Truth
