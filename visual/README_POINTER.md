@@ -1,0 +1,1 @@
+Key docs: ../START_HERE.md, ../AGENTS.md, BASELINE.md, PARITY_CHECKLIST.md, STATUS.md.
