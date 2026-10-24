@@ -10,70 +10,65 @@ Babel Lab is the experimental sandbox/incubator for Babel ecosystem concepts. It
 2. Babel Truth shared authority at the pinned commit
 3. this file
 4. `README.md`
-5. the relevant experiment under `fire/` or `world/`
+5. the relevant experiment under `fire/`, `world/`, or `visual/`
 6. relevant Lab/ecosystem items in Babel Truth Issue #1
+
+## Core Lab rule
+
+> **Lab is evidence, never authority.**
+
+Lab is intentionally allowed to contain mutually contradictory visual systems, component shapes, controls, interactions, product concepts, and prototypes. Never make another product "match the Lab." There is no canonical Lab design system.
+
+A Lab experiment may begin from current Babel foundations for convenience, but it can intentionally diverge. Label the experiment and judge it on its own question.
 
 ## Current Lab structure
 
-The old combined Prototype 02 surface has been split into two independent experiments inside the same repository.
-
 ### Fire Lab — `fire/`
 
-FIRE-bound visualization/progression-expression experiment.
-
-Current intentional hypotheses/boundaries:
-
-- flat 2D particles with no fake light-emission requirement
-- particle style can be Mixed, Square, Diamond, or Circle
-- emission is time-based so lower frame rates do not change density
-- Free Particles and Rigid Grid render the same underlying simulation logic
-- Rigid Grid remains animated
-- developer intensity / turbulence / diversity controls are visual probes only
-- `Evolve` cycles fake simulation presets; it is not approved progression
-- Reduce Motion pauses Fire animation
-- all state is fake
+FIRE-bound visualization/progression-expression experiment. Existing behavior and fake state remain preserved.
 
 If the experiment is promoted into a real product, its destination is `BabeDrums/babel-fire`.
 
 ### World Lab — `world/`
 
-World-bound achievement-collection experiment.
-
-Current intentional hypotheses/boundaries:
-
-- achievements begin locked
-- developer Earn / Lock controls manually toggle prototype state
-- normal and hidden/lore achievements share one collection
-- mysterious locked-text presentation remains experimental
-- temporary FIRE source/origin marks remain supporting provenance UI
-- achievement earning logic is intentionally not implemented
-- all state is fake
+World-bound achievement-collection experiment. Existing behavior and fake state remain preserved.
 
 If Babel World becomes a real product, it earns its own repository later. Babel Lab itself does not become World.
 
+### Visual Lab / FIRE Shell Lab — `visual/`
+
+Experimental visual-interaction harness for the unresolved FIRE generic shell.
+
+Purpose:
+
+- stress-test candidate shell ideas across representative pages, rows, controls, forms, sheets/dialogs, menus, states, focus/keyboard behavior, and responsive iPhone/iPad presentation
+- compare alternatives without turning production FIRE into a sketchbook
+- preserve contradictory variants when comparison is useful
+- use fake/prototype state only
+
+Boundaries:
+
+- this is **not** a fork of FIRE
+- it does not own FIRE product behavior, runtime, or data
+- it does not define Babel Truth
+- a polished Lab result is still only evidence
+- the current Structure modal study is the first specimen, not the definition of the whole shell
+
+Default shell promotion path:
+
+**Lab experiment → physical-device testing → candidate → FIRE implementation → FIRE physical validation → transferable rules promoted to Babel Truth.**
+
 ## Product-boundary rule
 
-Fire Lab and World Lab share a repository only because Lab is the experiment chamber.
+Fire Lab, World Lab, and Visual Lab share a repository only because Lab is the experiment chamber. Co-location does not merge their product meanings.
 
-Their co-location does **not** mean Fire and Achievements belong to the same final app:
+The repository root is a Lab launcher, not a production home screen.
 
-- Fire visualization/progression artifact → FIRE-bound
-- achievement collection → World-bound
+## Visual treatment of the Lab itself
 
-The repository root is a Lab launcher, not a World home screen.
+The Lab launcher/shared chrome may use a calm, current early-Babel treatment so the workspace is pleasant to use. That treatment is **provisional workspace chrome**, not an approved Babel shell and not evidence by itself.
 
-## Truth reconciliation rule
-
-Lab follows Babel Truth by default while preserving explicit experiments.
-
-When a Lab difference appears, classify it before changing it:
-
-- stale divergence
-- intentional experiment
-- potential upstream improvement
-- app/product-local exception
-
-Potential upstream improvements must be surfaced before changing Truth or forcing convergence.
+Do not let refreshing Lab chrome rewrite experiment-specific visuals or behavior. Preserve experiment content and state unless that experiment is explicitly being changed.
 
 ## Process
 
@@ -87,8 +82,8 @@ Promote validated semantics/decisions, not prototype code by default.
 
 New unresolved durable Lab findings go to Babel Truth Issue #1 under the persist-before-reply threshold.
 
-Do not create a repository commit for every brainstorm sentence. Mature experimental conclusions should be documented locally; genuinely cross-app lessons may be promoted into Babel Truth after review.
+Do not create a repository commit for every brainstorm sentence. Mature experimental conclusions should be documented locally; genuinely cross-app lessons may be promoted to Babel Truth after owning-product validation and review.
 
 ## Current next action
 
-Iterate Fire Lab and World Lab as separate experiments. Review each according to its own product destination instead of reviewing the Lab launcher as a final product UI.
+Use Visual Lab to continue the FIRE shell exploration, beginning with the Structure modal specimen and then expanding to enough representative shell surfaces/states to judge the system rather than one component. Keep Fire Lab and World Lab intact.
