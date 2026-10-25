@@ -2,81 +2,54 @@
 
 Use **Babel** as the project-facing name.
 
-## Shared authority
+Shared process, feedback interpretation, research expectations, foundations, conflict handling, and continuity come from the immutable Babel Truth commit pinned in `BABEL_TRUTH.md`. Do not duplicate them here unless Lab needs a real local exception.
 
-Read `BABEL_TRUTH.md` before substantive work. It pins the Babel Truth commit this repo last reconciled against.
+## Entry
 
-Then read local `START_HERE.md` and `README.md`.
+1. `BABEL_TRUTH.md`
+2. pinned Truth `START_HERE.md` / `AGENTS.md` / relevant `FOUNDATIONS.md`
+3. local `START_HERE.md`
+4. the relevant experiment/code
 
-## What Lab is
+## Lab boundary
 
-Babel Lab is an experimental sandbox/incubator.
+> **Lab is evidence, never authority.**
 
-Use it to test:
-- interaction concepts
-- visual systems
-- progression metaphors
-- cross-app concepts
-- prototype feature ideas
-- World-like surfaces before a World product exists
+Use Lab for bounded experiments: interactions, visual systems, progression metaphors, prototype feature ideas, and product concepts that do not yet have a real owning product.
 
-Lab is not production authority and does not automatically define FIRE/World/future-app behavior.
+Lab may contain contradictory experiments. Another product does not inherit a Lab design merely because it exists here.
 
-## Truth relationship
-
-Follow Babel Truth by default, but preserve intentional experimental divergence.
-
-Classify conflicts before editing:
-
-1. stale divergence → adopt Truth
-2. intentional experiment → preserve and document the hypothesis
-3. potential upstream improvement → surface to Babel before overwriting either side
-4. app/product-local exception → keep local and clarify scope
-
-Do not bump the local Truth pointer until reconciliation against the newer Truth state is complete.
+If the question requires the complete real app shell, navigation, state relationships, or product interactions to judge honestly, work in the owning product's isolated preview instead of reconstructing it in Lab.
 
 ## Prototype safety
 
-- Fake/simulated state is preferred unless the experiment explicitly needs real data.
-- Do not read/write FIRE production storage, schemas, or projects.
-- Do not create a hidden dependency on another app's runtime.
-- Do not turn prototype controls into implied product mechanics without review.
-- Do not promote a visual metaphor into a shared semantic rule merely because it looks good in one experiment.
+- prefer fake/simulated state unless the hypothesis explicitly needs real data
+- never read/write FIRE production storage, schema, or projects
+- do not create hidden runtime dependencies on production apps
+- do not turn developer controls into implied product mechanics without review
+- do not promote a visual metaphor into shared semantics merely because it looks good once
+- preserve intentional experimental divergence when the divergence itself is being tested
 
-## Workflow
+## Local workflow
 
-Use Babel Truth `PROCESS.md` as the shared iteration model:
+For meaningful changes:
 
-**Observe → Diagnose → Shape → Contract → Build → Verify → Consolidate**
+**branch → bounded experiment → verify the hypothesis → classify what was learned → clean obsolete experiment code → PR → merge**
 
-For meaningful Lab changes:
-
-**branch → experiment → verify the hypothesis → document what was learned → PR → merge**
-
-When a prototype result matters outside Lab, classify it before promotion:
-
-- global transferable lesson → candidate Babel Truth change
+Classify results before promotion:
+- global transferable lesson → candidate Truth change
 - FIRE-specific lesson → `babel-fire`
-- future product-specific lesson → that product's authority once it exists
-- unresolved durable conflict/question → Babel Truth Issue #1
+- future product-specific lesson → that owning product when it exists
+- unresolved durable question/conflict → Truth Issue #1
 
-## Continuity
+## Current active experiments
 
-Use Babel Truth Issue #1 for unresolved durable items whose loss at a chat boundary would cost real work.
+- `fire/` — Fire visualization/progression-expression experiment
+- `world/` — World achievement-collection experiment
+- root launcher / `shared/lab.css` — provisional Lab workspace chrome only
 
-Do not store every brainstorm turn.
-
-## Current prototype
-
-Prototype 02 focuses on Fire + Achievements. Read `START_HERE.md` / `README.md` for its current boundaries before modifying it.
+There is no active full FIRE shell replica. Git history preserves the rejected replica; do not recreate one unless Babel deliberately changes that boundary.
 
 ## Definition of done
 
-A Lab pass is complete when:
-
-- the experiment/question is clear
-- the prototype remains isolated from production data
-- intentional deviations from Truth are explicit
-- findings are classified instead of silently promoted
-- obsolete prototype code/content from the replaced approach is cleaned up
-- relevant unresolved findings are captured in the central buffer
+A Lab pass is complete when the question is clear, production data remains isolated, deviations are explicit, findings are classified instead of silently promoted, obsolete experiment code is removed, and any durable unresolved finding is captured through the shared Truth process.
