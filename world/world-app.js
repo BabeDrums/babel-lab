@@ -62,14 +62,14 @@ function iconSvg(kind) {
 
 function topbar(detail) {
   return `<header class="lab-topbar">
-    <div class="lab-topbar-left">
       ${detail
         ? '<button class="back-link" data-action="detail-back" aria-label="Back to achievements">←</button>'
         : '<a class="back-link" href="../" aria-label="Back to Babel Lab">←</a>'}
+    </header>
+    <div class="lab-page-header">
+      <div class="experiment-tag">World-bound experiment</div>
       <h1>${detail ? 'Achievement' : 'World Lab'}</h1>
-    </div>
-    <span class="experiment-tag">World-bound</span>
-  </header>`;
+    </div>`;
 }
 
 function achievementCard(a) {

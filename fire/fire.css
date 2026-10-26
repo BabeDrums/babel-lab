@@ -1,4 +1,3 @@
-.experiment-tag{color:var(--muted);font-size:11px;letter-spacing:.08em;text-transform:uppercase}
 .fire-lab{padding:var(--space-4);overflow:hidden}
 .experiment-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--space-4);padding:var(--space-1) var(--space-1) var(--space-4)}
 .experiment-heading h2{margin:var(--space-1) 0 0;font-family:Georgia,"Times New Roman",serif;font-size:32px;font-weight:600}

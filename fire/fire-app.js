@@ -31,12 +31,13 @@ function render() {
   const reducedMotion = !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   document.getElementById('app').innerHTML = `
     <header class="lab-topbar">
-      <div class="lab-topbar-left">
-        <a class="back-link" href="../" aria-label="Back to Babel Lab">←</a>
-        <h1>Fire Lab</h1>
-      </div>
-      <span class="experiment-tag">FIRE-bound</span>
+      <a class="back-link" href="../" aria-label="Back to Babel Lab">←</a>
     </header>
+
+    <div class="lab-page-header">
+      <div class="experiment-tag">FIRE-bound experiment</div>
+      <h1>Fire Lab</h1>
+    </div>
 
     <main>
       <section class="fire-lab section card">
