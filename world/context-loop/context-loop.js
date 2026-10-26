@@ -1,10 +1,10 @@
-const STORAGE_KEY = 'babel-world-context-loop-v0';
+const STORAGE_KEY = 'babel-world-context-loop-v1';
 
 const DEFAULT_STATE = {
-  stage: 'handoff',
-  linked: false,
-  fireProgress: 'active-focus',
-  declined: false
+  stage: 'fire-finish',
+  scenario: 'known',
+  projectName: 'Even',
+  createdNewProject: false
 };
 
 function loadState() {
@@ -29,12 +29,22 @@ function updateState(patch) {
   render();
 }
 
-function resetState() {
-  state = { ...DEFAULT_STATE };
-  try { localStorage.removeItem(STORAGE_KEY); } catch (_) {}
+function resetState(scenario = state.scenario || 'known') {
+  state = { ...DEFAULT_STATE, scenario };
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (_) {}
   closePrototypeInfo();
   window.scrollTo({ top: 0, behavior: 'auto' });
   render();
+}
+
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, character => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  })[character]);
 }
 
 function topbar() {
@@ -52,7 +62,11 @@ function header(kicker, title, subtitle) {
   </div>`;
 }
 
-function objectRow(icon, name, type, status) {
+function shell(kicker, title, subtitle, body) {
+  return `${topbar()}${header(kicker, title, subtitle)}<main class="context-main">${body}</main>`;
+}
+
+function objectRow(icon, name, type, status = '') {
   return `<div class="object-row">
     <div class="object-icon" aria-hidden="true">${icon}</div>
     <div class="object-copy"><strong>${name}</strong><small>${type}</small></div>
@@ -60,201 +74,150 @@ function objectRow(icon, name, type, status) {
   </div>`;
 }
 
-function shell(kicker, title, subtitle, body) {
-  return `${topbar()}${header(kicker, title, subtitle)}<main class="context-main">${body}</main>`;
+function projectChoice(icon, name, type, action) {
+  return `<button class="project-choice" data-action="${action}">
+    <span class="object-icon" aria-hidden="true">${icon}</span>
+    <span class="object-copy"><strong>${name}</strong><small>${type}</small></span>
+    <span class="choice-chevron" aria-hidden="true">›</span>
+  </button>`;
 }
 
-function renderHandoff() {
+function renderFireFinish() {
+  const known = state.scenario === 'known';
   return shell(
     'FIRE',
     'Even',
-    'Song',
-    `<section class="context-card">
-      <h2>There’s a bigger picture available.</h2>
-      <p class="lede">If this song is part of something larger, WORLD can help connect it.</p>
+    known ? 'Song · Even album' : 'Song',
+    `<section class="context-card finish-card">
+      <div class="status-pill">Ready</div>
+      <h2>The production pass is complete.</h2>
+      <p class="lede">Even has reached a natural stopping point.</p>
 
-      <div class="context-object-space">
-        ${objectRow('♪', 'Even', 'Song', 'In FIRE')}
-      </div>
+      ${known ? `<div class="known-project">
+        <div class="known-label">Part of</div>
+        ${objectRow('◫', 'Even', 'Album', '')}
+      </div>` : ''}
+    </section>
 
+    <section class="context-card next-level-card">
+      <div class="eyebrow">Take it further</div>
+      <h2>${known ? 'See what this changes for the album.' : 'See whether this belongs to something larger.'}</h2>
+      <p>${known ? 'Step back from the song and look at the bigger creative picture.' : 'WORLD can help place the finished song in a larger project when that actually matters.'}</p>
       <div class="action-stack">
-        <button class="context-primary" data-action="open-world">See the bigger picture</button>
-        <button class="context-quiet" data-action="decline-world">Not right now</button>
+        <button class="context-primary" data-action="open-world">Open in WORLD</button>
+        <button class="context-quiet" data-action="stay-fire">Stay in FIRE</button>
       </div>
     </section>`
   );
 }
 
-function renderRelationship() {
+function renderStayFire() {
+  return shell(
+    'FIRE',
+    'Even',
+    state.scenario === 'known' ? 'Song · Even album' : 'Song',
+    `<section class="context-card quiet-result">
+      <h2>Done for now.</h2>
+      <p class="lede">The broader path stays optional. Nothing else needs your attention here.</p>
+      <div class="action-stack">
+        <button class="context-secondary" data-action="back-finish">Back</button>
+      </div>
+    </section>`
+  );
+}
+
+function renderProjectChoice() {
   return shell(
     'WORLD',
-    'Connect the work',
+    'Where does Even belong?',
+    'Song',
+    `<section class="context-card choice-card">
+      <h2>Is this part of something larger?</h2>
+      <p class="lede">Choose an existing project, start something new, or keep the song on its own.</p>
+
+      <div class="choice-group">
+        <div class="choice-label">Existing</div>
+        ${projectChoice('◫', 'Even', 'Album', 'choose-even-album')}
+      </div>
+
+      <div class="action-stack compact-actions">
+        <button class="context-secondary" data-action="new-album">Create new album</button>
+        <button class="context-quiet" data-action="standalone">Keep it standalone</button>
+      </div>
+    </section>`
+  );
+}
+
+function renderNewAlbum() {
+  return shell(
+    'WORLD',
+    'Start something new',
     'Even · Song',
-    `<section class="context-card question-card">
-      ${objectRow('♪', 'Even', 'Song', '')}
-      <div class="relationship"><span>possible relationship</span><span class="relationship-line"></span></div>
-      ${objectRow('◫', 'Even', 'Album', '')}
-
-      <p class="question">Is this song part of the album <strong>Even</strong>?</p>
-
+    `<section class="context-card create-card">
+      <label class="field-label" for="album-name">Album name</label>
+      <input id="album-name" class="context-input" type="text" autocomplete="off" autocapitalize="words" placeholder="Name the album" />
       <div class="action-stack">
-        <button class="context-primary" data-action="confirm-link">Yes — link it</button>
-        <button class="context-secondary" data-action="decline-world">Not right now</button>
+        <button class="context-primary" data-action="create-album" disabled>Create album</button>
+        <button class="context-quiet" data-action="back-choice">Cancel</button>
       </div>
     </section>`
   );
 }
 
-function firstRecommendation() {
-  return `<div class="recommendation">
+function recommendation(projectName) {
+  const safeProjectName = escapeHTML(projectName);
+  return `<section class="recommendation">
     <div class="recommendation-label">Recommended now</div>
-    <h3>Finish the current production move before expanding the album plan.</h3>
-    <div class="reason"><strong>Why</strong><span>You already have momentum in the song. More planning right now would pull you away from making.</span></div>
-    <div class="alternative"><strong>Alternative:</strong> pause and capture one sentence about what the album should feel like as a whole.</div>
-  </div>`;
-}
-
-function updatedRecommendation() {
-  return `<div class="recommendation">
-    <div class="recommendation-label">Recommended now</div>
-    <h3>Choose the next production decision for the song.</h3>
-    <div class="reason"><strong>Why</strong><span>The latest production pass has a useful stopping point, and the album relationship is already in place.</span></div>
-    <div class="alternative"><strong>Alternative:</strong> pause production and define one album-level direction before pushing the song further.</div>
-  </div>`;
-}
-
-function renderWorld() {
-  return shell(
-    'WORLD',
-    'Even',
-    'Album',
-    `<section class="context-card">
-      <h2>Even is connected.</h2>
-      <p>The title song is now part of the album.</p>
-      ${firstRecommendation()}
-      <div class="action-stack">
-        <button class="context-primary" data-action="continue-fire">Continue in FIRE</button>
-        <button class="context-quiet" data-action="leave-world">Leave for now</button>
-      </div>
-    </section>`
-  );
-}
-
-function renderFire() {
-  return shell(
-    'FIRE',
-    'Even',
-    'Song · part of Even',
-    `<section class="context-card">
-      <h2>Back to the song.</h2>
-      <p>The album connection is already here. You don’t need to set it up again.</p>
-
-      <div class="action-stack">
-        <button class="context-primary" data-action="simulate-progress">Simulate production progress</button>
-        <button class="context-quiet" data-action="back-world">Back to WORLD</button>
-      </div>
-    </section>`
-  );
-}
-
-function renderFireUpdated() {
-  return shell(
-    'FIRE',
-    'Even',
-    'Song · part of Even',
-    `<section class="context-card">
-      <h2>A production pass is complete.</h2>
-      <p>You’ve reached a useful stopping point and can decide what deserves attention next.</p>
-
-      <div class="action-stack">
-        <button class="context-primary" data-action="return-progress">Return to WORLD</button>
-      </div>
-    </section>`
-  );
-}
-
-function renderFireNext() {
-  return shell(
-    'FIRE',
-    'Even',
-    'Song · part of Even',
-    `<section class="context-card">
-      <h2>Ready for the next production decision.</h2>
-      <p>Your place in the larger project is still attached.</p>
-
-      <div class="action-stack">
-        <button class="context-secondary" data-action="back-world-updated">Back to WORLD</button>
-      </div>
-    </section>`
-  );
-}
-
-function renderWorldUpdated() {
-  return shell(
-    'WORLD',
-    'Even',
-    'Album',
-    `<section class="context-card">
-      <h2>The project moved forward.</h2>
-      <div class="change-note">
-        <strong>Even · Song</strong>
-        <p>The latest production pass reached a useful stopping point.</p>
-      </div>
-
-      ${updatedRecommendation()}
-
-      <div class="action-stack">
-        <button class="context-primary" data-action="continue-fire">Continue in FIRE</button>
-        <button class="context-secondary" data-action="leave-world">Leave for now</button>
-      </div>
-    </section>`
-  );
-}
-
-function renderAway() {
-  return `${topbar()}<main class="interruption">
-    <div>
-      <div class="pause-mark" aria-hidden="true">···</div>
-      <h2>You stepped away from Even.</h2>
-      <p>Come back when you’re ready.</p>
-      <div class="action-stack">
-        <button class="context-primary" data-action="return-after-break">Return to Even</button>
-      </div>
+    <h3>Capture what “Even” establishes for ${safeProjectName}.</h3>
+    <div class="reason">
+      <strong>Why</strong>
+      <span>The finished song is fresh evidence. One short album-level takeaway can give the rest of the project something real to relate to without turning this into a planning session.</span>
     </div>
-  </main>`;
+    <div class="alternative"><strong>Alternative</strong><span>Skip the reflection and go straight back to FIRE with the next song that already has momentum.</span></div>
+  </section>`;
 }
 
-function renderReentry() {
+function renderWorldProject() {
+  const safeProjectName = escapeHTML(state.projectName);
+  const isExistingEvenAlbum = state.projectName === 'Even' && !state.createdNewProject;
+  const albumSequence = isExistingEvenAlbum
+    ? `<div class="album-sequence" aria-label="Album sequence"><strong>Even</strong><span>After</span><span>Fire</span><span>Fades</span><span>Embers</span><span>Still</span><span>Glow</span></div>`
+    : `<p class="new-project-note">Even is the first song attached to this album.</p>`;
+
   return shell(
     'WORLD',
-    'Welcome back to Even',
+    safeProjectName,
     'Album',
-    `<section class="context-card">
-      <h2>Here’s where you left off.</h2>
-
-      <div class="reentry-summary">
-        <div class="reentry-item"><small>LAST TIME</small><strong>The title song was connected to the album.</strong></div>
-        <div class="reentry-item"><small>WHAT CHANGED</small><strong>Even · Song reached a production stopping point.</strong></div>
-        <div class="reentry-item"><small>NEXT</small><strong>Choose the next production decision in FIRE.</strong><p>Or pause and define one album-level direction first.</p></div>
+    `<section class="context-card project-card">
+      <div class="project-heading">
+        <div>
+          <div class="eyebrow">Album</div>
+          <h2>${safeProjectName}</h2>
+        </div>
+        ${isExistingEvenAlbum ? '<div class="project-count">7 songs</div>' : '<div class="project-count">1 song</div>'}
       </div>
+      ${albumSequence}
+      <div class="project-song">${objectRow('♪', 'Even', 'Song', 'Ready')}</div>
+    </section>
 
-      <div class="action-stack">
-        <button class="context-primary" data-action="continue-fire">Continue in FIRE</button>
-        <button class="context-secondary" data-action="back-world-updated">Stay with the album</button>
-      </div>
-    </section>`
+    ${recommendation(state.projectName)}
+
+    <div class="world-footer-action">
+      <button class="context-secondary" data-action="back-finish">Back to FIRE</button>
+    </div>`
   );
 }
 
-function renderDeclined() {
+function renderStandalone() {
   return shell(
-    'FIRE',
+    'WORLD',
     'Even',
     'Song',
-    `<section class="context-card declined">
-      <div>
-        <h2>Stay with the song.</h2>
-        <p class="lede">WORLD won’t keep asking. You can come back to the bigger picture later if it becomes useful.</p>
+    `<section class="context-card quiet-result">
+      <h2>No bigger project needed.</h2>
+      <p class="lede">If Even is meant to stand on its own, WORLD does not need to invent extra structure around it.</p>
+      <div class="action-stack">
+        <button class="context-secondary" data-action="back-finish">Back to FIRE</button>
       </div>
     </section>`
   );
@@ -262,11 +225,22 @@ function renderDeclined() {
 
 function openPrototypeInfo() {
   const root = document.getElementById('quickview-root');
+  const knownActive = state.scenario === 'known' ? 'active' : '';
+  const unknownActive = state.scenario === 'unknown' ? 'active' : '';
   root.innerHTML = `<div class="quickview-backdrop" data-dismiss>
     <div class="quickview" role="dialog" aria-modal="true" aria-labelledby="prototype-info-title">
       <div class="eyebrow">Prototype info</div>
-      <h3 id="prototype-info-title">Context Loop v0</h3>
-      <p>This is a Babel Lab prototype using local state on this device. It is not connected to the real FIRE or WORLD products.</p>
+      <h3 id="prototype-info-title">Context Loop v1</h3>
+      <p>This Lab specimen tests one moment only: a finished FIRE song optionally stepping into WORLD for a useful larger-project next move.</p>
+
+      <div class="scenario-control" aria-label="Test scenario">
+        <div class="scenario-label">Test relationship state</div>
+        <div class="scenario-options">
+          <button class="scenario-option ${knownActive}" data-scenario="known">Already known</button>
+          <button class="scenario-option ${unknownActive}" data-scenario="unknown">Unknown</button>
+        </div>
+      </div>
+
       <div class="prototype-actions">
         <button class="secondary-btn" data-action="reset">Reset specimen</button>
         <button class="primary-btn" data-dismiss>Done</button>
@@ -288,26 +262,35 @@ function bindPrototypeInfoEvents() {
       if (e.target === el || el.tagName === 'BUTTON') closePrototypeInfo();
     });
   });
-  root.querySelectorAll('[data-action="reset"]').forEach(el => el.addEventListener('click', resetState));
+  root.querySelectorAll('[data-action="reset"]').forEach(el => el.addEventListener('click', () => resetState()));
+  root.querySelectorAll('[data-scenario]').forEach(el => {
+    el.addEventListener('click', () => resetState(el.dataset.scenario));
+  });
+}
+
+function bindCreateAlbumField() {
+  const input = document.getElementById('album-name');
+  const button = document.querySelector('[data-action="create-album"]');
+  if (!input || !button) return;
+  const sync = () => { button.disabled = !input.value.trim(); };
+  input.addEventListener('input', sync);
+  sync();
 }
 
 function render() {
   const app = document.getElementById('app');
   const views = {
-    handoff: renderHandoff,
-    relationship: renderRelationship,
-    world: renderWorld,
-    fire: renderFire,
-    'fire-updated': renderFireUpdated,
-    'fire-next': renderFireNext,
-    'world-updated': renderWorldUpdated,
-    away: renderAway,
-    reentry: renderReentry,
-    declined: renderDeclined
+    'fire-finish': renderFireFinish,
+    'stay-fire': renderStayFire,
+    'project-choice': renderProjectChoice,
+    'new-album': renderNewAlbum,
+    'world-project': renderWorldProject,
+    standalone: renderStandalone
   };
-  const renderer = views[state.stage] || renderHandoff;
+  const renderer = views[state.stage] || renderFireFinish;
   app.innerHTML = renderer();
   bindEvents();
+  if (state.stage === 'new-album') bindCreateAlbumField();
 }
 
 function bindEvents() {
@@ -315,16 +298,21 @@ function bindEvents() {
     button.addEventListener('click', () => {
       const action = button.dataset.action;
       if (action === 'prototype-info') return openPrototypeInfo();
-      if (action === 'open-world') return updateState({ stage: 'relationship' });
-      if (action === 'decline-world') return updateState({ stage: 'declined', declined: true, linked: false });
-      if (action === 'confirm-link') return updateState({ stage: 'world', linked: true, declined: false });
-      if (action === 'continue-fire') return updateState({ stage: state.fireProgress === 'rough-pass' ? 'fire-next' : 'fire' });
-      if (action === 'simulate-progress') return updateState({ stage: 'fire-updated', fireProgress: 'rough-pass' });
-      if (action === 'return-progress') return updateState({ stage: 'world-updated', fireProgress: 'rough-pass' });
-      if (action === 'back-world') return updateState({ stage: 'world' });
-      if (action === 'leave-world') return updateState({ stage: 'away' });
-      if (action === 'return-after-break') return updateState({ stage: 'reentry' });
-      if (action === 'back-world-updated') return updateState({ stage: 'world-updated' });
+      if (action === 'open-world') {
+        return updateState({ stage: state.scenario === 'known' ? 'world-project' : 'project-choice', projectName: 'Even', createdNewProject: false });
+      }
+      if (action === 'stay-fire') return updateState({ stage: 'stay-fire' });
+      if (action === 'back-finish') return updateState({ stage: 'fire-finish' });
+      if (action === 'choose-even-album') return updateState({ stage: 'world-project', projectName: 'Even', createdNewProject: false });
+      if (action === 'new-album') return updateState({ stage: 'new-album' });
+      if (action === 'back-choice') return updateState({ stage: 'project-choice' });
+      if (action === 'standalone') return updateState({ stage: 'standalone' });
+      if (action === 'create-album') {
+        const input = document.getElementById('album-name');
+        const name = input ? input.value.trim() : '';
+        if (!name) return;
+        return updateState({ stage: 'world-project', projectName: name, createdNewProject: true });
+      }
     });
   });
 }
