@@ -3,7 +3,7 @@
 Babel Lab follows shared cross-app authority from:
 
 - Truth repo: `BabeDrums/babel-truth`
-- Last reconciled Truth commit: `8862c5367691f618fe0eea9e166b7cfffee54c77`
+- Last reconciled Truth commit: `526ca70990b1d8b0c92fead9f96aa79356048e2a`
 - Unresolved durable continuity: Babel Truth Issue #1 — `Babel Continuity Buffer`
 
 ## Shared read order
@@ -21,4 +21,4 @@ Babel Lab follows shared cross-app authority from:
 
 Lab owns experiments only. It may deliberately diverge from Truth when the divergence is the hypothesis being tested. FIRE/World/future products do not inherit a design merely because it exists in Lab.
 
-Truth adoption is explicit; update this pointer only after reconciliation is complete.
+Truth adoption is explicit. This pointer was advanced only after the bounded generic-chrome reconciliation merged as Babel Lab commit `46ff4a9a64578162af0ad30daea8439f04056830` and its Pages deployment completed successfully.
