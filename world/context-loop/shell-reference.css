@@ -16,7 +16,24 @@
 }
 .context-topbar .back-link { grid-column: 1; justify-self: start; }
 .context-topbar .context-info-btn { grid-column: 3; justify-self: end; }
-.context-info-btn:not(:disabled):active { transform: none; background: var(--state-pressed); }
+.context-topbar .back-link,
+.context-topbar .context-info-btn {
+  width: var(--touch-target);
+  height: var(--touch-target);
+  min-width: var(--touch-target);
+  min-height: var(--touch-target);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  background: var(--surface-2);
+  color: var(--muted);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.025);
+}
+.context-topbar .back-link:active,
+.context-topbar .context-info-btn:not(:disabled):active {
+  transform: none;
+  background: var(--state-pressed);
+  border-color: var(--line-strong);
+}
 
 .context-header { padding: 0 2px var(--space-5); }
 .context-header h1 {
