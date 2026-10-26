@@ -4,23 +4,24 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
   <meta name="theme-color" content="#08080a" />
-  <title>Babel Lab — WORLD Context Loop v0</title>
-  <link rel="stylesheet" href="../../shared/lab.css?v=6" />
-  <link rel="stylesheet" href="context-loop.css?v=1" />
+  <title>Babel Lab — WORLD Context Loop</title>
+  <link rel="stylesheet" href="../../shared/lab.css?v=7" />
+  <link rel="stylesheet" href="context-loop.css?v=2" />
 </head>
 <body>
   <div id="app" class="lab-shell context-shell" aria-live="polite"></div>
+  <div id="quickview-root"></div>
   <script>
     (function(){
       function showBootError(message){
         var app=document.getElementById('app');
         if(!app)return;
-        app.innerHTML='<div class="error-card"><strong>WORLD Context Loop hit a JavaScript error.</strong><br><br>'+String(message)+'</div>';
+        app.innerHTML='<div class="error-card"><strong>Context Loop hit a JavaScript error.</strong><br><br>'+String(message)+'</div>';
       }
       window.addEventListener('error',function(e){showBootError(e.message||'Unknown script error');});
       window.addEventListener('unhandledrejection',function(e){showBootError(e.reason||'Unhandled promise error');});
     })();
   </script>
-  <script src="context-loop.js?v=1"></script>
+  <script src="context-loop.js?v=2"></script>
 </body>
 </html>
