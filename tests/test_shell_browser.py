@@ -47,13 +47,16 @@ class LabShellBrowser(unittest.TestCase):
         return page
 
     def assert_toolbar_control(self, locator):
-        # Frozen FIRE G7 contract: the 44px control itself owns the visible circle.
+        # Final frozen FIRE G7 cascade: 44px transparent interaction host + one 36px visible circle.
         self.assertEqual(locator.evaluate("el => getComputedStyle(el).width"), '44px')
         self.assertEqual(locator.evaluate("el => getComputedStyle(el).height"), '44px')
-        self.assertEqual(locator.evaluate("el => getComputedStyle(el).backgroundColor"), 'rgb(23, 23, 26)')
-        self.assertEqual(locator.evaluate("el => getComputedStyle(el).borderTopWidth"), '1px')
-        self.assertEqual(locator.evaluate("el => getComputedStyle(el).borderRadius"), '50%')
-        self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::after').content"), 'none')
+        self.assertEqual(locator.evaluate("el => getComputedStyle(el).backgroundColor"), 'rgba(0, 0, 0, 0)')
+        self.assertEqual(locator.evaluate("el => getComputedStyle(el).borderTopWidth"), '0px')
+        self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::after').width"), '36px')
+        self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::after').height"), '36px')
+        self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::after').backgroundColor"), 'rgb(23, 23, 26)')
+        self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::after').borderTopWidth"), '1px')
+        self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::after').borderRadius"), '50%')
 
     def test_root_header_uses_frozen_title_role(self):
         page = self.open('/')
@@ -70,6 +73,8 @@ class LabShellBrowser(unittest.TestCase):
         self.assert_toolbar_control(page.locator('.lab-topbar > .back-link'))
         self.assert_toolbar_control(page.locator('.header-demo .back-link'))
         self.assert_toolbar_control(page.locator('.header-demo .context-info-btn'))
+        self.assert_toolbar_control(page.locator('.header-demo .gallery-plus'))
+        self.assert_toolbar_control(page.locator('.header-demo .gallery-more'))
         self.assertGreaterEqual(page.locator('.large-card--destination').count(), 1)
         self.assertGreaterEqual(page.locator('.large-card--orientation').count(), 1)
         self.assertGreaterEqual(page.locator('.large-card--decision').count(), 1)

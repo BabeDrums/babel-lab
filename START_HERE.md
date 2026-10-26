@@ -38,12 +38,16 @@ A solved shell role must have **one implementation owner** in Lab. Experiment CS
 
 The shell regression gate checks real consuming pages at compact and regular widths. It is meant to catch accidental drift before a physical review, but physical-device evidence still wins when automation and reality disagree.
 
-Important correction from the frozen FIRE source:
-- the approved standalone toolbar control is the **44px visible circular control itself**
-- border + `#17171a` material belong on that 44px host
-- there is **not** a separate 36px inner painted circle inside a transparent 44px host
+The exact frozen FIRE toolbar contract must be read from the **final cascade**, not one primitive file in isolation:
+- `shell-primitives.css` establishes the base toolbar material
+- later `frame-primitives.css` owns the final interaction-vs-material geometry
+- final approved result = **44px transparent interaction host + one centered 36px visible circular material**
+- the 36px circle owns the border + `#17171a` background
+- symbol artwork sits above that material inside the stable 44px host
 
-The previous Lab interpretation that introduced a 36px inner circle was wrong and caused the double-ring regression seen on iPhone. `shared/header-reference.css` now follows the actual frozen FIRE primitive directly.
+The iPhone double-ring regression happened because old Lab/WORLD CSS painted an additional full-size 44px circle underneath the canonical 36px material. The fix is **single ownership**, not removing the quieter 36px FIRE material.
+
+A short-lived PR #23 interpretation mistakenly treated the earlier shell primitive layer as the final cascade and changed the host itself into the visible 44px circle. That interpretation was caught before physical sign-off and superseded immediately; tests now assert the real final FIRE geometry instead.
 
 ## Shell Gallery status model
 
@@ -144,7 +148,7 @@ A standalone repo becomes justified when physical use shows that:
 
 ## Current next action
 
-1. physically verify the corrected exact FIRE toolbar control on iPhone — no double ring
+1. physically verify the exact frozen FIRE toolbar control on iPhone — one 36px visible circle inside the 44px touch slot, no second ring
 2. review Shell Gallery v0, especially the Candidate large-card family
 3. judge the stripped-back Lab home destination cards as a live Candidate consumer
 4. only then decide what large-card variants earn promotion/refinement
