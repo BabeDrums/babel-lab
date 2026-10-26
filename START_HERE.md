@@ -8,7 +8,7 @@ Read `BABEL_TRUTH.md` first. This file owns only the current Lab structure and l
 
 - **Fire Lab — `fire/`**: Fire visualization/progression-expression experiment using fake/local state.
 - **World Lab — `world/`**: achievement-collection experiment using fake/local state.
-- **Root + `shared/lab.css`**: lightweight launcher and provisional Lab workspace chrome; this is not an approved Babel product shell.
+- **Root + `shared/lab.css`**: lightweight launcher and reconciled generic Lab workspace chrome. It follows the validated Babel shell baseline where meaning transfers, but it is still Lab chrome rather than a production product shell.
 
 There is **no active full FIRE shell replica** in Lab. The retired replica remains in Git history only.
 
@@ -19,7 +19,7 @@ There is **no active full FIRE shell replica** in Lab. The retired replica remai
 - FIRE owns FIRE product behavior, runtime, data, specs, tests, and its frozen in-context shell.
 - Babel Truth owns the genuinely transferable shell baseline proven through FIRE G7.
 - Lab owns bounded experiments only.
-- FIRE Core work does not wait for Lab reconciliation.
+- FIRE Core work does not wait for Lab work.
 
 Use Lab when a question can be answered honestly with a bounded specimen. If the complete owning-product shell/context is necessary, work in the owning product preview instead.
 
@@ -31,20 +31,35 @@ A Lab step is optional.
 
 ## Truth adoption status
 
-FIRE's G7 shell is now **10 / 10 Locked and Frozen**, and the validated generic shell baseline has been promoted into newer Babel Truth at `df8b1c25c3148d4376de31fe56cf24b13fc9cf77`.
+FIRE's G7 shell is **10 / 10 Locked and Frozen**, and its validated generic shell baseline is shared Babel Truth.
 
-Lab's `BABEL_TRUTH.md` intentionally remains pinned to its last fully reconciled Truth commit `8862c5367691f618fe0eea9e166b7cfffee54c77` until a real Lab reconciliation pass is completed. Do not advance the pointer merely to make version numbers match.
+Lab completed its bounded generic-chrome reconciliation in merge `46ff4a9a64578162af0ad30daea8439f04056830`. The launcher, Fire Lab, and World Lab now use the shared shell grammar where meaning genuinely transfers while preserving experiment-specific content and personality. The deployment for that merge completed successfully.
+
+Lab is now reconciled to Babel Truth commit `526ca70990b1d8b0c92fead9f96aa79356048e2a`.
 
 ## Current next action
 
-Keep Fire Lab and World Lab behavior intact. A **separate bounded shell-reconciliation pass is now available**:
+Build the first bounded **WORLD Context Loop v0** specimen in Lab using fake/local state and a real creative scenario.
 
-1. compare the provisional root/experiment chrome against the newer validated Babel shell baseline
-2. reconcile generic chrome only where the shared meaning genuinely transfers
-3. preserve Fire Lab and World Lab experiment-specific personality/content
-4. do not reconstruct FIRE workflow or a full FIRE shell replica
-5. verify the Lab pages, then deliberately advance `BABEL_TRUTH.md` and the Truth registry only when reconciliation is actually complete
+The experiment should test whether WORLD earns its existence by doing something a specialist product cannot own alone:
 
-This lane is useful ecosystem cleanup but **does not block FIRE Core breadboarding**.
+> restore and connect creative context across work, show what matters next at the larger-project level, and hand the artist into the right focused capability without making them reconstruct settled context.
 
-New durable unresolved Lab findings use Babel Truth Issue #1 under the shared persist-before-reply rule.
+Use the Continuity Buffer's current WORLD experiment contract as the hypothesis boundary. Keep the specimen small:
+
+1. begin from a song that has already received useful value in FIRE
+2. offer one relevant optional expansion into WORLD without a nag loop
+3. carry only the smallest useful transferable context
+4. establish one larger relationship, such as song → album/body of work
+5. show a thin orientation with one strongest current move, transparent reasoning, and a valid alternative
+6. route focused production work back to FIRE without re-asking settled context
+7. simulate one meaningful FIRE state change returning to WORLD
+8. verify WORLD can re-orient the artist after leaving and returning
+
+Prefer a real Babel scenario such as a song belonging to **Even**. Do not create a standalone World repository, backend/account/sync system, universal object schema, giant graph, full Artist Development curriculum, or FIRE Core redesign from this lane.
+
+The key falsification question is:
+
+> **After a real creative interruption, does this specimen get the artist mentally back into the project and into the correct next focused action more effectively than simply opening FIRE or a notes app directly?**
+
+New durable unresolved Lab/WORLD findings use Babel Truth Issue #1 under the shared persist-before-reply rule.
