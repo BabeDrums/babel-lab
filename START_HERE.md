@@ -7,7 +7,9 @@ Read `BABEL_TRUTH.md` first. This file owns only the current Lab structure and l
 ## Current structure
 
 - **Shell Gallery — `shell/`**: living visual proving ground for generic Babel UI. It shows real shared primitives plus explicitly labeled Candidate families. It is evidence, not authority.
-- **Fire Lab — `fire/`**: current Fire visualization/progression-expression experiment using fake/local state. Unproven FIRE Core behavior may incubate under Fire Lab once deliberately extracted from the current FIRE #99 seed; Lab does not become FIRE authority.
+- **Fire Lab — `fire/`**: container for FIRE-bound experiments.
+  - **Fire Visualization — `fire/visualization/`**: existing visualization/progression-expression experiment using fake/local state.
+  - **FIRE Core — `fire/core/`**: non-canonical incubation lane seeded by FIRE #99. It currently records the audition boundary and next interaction to extract; it is not promoted FIRE behavior.
 - **World Lab — `world/`**: container for WORLD-bound experiments.
   - **Achievements — `world/achievements/`**: collection/discovery experiment only.
   - **WORLD Phase 1 — `world/context-loop/`**: bounded WORLD audition testing finish → optional WORLD doorway → relationship if missing → orientation → required/suggested/open next-step logic.
@@ -58,7 +60,7 @@ Current Gallery v0 covers:
   - Destination card
   - Orientation card
   - Decision card
-- progress/status examples for continued evidence gathering
+- Candidate progress/status treatment for continued evidence gathering
 
 New generic UI needs should be developed in the Gallery when their reuse is plausible. Product-specific UI stays local. The animated WORLD doorway remains WORLD-local.
 
@@ -66,15 +68,15 @@ Do **not** create a universal shared component package yet. A code package such 
 
 ## FIRE incubation boundary
 
-FIRE #99 remains valuable seed work but is not currently merge-ready as a canonical FIRE runtime. The current working boundary is:
+FIRE #99 remains valuable seed work but is not currently merge-ready as a canonical FIRE runtime. The working boundary is:
 
 - keep FIRE doctrine/product architecture in `babel-fire`
-- incubate genuinely unproven FIRE Core interaction slices in Lab when cheap disposability is valuable
-- physically use and reshape them here
+- incubate genuinely unproven FIRE Core interaction slices in `fire/core/` when cheap disposability is valuable
+- physically use and reshape them in Lab
 - promote surviving behavior back into `babel-fire` against real FIRE state/navigation/data
 - do not treat Lab prototype code as production code merely because the behavior survives
 
-The existing Fire visualization experiment and a future FIRE Core audition are separate experiments. Do not silently redefine one as the other.
+The Fire Visualization experiment and FIRE Core audition are separate experiments. `fire/core/` currently establishes the incubation boundary only; the next deliberate step is to extract the #99 Active Focus → DAW experiment → result → changed-next-focus interaction into that lane using the shared shell.
 
 ## WORLD evidence so far
 
@@ -147,7 +149,7 @@ A standalone repo becomes justified when physical use shows that:
 3. judge the stripped-back Lab home destination cards as a live Candidate consumer
 4. only then decide what large-card variants earn promotion/refinement
 5. resume WORLD Phase 1 one screen at a time
-6. deliberately extract the FIRE #99 interaction seed into a bounded Fire Lab/Core audition when ready; do not merge #99 as-is merely to get a runnable proof
+6. extract the FIRE #99 interaction seed into `fire/core/` when ready; do not merge #99 as-is merely to get a runnable proof
 
 Do not create a standalone WORLD repo, backend/account/sync system, universal object schema, full WORLD homepage/navigation, giant graph, full Artist Development curriculum, Room/House commitment, generic notes database, achievement foundation, release/career suite, full visual-identity builder, universal shared UI package, or production FIRE Core implementation from this lane without evidence earning it.
 
