@@ -47,13 +47,13 @@ class LabShellBrowser(unittest.TestCase):
         return page
 
     def assert_toolbar_control(self, locator):
+        # Frozen FIRE G7 contract: the 44px control itself owns the visible circle.
         self.assertEqual(locator.evaluate("el => getComputedStyle(el).width"), '44px')
         self.assertEqual(locator.evaluate("el => getComputedStyle(el).height"), '44px')
-        self.assertEqual(locator.evaluate("el => getComputedStyle(el).backgroundColor"), 'rgba(0, 0, 0, 0)')
-        self.assertEqual(locator.evaluate("el => getComputedStyle(el).borderTopWidth"), '0px')
-        self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::after').width"), '36px')
-        self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::after').height"), '36px')
-        self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::after').borderRadius"), '50%')
+        self.assertEqual(locator.evaluate("el => getComputedStyle(el).backgroundColor"), 'rgb(23, 23, 26)')
+        self.assertEqual(locator.evaluate("el => getComputedStyle(el).borderTopWidth"), '1px')
+        self.assertEqual(locator.evaluate("el => getComputedStyle(el).borderRadius"), '50%')
+        self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::after').content"), 'none')
 
     def test_root_header_uses_frozen_title_role(self):
         page = self.open('/')
@@ -62,37 +62,43 @@ class LabShellBrowser(unittest.TestCase):
         self.assertEqual(title.evaluate("el => getComputedStyle(el).fontSize"), '34px')
         subtitle = page.locator('.lab-header p')
         self.assertEqual(subtitle.evaluate("el => getComputedStyle(el).fontSize"), '14px')
+        self.assertEqual(page.locator('.large-card--destination').count(), 3)
+
+    def test_shell_gallery_uses_real_shared_primitives(self):
+        page = self.open('/shell/')
+        self.assertEqual(page.locator('.lab-page-header h1').inner_text(), 'Shell Gallery')
+        self.assert_toolbar_control(page.locator('.lab-topbar > .back-link'))
+        self.assert_toolbar_control(page.locator('.header-demo .back-link'))
+        self.assert_toolbar_control(page.locator('.header-demo .context-info-btn'))
+        self.assertGreaterEqual(page.locator('.large-card--destination').count(), 1)
+        self.assertGreaterEqual(page.locator('.large-card--orientation').count(), 1)
+        self.assertGreaterEqual(page.locator('.large-card--decision').count(), 1)
 
     def test_world_lab_header_uses_shared_toolbar_and_title(self):
         page = self.open('/world/')
-        back = page.locator('.back-link')
-        self.assert_toolbar_control(back)
+        self.assert_toolbar_control(page.locator('.back-link'))
         title = page.locator('.lab-page-header h1')
         self.assertEqual(title.inner_text(), 'World Lab')
         self.assertEqual(title.evaluate("el => getComputedStyle(el).fontSize"), '34px')
 
     def test_fire_lab_header_uses_shared_toolbar_and_title(self):
         page = self.open('/fire/')
-        back = page.locator('.back-link')
-        self.assert_toolbar_control(back)
+        self.assert_toolbar_control(page.locator('.back-link'))
         title = page.locator('.lab-page-header h1')
         self.assertEqual(title.inner_text(), 'Fire Lab')
         self.assertEqual(title.evaluate("el => getComputedStyle(el).fontSize"), '34px')
 
     def test_achievements_header_uses_shared_toolbar_and_title(self):
         page = self.open('/world/achievements/')
-        back = page.locator('.back-link')
-        self.assert_toolbar_control(back)
+        self.assert_toolbar_control(page.locator('.back-link'))
         title = page.locator('.lab-page-header h1')
         self.assertEqual(title.inner_text(), 'Achievements')
         self.assertEqual(title.evaluate("el => getComputedStyle(el).fontSize"), '34px')
 
-    def test_world_phase_one_does_not_repaint_shared_toolbar(self):
+    def test_world_phase_one_uses_exact_frozen_toolbar(self):
         page = self.open('/world/context-loop/')
-        back = page.locator('.context-topbar .back-link')
-        info = page.locator('.context-topbar .context-info-btn')
-        self.assert_toolbar_control(back)
-        self.assert_toolbar_control(info)
+        self.assert_toolbar_control(page.locator('.context-topbar .back-link'))
+        self.assert_toolbar_control(page.locator('.context-topbar .context-info-btn'))
 
 
 if __name__ == '__main__':
