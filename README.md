@@ -1,15 +1,14 @@
 # Babel Lab
 
-Experimental sandbox for Babel concepts, interaction prototypes, and visual systems.
+Experimental sandbox and incubation workspace for Babel.
 
-Start with [`BABEL_TRUTH.md`](BABEL_TRUTH.md), then [`START_HERE.md`](START_HERE.md). Shared process/design rules come from the pinned Babel Truth commit; Lab owns experiments only.
+Start with [`BABEL_TRUTH.md`](BABEL_TRUTH.md), then [`START_HERE.md`](START_HERE.md). Shared operating/design rules come from the pinned Babel Truth commit; Lab owns experiments only.
 
-Active experiments:
-- `/fire/` — Fire visualization/progression-expression
-- `/world/` — achievement collection
+Current spaces:
+- `/shell/` — Shell Gallery for shared UI proof/candidates
+- `/fire/` — Fire Lab, including visualization and bounded FIRE Core incubation
+- `/world/` — World Lab, including Achievements and WORLD Phase 1
 
-The root launcher and `shared/lab.css` are provisional workspace chrome, not an approved Babel product shell. There is no active full FIRE shell replica; Git history preserves the rejected version.
+Lab consumes the proven Babel shell baseline for generic UI and keeps product-specific expression local. Experiments use fake/local state by default and must remain isolated from production product data/runtime.
 
-FIRE G7 is now frozen and its validated generic shell has been promoted to newer Babel Truth. Lab has **not yet adopted that newer Truth**: its pointer remains on the last fully reconciled commit until a separate bounded generic-chrome reconciliation is completed. That reconciliation is non-blocking for FIRE Core.
-
-No build step is required. Keep experiments isolated from production data/runtime.
+No build step is required. Git/PR history is the archive; `START_HERE.md` owns the current experiment gates.
