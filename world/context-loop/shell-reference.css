@@ -16,6 +16,7 @@
 }
 .context-topbar .back-link { grid-column: 1; justify-self: start; }
 .context-topbar .context-info-btn { grid-column: 3; justify-self: end; }
+.context-info-btn:not(:disabled):active { transform: none; background: var(--state-pressed); }
 
 .context-header { padding: 0 2px var(--space-5); }
 .context-header h1 {
@@ -57,14 +58,13 @@
   border: 1px solid var(--line-strong);
   color: var(--text);
 }
-.context-primary:not(:disabled):active { background: var(--primary-bg-pressed); }
+.context-primary:not(:disabled):active { transform: none; background: var(--primary-bg-pressed); }
 .context-secondary {
   background: var(--surface-2);
   border: 1px solid var(--line);
   color: var(--text);
 }
 .context-quiet { color: var(--muted); }
-.context-primary:not(:disabled):active,
 .context-secondary:not(:disabled):active,
 .context-quiet:not(:disabled):active,
 .project-choice:not(:disabled):active,
