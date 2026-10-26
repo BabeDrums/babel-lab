@@ -1,11 +1,11 @@
 .fire-lab{padding:var(--space-4);overflow:hidden}
 .experiment-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:var(--space-4);padding:var(--space-1) var(--space-1) var(--space-4)}
-.experiment-heading h2{margin:var(--space-1) 0 0;font-family:Georgia,"Times New Roman",serif;font-size:32px;font-weight:600}
+.experiment-heading h2{margin:var(--space-1) 0 0;font-size:28px;line-height:1.08;letter-spacing:-.028em;font-weight:760}
 .experiment-heading small,.developer-heading small{color:var(--quiet);font-size:11px}
-.fire-detail-stage{height:390px;position:relative;background:#0c0c0d;border:1px solid rgba(255,255,255,.045);border-radius:16px;overflow:hidden}
+.fire-detail-stage{height:390px;position:relative;background:#0c0c0d;border:1px solid rgba(255,255,255,.045);border-radius:var(--radius-card);overflow:hidden}
 .fire-detail-stage canvas{display:block;width:100%;height:100%}
-.motion-note{margin:var(--space-3) 0 0;padding:var(--space-3);border:1px solid var(--line);border-radius:12px;color:var(--muted);font-size:12px;line-height:1.45;background:rgba(255,255,255,.018)}
-.renderer-toggle{display:grid;grid-template-columns:1fr 1fr;margin-top:var(--space-3);border:1px solid var(--line);border-radius:14px;overflow:hidden;background:rgba(255,255,255,.018)}
+.motion-note{margin:var(--space-3) 0 0;padding:var(--space-3);border:1px solid var(--line);border-radius:var(--radius-control);color:var(--muted);font-size:12px;line-height:1.45;background:rgba(255,255,255,.018)}
+.renderer-toggle{display:grid;grid-template-columns:1fr 1fr;margin-top:var(--space-3);border:1px solid var(--line);border-radius:var(--radius-control);overflow:hidden;background:rgba(255,255,255,.018)}
 .renderer-toggle button{appearance:none;min-height:44px;border:0;background:transparent;color:var(--muted)}
 .renderer-toggle button+button{border-left:1px solid var(--line)}
 .renderer-toggle button.active{color:var(--text);background:rgba(255,170,70,.08)}
@@ -15,7 +15,7 @@
 .chip{appearance:none;min-height:44px;white-space:nowrap;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.02);color:var(--muted);padding:0 var(--space-4)}
 .chip.active{color:var(--text);border-color:rgba(255,200,120,.35);background:rgba(255,170,70,.06)}
 .controls-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);margin-top:var(--space-3)}
-.control{padding:var(--space-3);border:1px solid var(--line);border-radius:14px;background:rgba(255,255,255,.018)}
+.control{padding:var(--space-3);border:1px solid var(--line);border-radius:var(--radius-control);background:rgba(255,255,255,.018)}
 .control span{display:block;color:var(--muted);font-size:11px;margin-bottom:var(--space-2)}
 .control input{width:100%;accent-color:var(--orange);min-height:28px}
 .preset-row{display:flex;gap:var(--space-3);margin-top:var(--space-3)}

@@ -64,11 +64,11 @@ function topbar(detail) {
   return `<header class="lab-topbar">
       ${detail
         ? '<button class="back-link" data-action="detail-back" aria-label="Back to achievements">←</button>'
-        : '<a class="back-link" href="../" aria-label="Back to Babel Lab">←</a>'}
+        : '<a class="back-link" href="../" aria-label="Back to World Lab">←</a>'}
     </header>
     <div class="lab-page-header">
-      <div class="experiment-tag">World-bound experiment</div>
-      <h1>${detail ? 'Achievement' : 'World Lab'}</h1>
+      <div class="experiment-tag">WORLD experiment</div>
+      <h1>${detail ? 'Achievement' : 'Achievements'}</h1>
     </div>`;
 }
 
@@ -89,17 +89,13 @@ function renderCollection() {
   return `${topbar(false)}
     <main>
       <section class="section achievements-section">
-        <div class="section-title-row">
-          <div>
-            <div class="eyebrow">Collection experiment</div>
-            <h2>Achievements</h2>
-          </div>
+        <div class="section-title-row compact">
+          <div class="eyebrow">Collection experiment</div>
           <small>${state.unlocked.size}/${ACHIEVEMENTS.length}</small>
         </div>
         <div class="achievement-grid">${ACHIEVEMENTS.map(achievementCard).join('')}</div>
       </section>
-    </main>
-    <p class="lab-footnote">World Lab is an experiment. If World becomes a real product, it earns its own repository.</p>`;
+    </main>`;
 }
 
 function renderAchievement(id) {
