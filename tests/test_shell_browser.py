@@ -28,7 +28,18 @@ class LabShellBrowser(unittest.TestCase):
         page.set_default_timeout(5000)
         errors = []
         page.on('pageerror', lambda error: errors.append(str(error)))
-        page.on('console', lambda message: errors.append(message.text) if message.type == 'error' else None)
+        page.on(
+            'response',
+            lambda response: errors.append(f'{response.status} {response.url}')
+            if response.status >= 400 and not response.url.endswith('/favicon.ico')
+            else None,
+        )
+        page.on(
+            'console',
+            lambda message: errors.append(message.text)
+            if message.type == 'error' and not message.text.startswith('Failed to load resource:')
+            else None,
+        )
         response = page.goto(f'{BASE_URL}/{path.lstrip("/")}')
         self.assertIsNotNone(response)
         self.assertEqual(response.status, 200)
