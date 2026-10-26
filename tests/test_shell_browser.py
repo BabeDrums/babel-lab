@@ -58,6 +58,14 @@ class LabShellBrowser(unittest.TestCase):
         self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::after').borderTopWidth"), '1px')
         self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::after').borderRadius"), '50%')
 
+    def assert_info_control(self, locator):
+        self.assert_toolbar_control(locator)
+        # Physical iPhone evidence: the real button text seats correctly; generated pseudo text sat high.
+        self.assertEqual(locator.inner_text().strip(), 'i')
+        self.assertEqual(locator.evaluate("el => getComputedStyle(el).fontSize"), '15px')
+        self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::before').content"), 'none')
+        self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::after').zIndex"), '-1')
+
     def test_root_header_uses_frozen_title_role(self):
         page = self.open('/')
         title = page.locator('.lab-header h1')
@@ -72,7 +80,7 @@ class LabShellBrowser(unittest.TestCase):
         self.assertEqual(page.locator('.lab-page-header h1').inner_text(), 'Shell Gallery')
         self.assert_toolbar_control(page.locator('.lab-topbar > .back-link'))
         self.assert_toolbar_control(page.locator('.header-demo .back-link'))
-        self.assert_toolbar_control(page.locator('.header-demo .context-info-btn'))
+        self.assert_info_control(page.locator('.header-demo .context-info-btn'))
         self.assert_toolbar_control(page.locator('.header-demo .gallery-plus'))
         self.assert_toolbar_control(page.locator('.header-demo .gallery-more'))
         self.assertGreaterEqual(page.locator('.large-card--destination').count(), 1)
@@ -103,7 +111,7 @@ class LabShellBrowser(unittest.TestCase):
     def test_world_phase_one_uses_exact_frozen_toolbar(self):
         page = self.open('/world/context-loop/')
         self.assert_toolbar_control(page.locator('.context-topbar .back-link'))
-        self.assert_toolbar_control(page.locator('.context-topbar .context-info-btn'))
+        self.assert_info_control(page.locator('.context-topbar .context-info-btn'))
 
 
 if __name__ == '__main__':
