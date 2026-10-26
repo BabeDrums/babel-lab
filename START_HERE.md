@@ -38,42 +38,47 @@ Lab completed its bounded generic-chrome reconciliation in merge `46ff4a9a645781
 
 Lab is reconciled to Babel Truth commit `526ca70990b1d8b0c92fead9f96aa79356048e2a`.
 
-## WORLD Context Loop v0
+## WORLD Context Loop v0 — first physical review
 
-The specimen tests whether WORLD can earn a product job that a specialist cannot cleanly own alone:
+The original specimen tested a thin FIRE → WORLD → FIRE loop using **Even · Song → Even · Album** with local prototype state.
 
-> restore and connect creative context across work, show what matters next at the larger-project level, and hand the artist into the right focused capability without making them reconstruct settled context.
+Physical iPhone review found the specimen **currently fails** its key falsification question. The artist became confused because the default UI exposed architecture rather than simply delivering product value: provenance, transferred/not-transferred state, specialist ownership, settled-decision receipts, implementation-facing continuity language, and prototype narration all competed with the actual creative decision.
 
-The current fixture uses **Even · Song** and **Even · Album** with fake/local state. It deliberately tests this thin loop:
+That result does **not** prove WORLD has no useful job. It means v0 bundled too many hypotheses and explained the mechanism instead of letting the artist experience the benefit.
 
-1. FIRE has already delivered useful specialist value
-2. one optional, non-nagging expansion into WORLD
-3. smallest useful transferable context only
-4. one timely relationship confirmation: song → album
-5. thin orientation containing only relevant Work and Project context
-6. one strongest recommendation, transparent reasoning, and a valid alternative
-7. return to simulated FIRE without re-asking the established relationship
-8. one high-level FIRE state change returns to WORLD without FIRE internals
-9. leave/return re-entry restores where the artist was, what changed, what connects, and the strongest continuation
+Durable unresolved findings are captured in Babel Truth Issue #1. The strongest current directions are:
 
-The specimen uses browser-local persistence only so a refresh or leave/return can test continuity. This is **not** evidence for accounts, cloud sync, backend architecture, or a universal Babel schema.
+- default artist-facing surfaces should hide cross-app contract mechanics unless a real user decision requires them
+- recommendation + short `why` + valid alternative remains worth testing
+- a WORLD invitation may belong nearer a meaningful FIRE finish/readiness moment rather than casually inside active production; this is not yet locked
+- FIRE likely needs lightweight body-of-work awareness when known/relevant, while WORLD may also create/manage broader project context
+- if a body-of-work relationship is already known, WORLD should consume it rather than re-ask it
+- if it is unknown, WORLD should not opaque-infer one candidate; future tests should support existing choices and creating a new body of work, including the first song of a new album
+
+## Lab review-environment cleanup
+
+Before another WORLD product review, make Lab easier to judge physically:
+
+- launcher navigation should use calm Babel row/card grammar and familiar chevrons
+- reduce experiment copy to the minimum useful identity/job
+- remove developer/authority narration from the visible launcher
+- use a quiet centered Lab version indicator
+- default experiment views should feel like using the specimen, not reading a developer report
+- prototype/reset details may remain available through optional info UI
+
+This cleanup is a review-environment improvement, not a new Lab product and not a FIRE shell replica.
 
 ## Current next action
 
-Physically review **WORLD Context Loop v0** on iPhone and iPad/regular width. Do not promote its product model from internal confidence alone.
+1. verify the cleaned Lab launcher and Context Loop presentation on physical iPhone first, then regular width
+2. do **not** treat the cleaned v0 flow as product validation; its original product test already failed
+3. reshape the next WORLD specimen around artist-visible value only
+4. re-test invitation timing, body-of-work ownership/selection, and recommendation usefulness without architecture narration
+5. keep FIRE and WORLD independently useful; do not create a backend/universal schema merely to make the prototype easier
 
-Judge the specimen against the key falsification question:
+The key product question remains:
 
-> **After a real creative interruption, does this specimen get the artist mentally back into the project and into the correct next focused action more effectively than simply opening FIRE or a notes app directly?**
-
-Also inspect whether:
-- the optional WORLD invitation feels useful rather than like an upsell or nag
-- the single relationship question arrives at the right moment
-- WORLD makes the larger project clearer without becoming project-management overhead
-- the recommendation feels opinionated and explainable without acting like an AI manager
-- the FIRE return preserves context without exposing or duplicating FIRE internals
-- re-entry feels immediately useful on a physical device
-- the whole loop speeds up making rather than becoming productive procrastination
+> **After a real creative interruption, does WORLD get the artist mentally back into the project and into the correct next focused action more effectively than simply opening FIRE or notes directly?**
 
 Do not create a standalone World repository, backend/account/sync system, universal object schema, giant graph, full Artist Development curriculum, Room/House commitment, generic notes database, achievement foundation, or FIRE Core redesign from this lane.
 
