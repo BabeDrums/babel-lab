@@ -90,19 +90,18 @@
   z-index: 1;
 }
 
+/*
+  Info is intentionally the real button text, not a generated pseudo glyph.
+  The original direct-text version was physically centered on device; moving the "i" into
+  ::before changed its font box/optical seating and pulled it upward. The isolated host lets the
+  36px material sit behind the real text without changing the shared interaction geometry.
+*/
 .context-info-btn {
-  font-size: 0;
-  font-weight: 700;
-}
-.context-info-btn::before {
-  content: "i";
-  position: relative;
-  color: currentColor;
   font-size: 15px;
   font-weight: 700;
-  line-height: 1;
-  z-index: 1;
 }
+.context-info-btn::before { content: none; }
+.context-info-btn::after { z-index: -1; }
 
 /* Gallery uses the same canonical artwork rather than text glyph replicas. */
 .gallery-plus,
