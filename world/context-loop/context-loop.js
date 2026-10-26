@@ -37,6 +37,16 @@ function resetState(scenario = state.scenario || 'known') {
   render();
 }
 
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, character => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+  })[character]);
+}
+
 function topbar() {
   return `<header class="context-topbar">
     <a class="back-link" href="../../" aria-label="Back to Babel Lab">←</a>
@@ -155,34 +165,36 @@ function renderNewAlbum() {
 }
 
 function recommendation(projectName) {
+  const safeProjectName = escapeHTML(projectName);
   return `<section class="recommendation">
     <div class="recommendation-label">Recommended now</div>
-    <h3>Capture what “Even” establishes for ${projectName}.</h3>
+    <h3>Capture what “Even” establishes for ${safeProjectName}.</h3>
     <div class="reason">
       <strong>Why</strong>
-      <span>The title track is fresh evidence. One short album-level takeaway can give the rest of the project something real to relate to without turning this into a planning session.</span>
+      <span>The finished song is fresh evidence. One short album-level takeaway can give the rest of the project something real to relate to without turning this into a planning session.</span>
     </div>
     <div class="alternative"><strong>Alternative</strong><span>Skip the reflection and go straight back to FIRE with the next song that already has momentum.</span></div>
   </section>`;
 }
 
 function renderWorldProject() {
-  const isEvenAlbum = state.projectName === 'Even';
-  const albumSequence = isEvenAlbum
+  const safeProjectName = escapeHTML(state.projectName);
+  const isExistingEvenAlbum = state.projectName === 'Even' && !state.createdNewProject;
+  const albumSequence = isExistingEvenAlbum
     ? `<div class="album-sequence" aria-label="Album sequence"><strong>Even</strong><span>After</span><span>Fire</span><span>Fades</span><span>Embers</span><span>Still</span><span>Glow</span></div>`
     : `<p class="new-project-note">Even is the first song attached to this album.</p>`;
 
   return shell(
     'WORLD',
-    state.projectName,
+    safeProjectName,
     'Album',
     `<section class="context-card project-card">
       <div class="project-heading">
         <div>
           <div class="eyebrow">Album</div>
-          <h2>${state.projectName}</h2>
+          <h2>${safeProjectName}</h2>
         </div>
-        ${isEvenAlbum ? '<div class="project-count">7 songs</div>' : '<div class="project-count">1 song</div>'}
+        ${isExistingEvenAlbum ? '<div class="project-count">7 songs</div>' : '<div class="project-count">1 song</div>'}
       </div>
       ${albumSequence}
       <div class="project-song">${objectRow('♪', 'Even', 'Song', 'Ready')}</div>
