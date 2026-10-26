@@ -25,5 +25,18 @@
     })();
   </script>
   <script src="context-loop.js?v=4"></script>
+  <script>
+    (function(){
+      var app=document.getElementById('app');
+      function syncWorldBack(){
+        var back=document.querySelector('.context-topbar .back-link');
+        if(!back)return;
+        back.setAttribute('href','../');
+        back.setAttribute('aria-label','Back to World Lab');
+      }
+      new MutationObserver(syncWorldBack).observe(app,{childList:true,subtree:true});
+      syncWorldBack();
+    })();
+  </script>
 </body>
 </html>
