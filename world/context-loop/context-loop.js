@@ -223,6 +223,36 @@ function renderFireUpdated() {
   );
 }
 
+function renderFireNext() {
+  return shell(
+    'Simulated specialist return',
+    'Back in FIRE',
+    'WORLD has restored the broader relationship; FIRE can now own the next production decision.',
+    `<section class="context-card">
+      <div class="eyebrow">Context still intact</div>
+      <h2>Even · Song is ready for its next production decision.</h2>
+      <p>No relationship or project setup is repeated. The earlier rough pass and album connection arrive as lightweight continuation context.</p>
+
+      <div class="context-receipt">
+        <div class="receipt-row"><span>Song</span><span>Even</span></div>
+        <div class="receipt-row"><span>Larger work</span><span>Even · Album</span></div>
+        <div class="receipt-row"><span>Previous state</span><span>Rough production pass complete</span></div>
+        <div class="receipt-row"><span>Next focused job</span><span>Choose the next production decision</span></div>
+        <div class="receipt-row"><span>Not re-asked</span><span>The song → album relationship is already settled.</span></div>
+      </div>
+
+      <div class="change-note">
+        <strong>Boundary of this WORLD specimen</strong>
+        <p>The actual production decision belongs to FIRE Core, so Context Loop v0 stops at the handoff rather than inventing FIRE behavior here.</p>
+      </div>
+
+      <div class="action-stack">
+        <button class="context-secondary" data-action="back-world-updated">Return to WORLD context</button>
+      </div>
+    </section>`
+  );
+}
+
 function renderWorldUpdated() {
   return shell(
     'WORLD · state returned from FIRE',
@@ -308,6 +338,7 @@ function render() {
     world: renderWorld,
     fire: renderFire,
     'fire-updated': renderFireUpdated,
+    'fire-next': renderFireNext,
     'world-updated': renderWorldUpdated,
     away: renderAway,
     reentry: renderReentry,
@@ -326,7 +357,7 @@ function bindEvents() {
       if (action === 'open-world') return updateState({ stage: 'relationship' });
       if (action === 'decline-world') return updateState({ stage: 'declined', declined: true, linked: false });
       if (action === 'confirm-link') return updateState({ stage: 'world', linked: true, declined: false });
-      if (action === 'continue-fire') return updateState({ stage: state.fireProgress === 'rough-pass' ? 'fire-updated' : 'fire' });
+      if (action === 'continue-fire') return updateState({ stage: state.fireProgress === 'rough-pass' ? 'fire-next' : 'fire' });
       if (action === 'simulate-progress') return updateState({ stage: 'fire-updated', fireProgress: 'rough-pass' });
       if (action === 'return-progress') return updateState({ stage: 'world-updated', fireProgress: 'rough-pass' });
       if (action === 'back-world') return updateState({ stage: 'world' });
