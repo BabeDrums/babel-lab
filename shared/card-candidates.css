@@ -1,0 +1,112 @@
+/*
+  Babel large-card candidates.
+  Experimental: Lab may use these to gather evidence, but they are not shared Truth yet.
+  Same material family, different composition by meaning.
+*/
+
+.large-card {
+  position: relative;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  color: var(--text);
+}
+
+.large-card--destination {
+  min-height: 136px;
+  padding: 22px 58px 22px 22px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  text-decoration: none;
+  transition: background-color var(--motion-fast) var(--ease), border-color var(--motion-fast) var(--ease), transform var(--motion-fast) var(--ease);
+}
+.large-card--destination:hover { background: var(--surface-2); border-color: var(--line-strong); }
+.large-card--destination:active { background: var(--state-pressed); transform: scale(.99); }
+.large-card__title {
+  display: block;
+  font-size: 23px;
+  line-height: 1.08;
+  font-weight: 760;
+  letter-spacing: -.025em;
+}
+.large-card__meta {
+  display: block;
+  max-width: 34ch;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.4;
+}
+.large-card__chevron {
+  position: absolute;
+  right: 22px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--quiet);
+  font-size: 27px;
+  line-height: 1;
+  font-weight: 300;
+}
+
+.large-card--orientation,
+.large-card--decision {
+  padding: var(--space-5);
+}
+.large-card__label {
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.2;
+  font-weight: 700;
+}
+.large-card--orientation .large-card__title,
+.large-card--decision .large-card__title {
+  margin-top: 7px;
+  font-size: 26px;
+  line-height: 1.12;
+}
+.large-card__body {
+  margin: var(--space-3) 0 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.large-card__progress {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: var(--space-4);
+}
+.large-card__progress-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.13);
+}
+.large-card__progress-dot.is-current {
+  width: 20px;
+  background: rgba(255,255,255,.82);
+}
+.large-card__alternative {
+  display: grid;
+  gap: 5px;
+  margin-top: var(--space-5);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--line);
+}
+.large-card__alternative span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+.large-card__alternative strong {
+  font-size: 14px;
+  line-height: 1.42;
+  font-weight: 620;
+}
+
+@media (max-width: 620px) {
+  .large-card--destination { min-height: 126px; padding: 20px 54px 20px 20px; }
+  .large-card--orientation,
+  .large-card--decision { padding: var(--space-4); }
+}

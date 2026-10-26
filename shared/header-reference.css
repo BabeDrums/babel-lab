@@ -2,21 +2,18 @@
   Babel Lab header reference consumer.
   Canonical implementation reference: Babel FIRE G7 frozen runtime 4a258c5…
 
-  This file owns generic page-header composition only:
-  44px interaction hosts, 36px visible toolbar material, 8px toolbar-to-title rhythm,
-  34px page titles, 14px metadata, and quiet removal of redundant experiment kickers.
-  Product/experiment content remains local.
+  This file owns generic page-header composition only.
+  Important: the approved FIRE toolbar control is the 44px visible circular control itself.
+  Do not invent a smaller painted circle inside a transparent hit host.
 */
 
 :root {
-  --babel-toolbar-visual-size: 36px;
   --babel-toolbar-title-gap: 8px;
   --babel-toolbar-bg: #17171a;
   --babel-toolbar-active: #202024;
   --babel-icon-chevron-back: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14 18 8 12l6-6' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 
-/* Match FIRE's compact frame at phone widths without changing Lab's wider-screen experiment layout. */
 @media (max-width: 699px) {
   .lab-shell {
     padding-top: calc(10px + env(safe-area-inset-top));
@@ -25,7 +22,6 @@
   }
 }
 
-/* Toolbar row: full 44px interaction geometry, quiet 36px visible material. */
 .lab-topbar,
 .context-topbar {
   display: flex;
@@ -36,6 +32,7 @@
   margin-bottom: var(--babel-toolbar-title-gap);
 }
 
+/* Exact FIRE G7 primitive: stable 44px hit target and visible circular material are one control. */
 .icon-btn,
 .back-link,
 .context-info-btn {
@@ -48,9 +45,9 @@
   display: inline-grid;
   place-items: center;
   padding: 0;
-  border: 0;
+  border: 1px solid var(--line);
   border-radius: 50%;
-  background: transparent;
+  background: var(--babel-toolbar-bg);
   box-shadow: none;
   text-decoration: none;
   color: var(--muted);
@@ -59,25 +56,9 @@
 
 .icon-btn::after,
 .back-link::after,
-.context-info-btn::after {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: var(--babel-toolbar-visual-size);
-  height: var(--babel-toolbar-visual-size);
-  transform: translate(-50%, -50%);
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  background: var(--babel-toolbar-bg);
-  box-shadow: none;
-  pointer-events: none;
-  z-index: 0;
-}
+.context-info-btn::after { content: none; }
 
-.back-link {
-  font-size: 0;
-}
+.back-link { font-size: 0; }
 .back-link::before {
   content: "";
   position: absolute;
@@ -85,11 +66,10 @@
   margin: auto;
   width: 20px;
   height: 20px;
-  background: var(--muted);
+  background: currentColor;
   -webkit-mask: var(--babel-icon-chevron-back) center / contain no-repeat;
   mask: var(--babel-icon-chevron-back) center / contain no-repeat;
   pointer-events: none;
-  z-index: 1;
 }
 
 .context-info-btn {
@@ -98,9 +78,7 @@
 }
 .context-info-btn::before {
   content: "i";
-  position: relative;
-  z-index: 1;
-  color: var(--muted);
+  color: currentColor;
   font-size: 15px;
   font-weight: 700;
   line-height: 1;
@@ -108,18 +86,10 @@
 
 .icon-btn:hover,
 .back-link:hover,
-.context-info-btn:hover,
+.context-info-btn:hover { background: var(--babel-toolbar-bg); }
 .icon-btn:active,
 .back-link:active,
-.context-info-btn:active {
-  background: transparent;
-  border-color: transparent;
-}
-.icon-btn:active::after,
-.back-link:active::after,
-.context-info-btn:active::after {
-  background: var(--babel-toolbar-active);
-}
+.context-info-btn:active { background: var(--babel-toolbar-active); }
 
 /* FIRE header composition: toolbar -> 8px -> title/meta -> 20px to content. */
 .lab-page-header,
@@ -128,9 +98,7 @@
   padding: 0;
 }
 .lab-page-header > .experiment-tag,
-.context-header > .eyebrow {
-  display: none;
-}
+.context-header > .eyebrow { display: none; }
 .lab-page-header h1,
 .context-header h1 {
   margin: 0;
@@ -149,9 +117,7 @@
 }
 
 /* Root Lab has no toolbar action, so reserve the same toolbar-height rhythm before its title. */
-.lab-header {
-  padding: 44px 0 20px;
-}
+.lab-header { padding: 44px 0 20px; }
 .lab-header h1 {
   margin: 0;
   font-size: 34px;
@@ -170,7 +136,5 @@
 @media (max-width: 560px) {
   .context-header h1,
   .lab-page-header h1,
-  .lab-header h1 {
-    font-size: 34px;
-  }
+  .lab-header h1 { font-size: 34px; }
 }
