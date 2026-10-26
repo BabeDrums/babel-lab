@@ -96,63 +96,9 @@ button:disabled { cursor: default; opacity: .58; }
 }
 .launcher-shell { display: flex; flex-direction: column; }
 
-.lab-topbar,
-.context-topbar {
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
-  align-items: center;
-  gap: var(--space-3);
-  min-height: var(--touch-target);
-  margin-bottom: var(--space-5);
-}
-.lab-topbar > :first-child,
-.context-topbar > :first-child { grid-column: 1; justify-self: start; }
-.context-topbar .context-info-btn { grid-column: 3; justify-self: end; }
-
-/* Canonical compact toolbar control: same shell role, one visual/interaction primitive. */
-.icon-btn, .back-link, .context-info-btn {
-  width: var(--touch-target);
-  height: var(--touch-target);
-  min-width: var(--touch-target);
-  min-height: var(--touch-target);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-pill);
-  display: grid;
-  place-items: center;
-  padding: 0;
-  text-decoration: none;
-  color: var(--muted);
-  background: var(--surface-2);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,.025);
-}
-.icon-btn:hover, .back-link:hover, .context-info-btn:hover { background: var(--surface-3); }
-.back-link { font-size: 23px; line-height: 1; }
-.context-info-btn { font-size: 15px; font-weight: 700; }
-.icon-btn:not(:disabled):active,
-.back-link:active,
-.context-info-btn:not(:disabled):active {
-  background: var(--state-pressed);
-  border-color: var(--line-strong);
-}
+/* Generic toolbar + page-header composition is owned exclusively by header-reference.css. */
 .experiment-row:active { background: var(--state-pressed); }
 
-.lab-header { padding: 54px 2px 32px; }
-.lab-header h1,
-.lab-page-header h1 {
-  margin: 10px 0 8px;
-  font-size: 40px;
-  line-height: 1.02;
-  letter-spacing: -.038em;
-  font-weight: 790;
-}
-.lab-header p {
-  margin: 0;
-  max-width: 560px;
-  color: var(--muted);
-  font-size: 15px;
-  line-height: 1.45;
-}
-.lab-page-header { margin: 0 0 var(--space-1); padding: 0 2px; }
 .eyebrow, .experiment-tag {
   color: var(--muted);
   font-size: 12px;
@@ -277,7 +223,6 @@ button:disabled { cursor: default; opacity: .58; }
 }
 
 @media (max-width: 620px) {
-  .lab-header { padding-top: 38px; }
   .experiment-copy small { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
 }
 

@@ -1,0 +1,75 @@
+name: Babel shell regression
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  static:
+    name: Shell ownership
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Enforce one owner for shared header primitives
+        run: python3 scripts/check_shell_ownership.py
+      - name: Check JavaScript syntax
+        run: |
+          node --check fire/fire-app.js
+          node --check fire/fire-engine.js
+          node --check world/world-app.js
+          node --check world/context-loop/context-loop.js
+
+  browser:
+    name: Shell browser regression (${{ matrix.width }}px)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        width: [390, 820]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v7
+        with:
+          python-version: '3.12'
+          cache: pip
+          cache-dependency-path: requirements-test.txt
+      - name: Install Playwright
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements-test.txt
+          python -m playwright install --with-deps chromium
+      - name: Resolve Chromium path
+        run: |
+          echo "CHROMIUM_PATH=$(python - <<'PY'
+          from playwright.sync_api import sync_playwright
+          p = sync_playwright().start()
+          print(p.chromium.executable_path)
+          p.stop()
+          PY
+          )" >> "$GITHUB_ENV"
+      - name: Start Lab server
+        run: |
+          python -m http.server 8000 > /tmp/lab-http.log 2>&1 &
+          echo $! > /tmp/lab-http.pid
+          for i in {1..20}; do
+            if curl --fail --silent http://127.0.0.1:8000/ > /dev/null; then
+              exit 0
+            fi
+            sleep 0.25
+          done
+          cat /tmp/lab-http.log
+          exit 1
+      - name: Run shell regressions
+        env:
+          LAB_URL: http://127.0.0.1:8000
+          LAB_TEST_WIDTH: ${{ matrix.width }}
+        run: python -B -m unittest discover -s tests -v
+      - name: Show server log on failure
+        if: failure()
+        run: cat /tmp/lab-http.log || true
