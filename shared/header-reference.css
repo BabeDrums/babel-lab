@@ -3,15 +3,18 @@
   Canonical implementation reference: Babel FIRE G7 frozen runtime 4a258c5…
 
   This file owns generic page-header composition only.
-  Important: the approved FIRE toolbar control is the 44px visible circular control itself.
-  Do not invent a smaller painted circle inside a transparent hit host.
+  The final frozen FIRE cascade is authoritative: 44px interaction host,
+  transparent host, and one centered 36px visible circular material.
 */
 
 :root {
   --babel-toolbar-title-gap: 8px;
+  --babel-toolbar-visual-size: 36px;
   --babel-toolbar-bg: #17171a;
   --babel-toolbar-active: #202024;
   --babel-icon-chevron-back: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14 18 8 12l6-6' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --babel-icon-plus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12h14M12 5v14' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --babel-icon-ellipsis: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='5' cy='12' r='1.25' fill='%23000'/%3E%3Ccircle cx='12' cy='12' r='1.25' fill='%23000'/%3E%3Ccircle cx='19' cy='12' r='1.25' fill='%23000'/%3E%3C/svg%3E");
 }
 
 @media (max-width: 699px) {
@@ -32,7 +35,7 @@
   margin-bottom: var(--babel-toolbar-title-gap);
 }
 
-/* Exact FIRE G7 primitive: stable 44px hit target and visible circular material are one control. */
+/* Exact final FIRE G7 frame: 44px hit host, quieter 36px visible material. */
 .icon-btn,
 .back-link,
 .context-info-btn {
@@ -45,9 +48,9 @@
   display: inline-grid;
   place-items: center;
   padding: 0;
-  border: 1px solid var(--line);
+  border: 0;
   border-radius: 50%;
-  background: var(--babel-toolbar-bg);
+  background: transparent;
   box-shadow: none;
   text-decoration: none;
   color: var(--muted);
@@ -56,7 +59,21 @@
 
 .icon-btn::after,
 .back-link::after,
-.context-info-btn::after { content: none; }
+.context-info-btn::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: var(--babel-toolbar-visual-size);
+  height: var(--babel-toolbar-visual-size);
+  transform: translate(-50%, -50%);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--babel-toolbar-bg);
+  box-shadow: none;
+  pointer-events: none;
+  z-index: 0;
+}
 
 .back-link { font-size: 0; }
 .back-link::before {
@@ -70,6 +87,7 @@
   -webkit-mask: var(--babel-icon-chevron-back) center / contain no-repeat;
   mask: var(--babel-icon-chevron-back) center / contain no-repeat;
   pointer-events: none;
+  z-index: 1;
 }
 
 .context-info-btn {
@@ -78,18 +96,50 @@
 }
 .context-info-btn::before {
   content: "i";
+  position: relative;
   color: currentColor;
   font-size: 15px;
   font-weight: 700;
   line-height: 1;
+  z-index: 1;
 }
 
-.icon-btn:hover,
-.back-link:hover,
-.context-info-btn:hover { background: var(--babel-toolbar-bg); }
+/* Gallery uses the same canonical artwork rather than text glyph replicas. */
+.gallery-plus,
+.gallery-more { font-size: 0; }
+.gallery-plus::before,
+.gallery-more::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 20px;
+  height: 20px;
+  background: currentColor;
+  -webkit-mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  pointer-events: none;
+  z-index: 1;
+}
+.gallery-plus::before {
+  -webkit-mask-image: var(--babel-icon-plus);
+  mask-image: var(--babel-icon-plus);
+}
+.gallery-more::before {
+  -webkit-mask-image: var(--babel-icon-ellipsis);
+  mask-image: var(--babel-icon-ellipsis);
+}
+
 .icon-btn:active,
 .back-link:active,
-.context-info-btn:active { background: var(--babel-toolbar-active); }
+.context-info-btn:active { background: transparent; }
+.icon-btn:active::after,
+.back-link:active::after,
+.context-info-btn:active::after { background: var(--babel-toolbar-active); }
 
 /* FIRE header composition: toolbar -> 8px -> title/meta -> 20px to content. */
 .lab-page-header,
