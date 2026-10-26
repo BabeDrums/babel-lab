@@ -1,0 +1,11 @@
+.launcher-section{padding:0 2px}
+.launcher-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--space-4)}
+.launcher-card{position:relative;min-height:188px;padding:var(--space-5);border:1px solid var(--line);border-radius:var(--radius-card);background:var(--surface);text-decoration:none;display:grid;grid-template-columns:56px minmax(0,1fr) 28px;grid-template-rows:1fr auto;column-gap:var(--space-4);align-items:start;overflow:hidden;transition:background-color var(--motion-fast) var(--ease),border-color var(--motion-fast) var(--ease),transform var(--motion-fast) var(--ease)}
+.launcher-card:hover{background:var(--surface-2);border-color:var(--line-strong)}
+.launcher-card:active{background:var(--state-pressed);transform:scale(.99)}
+.launcher-card-mark{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;background:var(--surface-2);border:1px solid var(--line);font-size:23px;color:var(--muted);grid-row:1 / span 2}
+.launcher-card-copy{align-self:end;min-width:0}
+.launcher-card-copy strong{display:block;font-size:24px;line-height:1.08;letter-spacing:-.025em;font-weight:760}
+.launcher-card-copy small{display:block;margin-top:8px;color:var(--muted);font-size:14px;line-height:1.4;max-width:28ch}
+.launcher-card-chevron{justify-self:end;align-self:end;color:var(--quiet);font-size:28px;line-height:1;font-weight:300}
+@media(max-width:620px){.launcher-cards{grid-template-columns:1fr;gap:var(--space-3)}.launcher-card{min-height:164px;padding:20px}.launcher-card-copy strong{font-size:23px}}
