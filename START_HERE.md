@@ -49,6 +49,8 @@ The iPhone double-ring regression happened because old Lab/WORLD CSS painted an 
 
 A short-lived PR #23 interpretation mistakenly treated the earlier shell primitive layer as the final cascade and changed the host itself into the visible 44px circle. That interpretation was caught before physical sign-off and superseded immediately; tests now assert the real final FIRE geometry instead.
 
+Follow-up physical iPhone review then clarified a separate universal defect: the **Info glyph itself sat too high even though the circle geometry was correct**. The cause was pseudo-generated `::before` text replacing the previously centered real button text. Lab PR #25 restored direct centered button text and added a regression for that rendering path. The remaining gate is physical recheck of the corrected `i` seating; do not reopen the circle geometry unless new device evidence shows a geometry defect.
+
 ## Shell Gallery status model
 
 The Gallery is allowed to contain more than one idea, but status must be explicit:
@@ -148,12 +150,12 @@ A standalone repo becomes justified when physical use shows that:
 
 ## Current next action
 
-1. physically verify the exact frozen FIRE toolbar control on iPhone — one 36px visible circle inside the 44px touch slot, no second ring
+1. physically recheck the universal **Info glyph seating** after Lab PR #25; circle geometry is already settled unless new device evidence contradicts it
 2. review Shell Gallery v0, especially the Candidate large-card family
 3. judge the stripped-back Lab home destination cards as a live Candidate consumer
 4. only then decide what large-card variants earn promotion/refinement
 5. resume WORLD Phase 1 one screen at a time
-6. extract the FIRE #99 interaction seed into `fire/core/` when ready; do not merge #99 as-is merely to get a runnable proof
+6. extract the FIRE #99 interaction seed into `fire/core/` when the FIRE lane is ready; do not merge #99 as-is merely to get a runnable proof
 
 Do not create a standalone WORLD repo, backend/account/sync system, universal object schema, full WORLD homepage/navigation, giant graph, full Artist Development curriculum, Room/House commitment, generic notes database, achievement foundation, release/career suite, full visual-identity builder, universal shared UI package, or production FIRE Core implementation from this lane without evidence earning it.
 
