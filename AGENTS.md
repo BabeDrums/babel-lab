@@ -8,8 +8,9 @@ Shared process, feedback interpretation, research expectations, foundations, con
 
 1. `BABEL_TRUTH.md`
 2. pinned Truth `START_HERE.md` / `AGENTS.md` / relevant `FOUNDATIONS.md`
-3. local `START_HERE.md`
-4. the relevant experiment/code
+3. ADR 0004 when generic shell implementation/reference boundaries matter
+4. local `START_HERE.md`
+5. the relevant experiment/code
 
 ## Lab boundary
 
@@ -19,7 +20,15 @@ Use Lab for bounded experiments: interactions, visual systems, progression metap
 
 Lab may contain contradictory experiments. Another product does not inherit a Lab design merely because it exists here.
 
-If the question requires the complete real app shell, navigation, state relationships, or product interactions to judge honestly, work in the owning product's isolated preview instead of reconstructing it in Lab.
+### Generic shell is not an experiment
+
+Lab must not invent a parallel generic Babel UI system. For same-role shell behavior, reconcile against the frozen FIRE G7 implementation reference named in `BABEL_TRUTH.md`: page frame, toolbar geometry, typography roles, common actions, grouped rows, generic surfaces, fields/controls, temporary UI, responsive behavior, focus/accessibility, and motion defaults.
+
+Experiment-specific expression may layer on top when it serves the hypothesis. A deliberate shell divergence is allowed only when that divergence itself is being tested or the experimental product job genuinely requires it.
+
+This is a reference-consumer relationship, not a runtime dependency and not a universal component library.
+
+If the question requires the complete real owning-product workflow, navigation/state relationships, or production interactions to judge honestly, work in the owning product's isolated preview instead of rebuilding its product behavior in Lab.
 
 ## Prototype safety
 
@@ -45,11 +54,12 @@ Classify results before promotion:
 ## Current active experiments
 
 - `fire/` — Fire visualization/progression-expression experiment
-- `world/` — World achievement-collection experiment
-- root launcher / `shared/lab.css` — provisional Lab workspace chrome only
+- `world/` — older World achievement-collection experiment
+- `world/context-loop/` — WORLD Phase 1 orientation audition
+- root launcher / `shared/lab.css` — Lab host using the frozen Babel shell reference as its generic baseline
 
-There is no active full FIRE shell replica. Git history preserves the rejected replica; do not recreate one unless Babel deliberately changes that boundary.
+Lab does **not** host a replica of FIRE product workflow. It does intentionally consume the generic frozen Babel shell reference so experiments are judged inside already-solved UI fundamentals.
 
 ## Definition of done
 
-A Lab pass is complete when the question is clear, production data remains isolated, deviations are explicit, findings are classified instead of silently promoted, obsolete experiment code is removed, and any durable unresolved finding is captured through the shared Truth process.
+A Lab pass is complete when the question is clear, production data remains isolated, generic shell behavior starts from the frozen Babel reference, deviations are explicit, findings are classified instead of silently promoted, obsolete experiment code is removed, and any durable unresolved finding is captured through the shared Truth process.
