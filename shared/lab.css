@@ -43,7 +43,7 @@
   --space-5: 20px;
   --space-6: 24px;
   --card-padding: var(--space-5);
-  --desktop-gutter: 20px;
+  --desktop-gutter: clamp(18px, 3vw, 56px);
   --canvas-width: 760px;
   --motion-fast: 120ms;
   --motion-standard: 180ms;
@@ -99,7 +99,7 @@ button:disabled { cursor: default; opacity: .42; }
   min-width: 0;
   min-height: 100dvh;
   margin-inline: auto;
-  padding: calc(10px + env(safe-area-inset-top)) 20px calc(26px + env(safe-area-inset-bottom));
+  padding: calc(10px + env(safe-area-inset-top)) var(--desktop-gutter) calc(26px + env(safe-area-inset-bottom));
 }
 .launcher-shell { display: flex; flex-direction: column; }
 
