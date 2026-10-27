@@ -165,10 +165,12 @@ class LabShellBrowser(unittest.TestCase):
         viewport = root.evaluate('window.innerWidth')
         expected_width = min(viewport, 760)
         expected_gutter = min(max(viewport * 0.03, 18), 56)
+        expected_inner_edge = expected_gutter + 16
         self.assertAlmostEqual(root_shell['width'], expected_width, delta=0.1)
         self.assertAlmostEqual(root_shell['x'], (viewport - expected_width) / 2, delta=0.1)
-        self.assertAlmostEqual(root_group['x'], root_shell['x'] + expected_gutter, delta=0.1)
-        self.assertAlmostEqual(root_group['width'], expected_width - (expected_gutter * 2), delta=0.1)
+        self.assertAlmostEqual(root.locator('.lab-shell').evaluate("el => parseFloat(getComputedStyle(el).paddingLeft)"), expected_inner_edge, delta=0.1)
+        self.assertAlmostEqual(root_group['x'], root_shell['x'] + expected_inner_edge, delta=0.1)
+        self.assertAlmostEqual(root_group['width'], expected_width - (expected_inner_edge * 2), delta=0.1)
 
         for path in ('/world/', '/fire/', '/shell/'):
             page = self.open(path)
