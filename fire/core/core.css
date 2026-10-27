@@ -1,5 +1,4 @@
-.core-shell { --canvas-width: 900px; }
-.core-column { width: min(100%, 700px); }
+.core-column { width: 100%; min-width: 0; }
 .core-header { margin-bottom: 20px; }
 .core-intro { margin: 0 0 16px; color: var(--muted); font-size: 15px; line-height: 1.5; }
 .core-boundary { margin: 16px 2px 0; color: var(--quiet); font-size: 12px; line-height: 1.45; }
@@ -8,7 +7,18 @@
 .core-choice-list { overflow: hidden; border: 1px solid var(--line); border-radius: var(--radius-card); background: var(--surface); }
 
 .core-project-row,
-.core-choice { width: 100%; min-height: 72px; padding: 13px 14px 13px 16px; border-radius: 0; display: grid; grid-template-columns: minmax(0, 1fr) 28px; align-items: center; gap: 12px; text-align: left; }
+.core-choice {
+  width: 100%;
+  min-height: var(--row-height);
+  height: var(--row-height);
+  padding: var(--space-2) var(--row-inline);
+  border-radius: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 20px;
+  align-items: center;
+  gap: var(--space-2);
+  text-align: left;
+}
 .core-project-row + .core-project-row,
 .core-choice + .core-choice { border-top: 1px solid var(--line); }
 .core-project-row:active,
@@ -20,10 +30,10 @@
 .core-choice strong,
 .core-choice small { display: block; }
 .core-project-copy strong,
-.core-choice strong { font-size: 17px; line-height: 1.25; font-weight: 680; }
+.core-choice strong { font-size: 16px; line-height: 1.25; font-weight: var(--row-label-weight); letter-spacing: -.01em; }
 .core-project-copy small,
-.core-choice small { margin-top: 4px; color: var(--muted); font-size: 13px; line-height: 1.4; }
-.core-project-arrow { justify-self: end; color: var(--quiet); font-size: 25px; font-weight: 300; line-height: 1; }
+.core-choice small { margin-top: 2px; color: var(--muted); font-size: 12px; line-height: 1.35; }
+.core-project-arrow { justify-self: end; color: var(--quiet); }
 .core-back { font-size: 0; }
 .core-reset { min-width: 44px; min-height: 44px; padding: 0 4px; color: var(--muted); font-size: 13px; font-weight: 650; }
 .core-reset:active { color: var(--text); }
@@ -47,12 +57,12 @@
 .core-why summary { width: fit-content; cursor: pointer; color: var(--accent-text); font-weight: 650; list-style: none; }
 .core-why summary::-webkit-details-marker { display: none; }
 .core-why p { margin: 8px 0 0; }
-.core-primary { width: 100%; max-width: none; margin-top: 18px; min-height: 52px; }
+.core-primary { width: 100%; max-width: none; margin-top: 18px; min-height: var(--control-height); }
 
 .core-sheet h3 { margin: 0 0 6px; }
 .core-result-stack { overflow: hidden; margin-top: 14px; border: 1px solid var(--line); border-radius: var(--radius-control); background: var(--surface); }
 .core-result-btn,
-.core-reveal-choice { width: 100%; min-height: 60px; padding: 13px 14px; border-radius: 0; text-align: left; }
+.core-reveal-choice { width: 100%; min-height: var(--row-height); height: var(--row-height); padding: var(--space-2) var(--row-inline); border-radius: 0; text-align: left; }
 .core-result-btn + .core-result-btn,
 .core-reveal-choice + .core-reveal-choice { border-top: 1px solid var(--line); }
 .core-result-btn:active,
@@ -65,7 +75,6 @@
 .core-textarea::placeholder { color: var(--quiet); }
 
 @media (max-width: 699px) {
-  .core-column { width: 100%; }
   .core-focus-card { padding: 18px 16px; }
   .core-focus-card h2,
   .core-question-head h2 { font-size: 23px; }
