@@ -89,9 +89,10 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 button:disabled { cursor: default; opacity: .42; }
 
 /*
-  Exact frozen FIRE G7 page frame from 4a258c5… / v7-preview/styles.css.
-  One centered 760px canvas. One 20px horizontal page inset. No copied V6 gutter math,
-  no route-specific compensation, and no second inner inset.
+  Frozen FIRE G7 shell frame from 4a258c5… / v7-preview/styles.css.
+  Base/mobile uses 20px horizontal padding. The final G7 cascade overrides tablet/desktop
+  at >=700px to 34px horizontal padding and 54px bottom padding. Keep both declarations:
+  the computed cascade, not either rule in isolation, is the reference.
 */
 .lab-shell {
   width: min(100%, var(--canvas-width));
@@ -247,6 +248,14 @@ button:disabled { cursor: default; opacity: .42; }
 .error-card { margin: 28px 0; padding: var(--space-4); border: 1px solid rgba(255,143,154,.25); border-radius: var(--radius-card); background: var(--danger-soft); color: #ffdada; }
 
 @media (min-width: 700px) {
+  /* Final frozen G7 breakpoint — this was the missing physical iPad rule. */
+  .lab-shell {
+    width: min(100%, var(--canvas-width));
+    padding-inline: 34px;
+    padding-bottom: 54px;
+  }
+  .lab-version { bottom: var(--space-5); }
+
   .quickview-backdrop {
     align-items: center;
     overflow: auto;
