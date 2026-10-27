@@ -123,10 +123,9 @@ function renderFireFinish() {
     <section class="world-invite">
       <h3>Want to take it further?</h3>
       <button class="world-doorway" data-action="open-world" aria-label="Open in WORLD">
-        <span class="world-doorway-stars" aria-hidden="true"></span>
-        <span class="world-doorway-mark" aria-hidden="true">✦</span>
+        <span class="world-doorway-balance" aria-hidden="true"></span>
         <span class="world-doorway-label">WORLD</span>
-        <span class="world-doorway-arrow" aria-hidden="true">→</span>
+        <span class="world-doorway-chevron" aria-hidden="true">›</span>
       </button>
     </section>
   </main>`;
@@ -296,38 +295,36 @@ function renderStandalone() {
 
 function openPrototypeInfo() {
   const root = document.getElementById('quickview-root');
-  const relationshipUnknown = state.relationship === 'unknown' ? 'active' : '';
-  const relationshipKnown = state.relationship === 'known' ? 'active' : '';
-  const suggestedActive = state.decisionMode === 'suggested' ? 'active' : '';
-  const openActive = state.decisionMode === 'open' ? 'active' : '';
-  const questionActive = state.decisionMode === 'question' ? 'active' : '';
-
   root.innerHTML = `<div class="quickview-backdrop" data-dismiss>
-    <div class="quickview" role="dialog" aria-modal="true" aria-labelledby="prototype-info-title">
-      <div class="eyebrow">Prototype info</div>
+    <div class="quickview prototype-sheet" role="dialog" aria-modal="true" aria-labelledby="prototype-info-title">
       <h3 id="prototype-info-title">WORLD Phase 1</h3>
-      <p>This Lab specimen tests orientation, not a finished WORLD product. The doorway motion/material is exploratory and does not define WORLD’s final visual identity.</p>
+      <div class="prototype-sheet-meta">Prototype controls · local only</div>
 
-      <div class="scenario-control">
-        <div class="scenario-label">Song relationship</div>
-        <div class="scenario-options two">
-          <button class="scenario-option ${relationshipUnknown}" data-relationship="unknown">Unattached</button>
-          <button class="scenario-option ${relationshipKnown}" data-relationship="known">Already in Even</button>
+      <div class="prototype-setting-list">
+        <div class="prototype-setting-row">
+          <label for="prototype-relationship">Song relationship</label>
+          <span class="prototype-select-wrap">
+            <select id="prototype-relationship" class="prototype-select" data-prototype-relationship>
+              <option value="unknown" ${state.relationship === 'unknown' ? 'selected' : ''}>Unattached</option>
+              <option value="known" ${state.relationship === 'known' ? 'selected' : ''}>Already in Even</option>
+            </select>
+          </span>
         </div>
-      </div>
-
-      <div class="scenario-control">
-        <div class="scenario-label">Orientation logic</div>
-        <div class="scenario-options three">
-          <button class="scenario-option ${suggestedActive}" data-decision-mode="suggested">Suggested</button>
-          <button class="scenario-option ${openActive}" data-decision-mode="open">Open</button>
-          <button class="scenario-option ${questionActive}" data-decision-mode="question">Needs context</button>
+        <div class="prototype-setting-row">
+          <label for="prototype-decision">Guidance</label>
+          <span class="prototype-select-wrap">
+            <select id="prototype-decision" class="prototype-select" data-prototype-decision>
+              <option value="suggested" ${state.decisionMode === 'suggested' ? 'selected' : ''}>Suggested</option>
+              <option value="open" ${state.decisionMode === 'open' ? 'selected' : ''}>Open</option>
+              <option value="question" ${state.decisionMode === 'question' ? 'selected' : ''}>Needs context</option>
+            </select>
+          </span>
         </div>
       </div>
 
       <div class="prototype-actions">
-        <button class="secondary-btn" data-action="reset">Reset specimen</button>
         <button class="primary-btn" data-dismiss>Done</button>
+        <button class="prototype-reset" data-action="reset" type="button">Reset specimen</button>
       </div>
     </div>
   </div>`;
@@ -337,6 +334,18 @@ function openPrototypeInfo() {
 function closePrototypeInfo() {
   const root = document.getElementById('quickview-root');
   if (root) root.innerHTML = '';
+}
+
+function applyPrototypeScenario(patch) {
+  state = {
+    ...DEFAULT_STATE,
+    relationship: state.relationship,
+    decisionMode: state.decisionMode,
+    ...patch
+  };
+  saveState();
+  window.scrollTo({ top: 0, behavior: 'auto' });
+  render();
 }
 
 function bindPrototypeInfoEvents() {
@@ -354,19 +363,15 @@ function bindPrototypeInfoEvents() {
     }));
   });
 
-  root.querySelectorAll('[data-relationship]').forEach(el => {
-    el.addEventListener('click', () => resetState({
-      relationship: el.dataset.relationship,
-      decisionMode: state.decisionMode
-    }));
-  });
+  const relationship = root.querySelector('[data-prototype-relationship]');
+  if (relationship) {
+    relationship.addEventListener('change', () => applyPrototypeScenario({ relationship: relationship.value }));
+  }
 
-  root.querySelectorAll('[data-decision-mode]').forEach(el => {
-    el.addEventListener('click', () => resetState({
-      relationship: state.relationship,
-      decisionMode: el.dataset.decisionMode
-    }));
-  });
+  const decision = root.querySelector('[data-prototype-decision]');
+  if (decision) {
+    decision.addEventListener('change', () => applyPrototypeScenario({ decisionMode: decision.value }));
+  }
 }
 
 function bindCreateAlbumField() {

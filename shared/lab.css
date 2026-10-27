@@ -44,6 +44,7 @@
   --space-6: 24px;
   --card-padding: var(--space-5);
   --desktop-gutter: 20px;
+  --canvas-width: 760px;
   --motion-fast: 120ms;
   --motion-standard: 180ms;
   --ease: cubic-bezier(0.22, 0.8, 0.22, 1);
@@ -88,12 +89,16 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 }
 button:disabled { cursor: default; opacity: .42; }
 
-/* Exact shared page frame from frozen FIRE G7. */
+/*
+  Exact shared page frame from frozen FIRE G7.
+  No experiment may widen or narrow this canvas. Product-specific content can compose inside it.
+*/
 .lab-shell {
-  --canvas-width: 760px;
-  width: min(100%, var(--canvas-width));
+  width: 100%;
+  max-width: var(--canvas-width);
+  min-width: 0;
   min-height: 100dvh;
-  margin: 0 auto;
+  margin-inline: auto;
   padding: calc(10px + env(safe-area-inset-top)) 20px calc(26px + env(safe-area-inset-bottom));
 }
 .launcher-shell { display: flex; flex-direction: column; }
@@ -157,6 +162,7 @@ button:disabled { cursor: default; opacity: .42; }
 .experiment-row {
   width: 100%;
   min-height: var(--row-height);
+  height: var(--row-height);
   padding: var(--space-2) var(--row-inline);
   display: grid;
   grid-template-columns: minmax(0,1fr) 20px;
@@ -193,7 +199,7 @@ button:disabled { cursor: default; opacity: .42; }
   font-size: 12px;
   line-height: 1.35;
 }
-.row-chevron { justify-self: end; color: var(--quiet); font-size: 21px; line-height: 1; font-weight: 300; }
+.row-chevron { justify-self: end; color: var(--quiet); }
 
 /* Same build/footer treatment as FIRE: tiny, stable, fixed to the safe-area edge. */
 .lab-version {

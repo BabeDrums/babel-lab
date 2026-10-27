@@ -1,3 +1,0 @@
-.launcher-section{padding:0 2px}
-.launcher-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--space-4)}
-@media(max-width:900px){.launcher-cards{grid-template-columns:1fr}}
