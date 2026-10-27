@@ -22,7 +22,8 @@ class LabShellBrowser(unittest.TestCase):
 
     def open(self, path):
         width = int(os.environ.get('LAB_TEST_WIDTH', '390'))
-        context = self.browser.new_context(viewport={'width': width, 'height': 844}, has_touch=True)
+        height = 768 if width >= 1000 else 844
+        context = self.browser.new_context(viewport={'width': width, 'height': height}, has_touch=True)
         self.addCleanup(context.close)
         page = context.new_page()
         page.set_default_timeout(5000)
@@ -46,6 +47,13 @@ class LabShellBrowser(unittest.TestCase):
         self.addCleanup(lambda: self.assertEqual(errors, []))
         return page
 
+    def rect(self, locator):
+        return locator.evaluate("el => { const r = el.getBoundingClientRect(); return {x:r.x, y:r.y, width:r.width, height:r.height, right:r.right}; }")
+
+    def assert_same_rect_axis(self, first, second, keys=('x', 'width', 'right'), delta=0.1):
+        for key in keys:
+            self.assertAlmostEqual(first[key], second[key], delta=delta, msg=f'{key}: {first[key]} != {second[key]}')
+
     def assert_toolbar_control(self, locator):
         # Final frozen FIRE G7 cascade: 44px transparent interaction host + one 36px visible circle.
         self.assertEqual(locator.evaluate("el => getComputedStyle(el).width"), '44px')
@@ -68,6 +76,12 @@ class LabShellBrowser(unittest.TestCase):
         self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::before').zIndex"), '1')
         self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::after').zIndex"), '0')
 
+    def assert_forward_chevron(self, locator):
+        self.assertEqual(locator.evaluate("el => getComputedStyle(el).fontSize"), '0px')
+        self.assertEqual(locator.evaluate("el => getComputedStyle(el).width"), '20px')
+        self.assertEqual(locator.evaluate("el => getComputedStyle(el).height"), '20px')
+        self.assertNotEqual(locator.evaluate("el => getComputedStyle(el).webkitMaskImage"), 'none')
+
     def assert_fire_header_role(self, title):
         self.assertEqual(title.evaluate("el => getComputedStyle(el).fontSize"), '34px')
         self.assertEqual(title.evaluate("el => getComputedStyle(el).lineHeight"), '35.36px')
@@ -80,6 +94,9 @@ class LabShellBrowser(unittest.TestCase):
         self.assertEqual(strong.evaluate("el => getComputedStyle(el).fontSize"), '16px')
         small = locator.locator('.experiment-copy small')
         self.assertEqual(small.evaluate("el => getComputedStyle(el).fontSize"), '12px')
+        chevron = locator.locator('.row-chevron')
+        if chevron.count():
+            self.assert_forward_chevron(chevron)
 
     def test_root_header_and_rows_use_frozen_fire_roles(self):
         page = self.open('/')
@@ -141,11 +158,72 @@ class LabShellBrowser(unittest.TestCase):
         self.assertEqual(title.inner_text(), 'Achievements')
         self.assert_fire_header_role(title)
 
-    def test_world_phase_one_uses_frozen_toolbar_and_fixed_rows(self):
+    def test_shared_canvas_and_group_span_do_not_change_between_routes(self):
+        root = self.open('/')
+        root_shell = self.rect(root.locator('.lab-shell'))
+        root_group = self.rect(root.locator('.experiment-list'))
+        viewport = root.evaluate('window.innerWidth')
+        expected_width = min(viewport, 760)
+        self.assertAlmostEqual(root_shell['width'], expected_width, delta=0.1)
+        self.assertAlmostEqual(root_shell['x'], (viewport - expected_width) / 2, delta=0.1)
+
+        for path in ('/world/', '/fire/', '/shell/'):
+            page = self.open(path)
+            self.assert_same_rect_axis(root_shell, self.rect(page.locator('.lab-shell')))
+
+        world = self.open('/world/')
+        fire = self.open('/fire/')
+        self.assert_same_rect_axis(root_group, self.rect(world.locator('.experiment-list')))
+        self.assert_same_rect_axis(root_group, self.rect(fire.locator('.experiment-list')))
+
+    def test_fire_core_never_changes_canvas_or_left_edge_at_depth(self):
+        page = self.open('/fire/core/')
+        shell_before = self.rect(page.locator('.lab-shell'))
+        list_before = self.rect(page.locator('.core-project-list'))
+        rows = page.locator('.core-project-row')
+        self.assertEqual(rows.count(), 2)
+        for index in range(rows.count()):
+            row = rows.nth(index)
+            self.assertEqual(row.evaluate("el => el.getBoundingClientRect().height"), 64)
+            self.assertEqual(row.locator('strong').evaluate("el => getComputedStyle(el).fontSize"), '16px')
+            self.assertEqual(row.locator('small').evaluate("el => getComputedStyle(el).fontSize"), '12px')
+            self.assert_forward_chevron(row.locator('.core-project-arrow'))
+
+        page.locator('[data-select-project="even"]').click()
+        first_choice = self.rect(page.locator('.core-choice-list'))
+        self.assert_same_rect_axis(list_before, first_choice)
+        self.assertEqual(page.locator('.core-choice').first.evaluate("el => el.getBoundingClientRect().height"), 64)
+
+        page.locator('[data-stage]').first.click()
+        second_choice = self.rect(page.locator('.core-choice-list'))
+        self.assert_same_rect_axis(list_before, second_choice)
+
+        page.locator('[data-need]').first.click()
+        focus = self.rect(page.locator('.core-focus-card'))
+        self.assert_same_rect_axis(list_before, focus)
+        self.assert_same_rect_axis(shell_before, self.rect(page.locator('.lab-shell')))
+
+    def test_world_phase_one_uses_shared_symbols_and_clean_info_sheet(self):
         page = self.open('/world/context-loop/')
         self.assert_toolbar_control(page.locator('.context-topbar .back-link'))
         self.assert_info_control(page.locator('.context-topbar .context-info-btn'))
         self.assertEqual(page.locator('.fire-finish-identity h1').evaluate("el => getComputedStyle(el).fontSize"), '34px')
+
+        doorway = page.locator('.world-doorway')
+        self.assertEqual(doorway.locator('.world-doorway-mark').count(), 0)
+        self.assertEqual(doorway.locator('.world-doorway-stars').count(), 0)
+        self.assertEqual(doorway.locator('.world-doorway-arrow').count(), 0)
+        self.assertEqual(doorway.locator('.world-doorway-chevron').count(), 1)
+        self.assert_forward_chevron(doorway.locator('.world-doorway-chevron'))
+
+        page.locator('[data-action="prototype-info"]').click()
+        self.assertEqual(page.locator('.scenario-control').count(), 0)
+        self.assertEqual(page.locator('.scenario-option').count(), 0)
+        self.assertEqual(page.locator('.prototype-setting-row').count(), 2)
+        self.assertEqual(page.locator('.prototype-select').count(), 2)
+        sheet = self.rect(page.locator('.prototype-sheet'))
+        self.assertLessEqual(sheet['width'], 420.1)
+        page.locator('.prototype-sheet [data-dismiss]').click()
 
         page.locator('[data-action="open-world"]').click()
         page.locator('[data-action="choose-even-album"]').click()
