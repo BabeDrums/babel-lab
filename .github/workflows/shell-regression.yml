@@ -21,6 +21,7 @@ jobs:
         run: |
           node --check fire/fire-app.js
           node --check fire/fire-engine.js
+          node --check fire/core/core.js
           node --check world/world-app.js
           node --check world/context-loop/context-loop.js
 
@@ -31,7 +32,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        width: [390, 820]
+        width: [390, 820, 1024]
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-python@v7
