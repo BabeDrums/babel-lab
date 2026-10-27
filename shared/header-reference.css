@@ -190,3 +190,10 @@
   margin: 0 0 20px;
   padding: calc(var(--touch-target) + var(--babel-toolbar-title-gap)) 0 0;
 }
+
+@media (min-width: 700px) {
+  /* Final frozen G7 title-size override. */
+  .lab-page-header h1,
+  .context-header h1,
+  .lab-header h1 { font-size: 35px; }
+}
