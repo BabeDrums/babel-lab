@@ -38,7 +38,9 @@ Do not extract a universal shared component package yet. Shared implementation m
 
 Toolbar circle geometry is settled unless new device evidence contradicts it: **44px interaction host + one centered 36px visible circle**.
 
-The latest universal defect was only the lowercase Info `i` sitting too high. PR #25 restored direct centered button text and added regression coverage. The remaining shell gate is a quick physical iPhone recheck of the corrected glyph seating; do not reopen the circle geometry without new evidence.
+Physical iPhone review confirmed the corrected lowercase Info `i` is vertically seated correctly, but the font glyph does not visually belong to the same symbol family as Back / Plus / More. The current candidate keeps the approved geometry and centered artwork box while replacing the font-rendered `i` with purpose-built vector artwork using the same 2px rounded-stroke / filled-dot language as the existing symbols.
+
+Remaining shell gate: physically confirm on iPhone that the vector Info symbol preserves the good seating **and** now reads as part of the same toolbar family. Do not reopen the circle geometry without new evidence.
 
 ## FIRE Core incubation
 
@@ -82,7 +84,7 @@ WORLD earns a standalone repo only after physical use proves independent value, 
 
 ## Immediate gates
 
-1. Physically recheck the corrected shared Info glyph on iPhone.
+1. Physically recheck the shared vector Info symbol on iPhone for both seating and family resemblance.
 2. Review/refine Shell Gallery large-card candidates and the Lab-home Destination-card consumer; do not canonize the current composition by default.
 3. Continue WORLD Phase 1 **one screen at a time**, judging whether WORLD genuinely improves larger-project orientation and next action.
 4. FIRE lane may build the bounded `fire/core/**` audition independently.
