@@ -23,6 +23,26 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+      - name: Stamp deployed Git revision
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os
+          from pathlib import Path
+
+          short_sha = os.environ['GITHUB_SHA'][:7]
+          stamped = 0
+          for path in Path('.').rglob('*.html'):
+              text = path.read_text()
+              if 'LAB · local' not in text:
+                  continue
+              path.write_text(text.replace('LAB · local', f'LAB · {short_sha}'))
+              stamped += 1
+
+          if stamped == 0:
+              raise SystemExit('No LAB · local build marker found to stamp')
+          print(f'Stamped Lab build as {short_sha} in {stamped} HTML file(s)')
+          PY
       - name: Configure Pages
         uses: actions/configure-pages@v6
       - name: Upload site

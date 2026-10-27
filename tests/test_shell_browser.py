@@ -83,8 +83,10 @@ class LabShellBrowser(unittest.TestCase):
         self.assertNotEqual(locator.evaluate("el => getComputedStyle(el).webkitMaskImage"), 'none')
 
     def assert_fire_header_role(self, title):
-        self.assertEqual(title.evaluate("el => getComputedStyle(el).fontSize"), '34px')
-        self.assertEqual(title.evaluate("el => getComputedStyle(el).lineHeight"), '35.36px')
+        viewport = title.evaluate("window.innerWidth")
+        expected_font = 35 if viewport >= 700 else 34
+        self.assertAlmostEqual(title.evaluate("el => parseFloat(getComputedStyle(el).fontSize)"), expected_font, delta=0.1)
+        self.assertAlmostEqual(title.evaluate("el => parseFloat(getComputedStyle(el).lineHeight)"), expected_font * 1.04, delta=0.1)
         self.assertAlmostEqual(title.evaluate("el => el.getBoundingClientRect().top"), 62, delta=0.6)
 
     def assert_fire_row(self, locator):
@@ -110,8 +112,12 @@ class LabShellBrowser(unittest.TestCase):
         for index in range(rows.count()):
             self.assert_fire_row(rows.nth(index))
         footer = page.locator('.lab-version')
+        self.assertEqual(footer.inner_text(), 'LAB · local')
         self.assertEqual(footer.evaluate("el => getComputedStyle(el).position"), 'fixed')
         self.assertEqual(footer.evaluate("el => getComputedStyle(el).fontSize"), '10px')
+        viewport = page.evaluate('window.innerWidth')
+        expected_bottom = 20 if viewport >= 700 else 12
+        self.assertAlmostEqual(footer.evaluate("el => parseFloat(getComputedStyle(el).bottom)"), expected_bottom, delta=0.1)
 
     def test_shell_gallery_uses_real_shared_primitives_only(self):
         page = self.open('/shell/')
@@ -158,18 +164,23 @@ class LabShellBrowser(unittest.TestCase):
         self.assertEqual(title.inner_text(), 'Achievements')
         self.assert_fire_header_role(title)
 
-    def test_shared_canvas_matches_exact_frozen_g7_page_frame(self):
+    def test_shared_canvas_matches_final_computed_frozen_g7_page_frame(self):
         root = self.open('/')
         root_shell = self.rect(root.locator('.lab-shell'))
         root_group = self.rect(root.locator('.experiment-list'))
         viewport = root.evaluate('window.innerWidth')
         expected_width = min(viewport, 760)
+        expected_inline = 34 if viewport >= 700 else 20
+        expected_bottom = 54 if viewport >= 700 else 26
+        shell = root.locator('.lab-shell')
+
         self.assertAlmostEqual(root_shell['width'], expected_width, delta=0.1)
         self.assertAlmostEqual(root_shell['x'], (viewport - expected_width) / 2, delta=0.1)
-        self.assertAlmostEqual(root.locator('.lab-shell').evaluate("el => parseFloat(getComputedStyle(el).paddingLeft)"), 20, delta=0.1)
-        self.assertAlmostEqual(root.locator('.lab-shell').evaluate("el => parseFloat(getComputedStyle(el).paddingRight)"), 20, delta=0.1)
-        self.assertAlmostEqual(root_group['x'], root_shell['x'] + 20, delta=0.1)
-        self.assertAlmostEqual(root_group['width'], expected_width - 40, delta=0.1)
+        self.assertAlmostEqual(shell.evaluate("el => parseFloat(getComputedStyle(el).paddingLeft)"), expected_inline, delta=0.1)
+        self.assertAlmostEqual(shell.evaluate("el => parseFloat(getComputedStyle(el).paddingRight)"), expected_inline, delta=0.1)
+        self.assertAlmostEqual(shell.evaluate("el => parseFloat(getComputedStyle(el).paddingBottom)"), expected_bottom, delta=0.1)
+        self.assertAlmostEqual(root_group['x'], root_shell['x'] + expected_inline, delta=0.1)
+        self.assertAlmostEqual(root_group['width'], expected_width - (expected_inline * 2), delta=0.1)
 
         for path in ('/world/', '/fire/', '/shell/'):
             page = self.open(path)
