@@ -43,8 +43,6 @@
   --space-5: 20px;
   --space-6: 24px;
   --card-padding: var(--space-5);
-  --desktop-gutter: clamp(18px, 3vw, 56px);
-  --page-inline-inset: var(--space-4);
   --canvas-width: 760px;
   --motion-fast: 120ms;
   --motion-standard: 180ms;
@@ -91,17 +89,16 @@ button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visib
 button:disabled { cursor: default; opacity: .42; }
 
 /*
-  Shared Lab frame translated from the rendered FIRE Projects composition.
-  The outer shell keeps FIRE's responsive desktop gutter; Lab content then uses
-  the same 16px inner page inset visible in physical FIRE review.
+  Exact frozen FIRE G7 page frame from 4a258c5… / v7-preview/styles.css.
+  One centered 760px canvas. One 20px horizontal page inset. No copied V6 gutter math,
+  no route-specific compensation, and no second inner inset.
 */
 .lab-shell {
-  width: 100%;
-  max-width: var(--canvas-width);
+  width: min(100%, var(--canvas-width));
   min-width: 0;
   min-height: 100dvh;
-  margin-inline: auto;
-  padding: calc(10px + env(safe-area-inset-top)) calc(var(--desktop-gutter) + var(--page-inline-inset)) calc(26px + env(safe-area-inset-bottom));
+  margin: 0 auto;
+  padding: calc(10px + env(safe-area-inset-top)) 20px calc(26px + env(safe-area-inset-bottom));
 }
 .launcher-shell { display: flex; flex-direction: column; }
 
