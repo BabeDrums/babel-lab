@@ -13,8 +13,9 @@
   --babel-toolbar-bg: #17171a;
   --babel-toolbar-active: #202024;
   --babel-icon-chevron-back: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14 18 8 12l6-6' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
-  --babel-icon-plus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12h14M12 5v14' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --babel-icon-plus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12h14M12 5v14' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
   --babel-icon-ellipsis: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='5' cy='12' r='1.25' fill='%23000'/%3E%3Ccircle cx='12' cy='12' r='1.25' fill='%23000'/%3E%3Ccircle cx='19' cy='12' r='1.25' fill='%23000'/%3E%3C/svg%3E");
+  --babel-icon-info: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='6.5' r='1.25' fill='%23000'/%3E%3Cpath d='M12 11v7' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
 }
 
 @media (max-width: 699px) {
@@ -91,17 +92,25 @@
 }
 
 /*
-  Info is intentionally the real button text, not a generated pseudo glyph.
-  The original direct-text version was physically centered on device; moving the "i" into
-  ::before changed its font box/optical seating and pulled it upward. The isolated host lets the
-  36px material sit behind the real text without changing the shared interaction geometry.
+  Info keeps the physically approved centered artwork box, but no longer relies on a font glyph.
+  The custom vector uses the same family language as the other toolbar symbols:
+  a 2px rounded stroke for the stem and the same 1.25px filled dot used by More.
 */
-.context-info-btn {
-  font-size: 15px;
-  font-weight: 700;
+.context-info-btn { font-size: 0; }
+.context-info-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 20px;
+  height: 20px;
+  background: currentColor;
+  -webkit-mask: var(--babel-icon-info) center / contain no-repeat;
+  mask: var(--babel-icon-info) center / contain no-repeat;
+  pointer-events: none;
+  z-index: 1;
 }
-.context-info-btn::before { content: none; }
-.context-info-btn::after { z-index: -1; }
+.context-info-btn::after { z-index: 0; }
 
 /* Gallery uses the same canonical artwork rather than text glyph replicas. */
 .gallery-plus,
