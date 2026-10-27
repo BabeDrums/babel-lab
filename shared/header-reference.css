@@ -2,7 +2,7 @@
   Babel Lab header reference consumer.
   Canonical implementation reference: Babel FIRE G7 frozen runtime 4a258c5…
 
-  This file owns generic page-header composition only.
+  This file owns generic page-header composition and shared symbol artwork.
   The final frozen FIRE cascade is authoritative: 44px interaction host,
   transparent host, one centered 36px visible circular material, and the
   toolbar → title/meta rhythm used throughout the app.
@@ -14,9 +14,10 @@
   --babel-toolbar-bg: #17171a;
   --babel-toolbar-active: #202024;
   --babel-icon-chevron-back: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M14 18 8 12l6-6' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --babel-icon-chevron-forward: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='m10 6 6 6-6 6' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
   --babel-icon-plus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12h14M12 5v14' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
   --babel-icon-ellipsis: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='5' cy='12' r='1.25' fill='%23000'/%3E%3Ccircle cx='12' cy='12' r='1.25' fill='%23000'/%3E%3Ccircle cx='19' cy='12' r='1.25' fill='%23000'/%3E%3C/svg%3E");
-  --babel-icon-info: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='6.5' r='1.25' fill='%23000'/%3E%3Cpath d='M12 11v7' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+  --babel-icon-info: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='5.15' r='1.4' fill='%23000'/%3E%3Cpath d='M10 9v6.2' fill='none' stroke='%23000' stroke-width='2.2' stroke-linecap='round'/%3E%3C/svg%3E");
 }
 
 .lab-topbar,
@@ -84,7 +85,7 @@
   z-index: 1;
 }
 
-/* Physically approved Info artwork in the same toolbar symbol family. */
+/* Info is purpose-built artwork, not a font glyph. Its optical weight is tuned to Back / Plus / More. */
 .context-info-btn { font-size: 0; }
 .context-info-btn::before {
   content: "";
@@ -100,6 +101,24 @@
   z-index: 1;
 }
 .context-info-btn::after { z-index: 0; }
+
+/* One forward-chevron artwork across navigation rows and the WORLD doorway. */
+.row-chevron,
+.choice-chevron,
+.core-project-arrow,
+.world-doorway-chevron {
+  width: 20px;
+  height: 20px;
+  min-width: 20px;
+  display: inline-block;
+  justify-self: end;
+  color: var(--quiet);
+  font-size: 0 !important;
+  line-height: 0;
+  background: currentColor;
+  -webkit-mask: var(--babel-icon-chevron-forward) center / contain no-repeat;
+  mask: var(--babel-icon-chevron-forward) center / contain no-repeat;
+}
 
 /* Gallery uses the same canonical artwork rather than text glyph replicas. */
 .gallery-plus,
