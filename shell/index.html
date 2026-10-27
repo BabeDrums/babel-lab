@@ -3,12 +3,11 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-  <meta name="theme-color" content="#090a0d" />
+  <meta name="theme-color" content="#09090b" />
   <title>Babel Lab — Shell Gallery</title>
-  <link rel="stylesheet" href="../shared/lab.css?v=12" />
-  <link rel="stylesheet" href="../shared/card-candidates.css?v=1" />
-  <link rel="stylesheet" href="gallery.css?v=1" />
-  <link rel="stylesheet" href="../shared/header-reference.css?v=6" />
+  <link rel="stylesheet" href="../shared/lab.css?v=13" />
+  <link rel="stylesheet" href="gallery.css?v=2" />
+  <link rel="stylesheet" href="../shared/header-reference.css?v=7" />
 </head>
 <body>
   <main class="lab-shell shell-gallery">
@@ -18,7 +17,7 @@
 
     <header class="lab-page-header">
       <h1>Shell Gallery</h1>
-      <p>Prove shared Babel UI once. Keep product-specific expression local.</p>
+      <p>Shared Babel UI · proving ground</p>
     </header>
 
     <section class="gallery-section">
@@ -39,7 +38,7 @@
         </div>
         <div class="gallery-title-demo">
           <strong>Project title</strong>
-          <span>Optional metadata</span>
+          <span>Artist · Project type</span>
         </div>
       </div>
     </section>
@@ -48,19 +47,17 @@
       <div class="gallery-section-head">
         <div>
           <span class="gallery-status is-proven">Proven</span>
-          <h2>Rows + actions</h2>
+          <h2>Rows + state</h2>
         </div>
       </div>
       <div class="experiment-list gallery-list-demo">
         <a class="experiment-row" href="#" onclick="return false">
-          <span class="experiment-mark" aria-hidden="true">✓</span>
-          <span class="experiment-copy"><strong>Navigation row</strong><small>Stable leading anchor and supporting metadata.</small></span>
+          <span class="experiment-copy"><strong>Navigation row</strong><small>Supporting metadata · one line</small></span>
           <span class="row-chevron" aria-hidden="true">›</span>
         </a>
         <a class="experiment-row" href="#" onclick="return false">
-          <span class="experiment-mark" aria-hidden="true">—</span>
-          <span class="experiment-copy"><strong>Current state</strong><small>Same row grammar, different meaningful state.</small></span>
-          <span class="row-chevron" aria-hidden="true">›</span>
+          <span class="experiment-copy"><strong>Current state</strong><small>Same 64px geometry · different meaning</small></span>
+          <span class="gallery-row-state" aria-hidden="true">—</span>
         </a>
       </div>
       <div class="gallery-action-row">
@@ -73,71 +70,18 @@
       <div class="gallery-section-head">
         <div>
           <span class="gallery-status is-candidate">Candidate</span>
-          <h2>Large cards</h2>
-        </div>
-        <p>Same material family. Different composition by meaning.</p>
-      </div>
-
-      <div class="gallery-card-grid">
-        <article class="gallery-specimen">
-          <div class="gallery-specimen-name">Destination</div>
-          <a class="large-card large-card--destination" href="#" onclick="return false">
-            <span class="large-card__title">World Lab</span>
-            <span class="large-card__meta">WORLD experiments and product proofs.</span>
-            <span class="large-card__chevron" aria-hidden="true">›</span>
-          </a>
-        </article>
-
-        <article class="gallery-specimen">
-          <div class="gallery-specimen-name">Orientation</div>
-          <div class="large-card large-card--orientation">
-            <div class="large-card__label">Where you are</div>
-            <strong class="large-card__title">Even has its first finished song.</strong>
-            <div class="large-card__meta">1 finished · 7 tracks planned</div>
-            <div class="large-card__progress" aria-hidden="true">
-              <span class="large-card__progress-dot is-current"></span>
-              <span class="large-card__progress-dot"></span>
-              <span class="large-card__progress-dot"></span>
-              <span class="large-card__progress-dot"></span>
-              <span class="large-card__progress-dot"></span>
-              <span class="large-card__progress-dot"></span>
-              <span class="large-card__progress-dot"></span>
-            </div>
-          </div>
-        </article>
-
-        <article class="gallery-specimen">
-          <div class="gallery-specimen-name">Decision</div>
-          <div class="large-card large-card--decision">
-            <div class="large-card__label">Suggested next</div>
-            <strong class="large-card__title">Make the next musical anchor.</strong>
-            <p class="large-card__body">A second finished song gives the project more evidence before one track has to carry the whole direction.</p>
-            <div class="large-card__alternative"><span>Alternative</span><strong>Start shaping the visual identity while the song is fresh.</strong></div>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="gallery-section">
-      <div class="gallery-section-head">
-        <div>
-          <span class="gallery-status is-candidate">Candidate</span>
           <h2>Progress + status</h2>
         </div>
       </div>
-      <div class="gallery-demo progress-demo">
-        <div class="large-card__progress" aria-label="Progress example">
-          <span class="large-card__progress-dot is-current"></span>
-          <span class="large-card__progress-dot"></span>
-          <span class="large-card__progress-dot"></span>
-          <span class="large-card__progress-dot"></span>
-          <span class="large-card__progress-dot"></span>
+      <div class="experiment-list gallery-list-demo">
+        <div class="experiment-row">
+          <span class="experiment-copy"><strong>1 of 7 finished</strong><small>Meaningful state · not generic percent complete</small></span>
+          <span class="gallery-progress" aria-label="1 of 7 finished"><i class="is-current"></i><i></i><i></i></span>
         </div>
-        <p>Meaningful state beats generic percent complete.</p>
       </div>
     </section>
 
-    <p class="gallery-note">Gallery status is evidence, not authority. Truth owns what becomes canonical.</p>
+    <p class="gallery-note">Large-card navigation retired after physical review. Shared Lab surfaces now follow the frozen FIRE shell grammar.</p>
   </main>
 </body>
 </html>

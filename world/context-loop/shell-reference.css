@@ -3,12 +3,12 @@
   This layer reconciles the specimen to the frozen Babel shell reference
   (FIRE G7 runtime 4a258c5...) while leaving WORLD-specific expression local.
 
-  Important: toolbar + page-header composition is owned by
-  ../../shared/header-reference.css. Do not restyle those primitives here.
+  Toolbar + page-header composition is owned by ../../shared/header-reference.css.
+  This file only adapts WORLD content to FIRE's stable groups/rows/controls.
 */
 
-.context-shell { max-width: 1160px; }
-.context-main { gap: var(--space-5); }
+.context-shell { max-width: 760px; }
+.context-main { gap: var(--space-3); }
 
 .context-card,
 .orientation-summary,
@@ -31,7 +31,7 @@
 }
 .context-primary {
   background: var(--primary-bg);
-  border: 1px solid var(--line-strong);
+  border: 1px solid #5a5a63;
   color: var(--text);
 }
 .context-primary:not(:disabled):active { transform: none; background: var(--primary-bg-pressed); }
@@ -51,19 +51,64 @@
   background-color: var(--state-pressed);
 }
 
+/* Relationship choices use the same 64px row geometry as FIRE. */
 .project-choice {
-  min-height: 64px;
-  padding: 10px var(--space-4);
+  min-height: var(--row-height);
+  max-height: var(--row-height);
+  padding: var(--space-2) var(--row-inline);
+  grid-template-columns: minmax(0,1fr) 20px;
+  gap: var(--space-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  overflow: hidden;
+}
+.project-choice .object-icon { display: none; }
+.project-choice .object-copy strong {
+  font-size: 16px;
+  line-height: 1.25;
+  font-weight: var(--row-label-weight);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.project-choice .object-copy small {
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.choice-chevron { color: var(--quiet); font-size: 21px; transform: none; }
+
+.relationship-step h2 {
+  margin: 6px 0 0;
+  font-size: 23px;
+  line-height: 1.15;
+  letter-spacing: -.025em;
+  font-weight: 730;
+}
+.relationship-actions {
+  overflow: hidden;
+  gap: 0;
   border: 1px solid var(--line);
   border-radius: var(--radius-card);
   background: var(--surface);
 }
-.object-icon {
-  border-radius: var(--radius-control);
+.relationship-actions .context-secondary,
+.relationship-actions .context-quiet {
+  min-height: var(--row-height);
+  border: 0;
+  border-radius: 0;
   background: transparent;
-  color: var(--muted);
+  text-align: left;
+  justify-content: flex-start;
+  padding: var(--space-2) var(--row-inline);
+  font-size: 16px;
+  font-weight: var(--row-label-weight);
 }
-.choice-chevron { color: var(--quiet); font-size: 23px; }
+.relationship-actions .context-quiet { border-top: 1px solid var(--line); color: var(--muted); }
 
 .context-input {
   min-height: var(--control-height);
@@ -74,20 +119,147 @@
 }
 .context-input:focus { border-color: var(--state-selected-border); }
 
+/* Orientation becomes one ordinary FIRE-sized state row. */
+.orientation-summary {
+  padding: 0;
+  overflow: hidden;
+}
+.orientation-label { display: none; }
+.orientation-copy {
+  min-height: var(--row-height);
+  max-height: var(--row-height);
+  margin: 0;
+  padding: var(--space-2) var(--row-inline);
+  display: grid;
+  align-content: center;
+  gap: 2px;
+}
+.orientation-copy strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 16px;
+  line-height: 1.25;
+  font-weight: var(--row-label-weight);
+  letter-spacing: -.01em;
+}
+.orientation-copy span { font-size: 12px; line-height: 1.35; color: var(--muted); }
+.track-line { display: none; }
+
+/* Suggested/alternative content uses stacked 64px rows instead of a second card language. */
+.decision-card {
+  padding: 0;
+  overflow: hidden;
+}
+.decision-card > .decision-label { display: none; }
+.decision-card h2 {
+  min-height: var(--row-height);
+  max-height: var(--row-height);
+  margin: 0;
+  padding: var(--space-2) var(--row-inline);
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--line);
+  font-size: 16px;
+  line-height: 1.25;
+  font-weight: var(--row-label-weight);
+  letter-spacing: -.01em;
+}
+.decision-card p {
+  min-height: var(--row-height);
+  max-height: var(--row-height);
+  margin: 0;
+  padding: var(--space-2) var(--row-inline);
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+.alternative-line {
+  min-height: var(--row-height);
+  max-height: var(--row-height);
+  margin: 0;
+  padding: 7px var(--row-inline);
+  border-top: 1px solid var(--line);
+  display: grid;
+  align-content: center;
+  gap: 2px;
+  overflow: hidden;
+}
+.alternative-line span { font-size: 10px; line-height: 12px; }
+.alternative-line strong {
+  overflow: hidden;
+  font-size: 13px;
+  line-height: 16px;
+  font-weight: 600;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+/* Question/open modes retain their logic but share the exact same row heights. */
+.context-question,
+.open-decision { padding: 0; overflow: hidden; }
+.context-question > .decision-label,
+.open-decision > .decision-label { display: none; }
+.context-question h2,
+.open-decision h2 {
+  min-height: var(--row-height);
+  margin: 0;
+  padding: var(--space-2) var(--row-inline);
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  line-height: 1.25;
+  font-weight: var(--row-label-weight);
+  letter-spacing: -.01em;
+}
+.question-options,
+.direction-grid { margin: 0; gap: 0; }
 .question-option,
 .direction-option {
-  border: 1px solid var(--line);
-  background: var(--surface-2);
+  min-height: var(--row-height);
+  max-height: var(--row-height);
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+  padding: var(--space-2) var(--row-inline);
+  text-align: left;
+}
+.question-option { font-size: 16px; font-weight: var(--row-label-weight); }
+.direction-option { align-content: center; }
+.direction-option strong { font-size: 16px; font-weight: var(--row-label-weight); }
+.direction-option span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 12px;
 }
 .direction-option.is-selected {
   background: var(--state-selected);
-  border-color: var(--state-selected-border);
+  border-color: var(--line);
+}
+.random-picker {
+  width: calc(100% - (2 * var(--row-inline)));
+  margin: var(--space-3) var(--row-inline) var(--row-inline);
 }
 
-/* Use the frozen shell's space budget instead of nesting a second full viewport. */
+/* FIRE completion keeps its expressive doorway, but its page identity no longer changes scale. */
+.fire-finish-identity .eyebrow { display: none; }
+.fire-finish-identity h1 {
+  margin: 0;
+  font-size: 34px;
+  line-height: 1.04;
+  font-weight: 760;
+  letter-spacing: -.038em;
+}
 .fire-finish-screen {
-  min-height: calc(100dvh - 18px - env(safe-area-inset-top) - 92px - env(safe-area-inset-bottom) - 68px);
-  padding: 0 2px;
+  min-height: calc(100dvh - 10px - env(safe-area-inset-top) - 44px - 8px - 34px - 26px - env(safe-area-inset-bottom));
+  padding: 0;
 }
 .completion-moment { padding: var(--space-5) 0 var(--space-6); }
 
@@ -95,8 +267,11 @@
 .world-doorway { border-radius: var(--radius-card); }
 
 @media (max-width: 560px) {
-  .fire-finish-screen {
-    min-height: calc(100dvh - 18px - env(safe-area-inset-top) - 92px - env(safe-area-inset-bottom) - 68px);
-    padding-bottom: 0;
-  }
+  .fire-finish-identity h1 { font-size: 34px; }
+  .fire-finish-screen { padding-bottom: 0; }
+  .orientation-summary,
+  .decision-card,
+  .open-decision,
+  .context-question,
+  .context-card { padding: 0; }
 }

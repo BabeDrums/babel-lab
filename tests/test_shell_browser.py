@@ -60,7 +60,6 @@ class LabShellBrowser(unittest.TestCase):
 
     def assert_info_control(self, locator):
         self.assert_toolbar_control(locator)
-        # Keep the semantic fallback text in the DOM, but render a vector icon that matches the shared symbol family.
         self.assertEqual(locator.inner_text().strip(), 'i')
         self.assertEqual(locator.evaluate("el => getComputedStyle(el).fontSize"), '0px')
         self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::before').width"), '20px')
@@ -69,52 +68,95 @@ class LabShellBrowser(unittest.TestCase):
         self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::before').zIndex"), '1')
         self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::after').zIndex"), '0')
 
-    def test_root_header_uses_frozen_title_role(self):
+    def assert_fire_header_role(self, title):
+        self.assertEqual(title.evaluate("el => getComputedStyle(el).fontSize"), '34px')
+        self.assertEqual(title.evaluate("el => getComputedStyle(el).lineHeight"), '35.36px')
+        self.assertAlmostEqual(title.evaluate("el => el.getBoundingClientRect().top"), 62, delta=0.6)
+
+    def assert_fire_row(self, locator):
+        self.assertEqual(locator.evaluate("el => getComputedStyle(el).minHeight"), '64px')
+        self.assertEqual(locator.evaluate("el => el.getBoundingClientRect().height"), 64)
+        strong = locator.locator('.experiment-copy strong')
+        self.assertEqual(strong.evaluate("el => getComputedStyle(el).fontSize"), '16px')
+        small = locator.locator('.experiment-copy small')
+        self.assertEqual(small.evaluate("el => getComputedStyle(el).fontSize"), '12px')
+
+    def test_root_header_and_rows_use_frozen_fire_roles(self):
         page = self.open('/')
         title = page.locator('.lab-header h1')
         self.assertEqual(title.inner_text(), 'Babel Lab')
-        self.assertEqual(title.evaluate("el => getComputedStyle(el).fontSize"), '34px')
+        self.assert_fire_header_role(title)
         subtitle = page.locator('.lab-header p')
         self.assertEqual(subtitle.evaluate("el => getComputedStyle(el).fontSize"), '14px')
-        self.assertEqual(page.locator('.large-card--destination').count(), 3)
+        rows = page.locator('.experiment-row')
+        self.assertEqual(rows.count(), 3)
+        for index in range(rows.count()):
+            self.assert_fire_row(rows.nth(index))
+        footer = page.locator('.lab-version')
+        self.assertEqual(footer.evaluate("el => getComputedStyle(el).position"), 'fixed')
+        self.assertEqual(footer.evaluate("el => getComputedStyle(el).fontSize"), '10px')
 
-    def test_shell_gallery_uses_real_shared_primitives(self):
+    def test_shell_gallery_uses_real_shared_primitives_only(self):
         page = self.open('/shell/')
-        self.assertEqual(page.locator('.lab-page-header h1').inner_text(), 'Shell Gallery')
+        title = page.locator('.lab-page-header h1')
+        self.assertEqual(title.inner_text(), 'Shell Gallery')
+        self.assert_fire_header_role(title)
         self.assert_toolbar_control(page.locator('.lab-topbar > .back-link'))
         self.assert_toolbar_control(page.locator('.header-demo .back-link'))
         self.assert_info_control(page.locator('.header-demo .context-info-btn'))
         self.assert_toolbar_control(page.locator('.header-demo .gallery-plus'))
         self.assert_toolbar_control(page.locator('.header-demo .gallery-more'))
-        self.assertGreaterEqual(page.locator('.large-card--destination').count(), 1)
-        self.assertGreaterEqual(page.locator('.large-card--orientation').count(), 1)
-        self.assertGreaterEqual(page.locator('.large-card--decision').count(), 1)
+        self.assertEqual(page.locator('.large-card').count(), 0)
+        rows = page.locator('.experiment-row')
+        self.assertGreaterEqual(rows.count(), 3)
+        for index in range(rows.count()):
+            self.assert_fire_row(rows.nth(index))
 
-    def test_world_lab_header_uses_shared_toolbar_and_title(self):
+    def test_world_lab_header_and_rows_use_fire_geometry(self):
         page = self.open('/world/')
         self.assert_toolbar_control(page.locator('.back-link'))
         title = page.locator('.lab-page-header h1')
         self.assertEqual(title.inner_text(), 'World Lab')
-        self.assertEqual(title.evaluate("el => getComputedStyle(el).fontSize"), '34px')
+        self.assert_fire_header_role(title)
+        rows = page.locator('.experiment-row')
+        self.assertEqual(rows.count(), 2)
+        for index in range(rows.count()):
+            self.assert_fire_row(rows.nth(index))
 
-    def test_fire_lab_header_uses_shared_toolbar_and_title(self):
+    def test_fire_lab_header_and_rows_use_fire_geometry(self):
         page = self.open('/fire/')
         self.assert_toolbar_control(page.locator('.back-link'))
         title = page.locator('.lab-page-header h1')
         self.assertEqual(title.inner_text(), 'Fire Lab')
-        self.assertEqual(title.evaluate("el => getComputedStyle(el).fontSize"), '34px')
+        self.assert_fire_header_role(title)
+        rows = page.locator('.experiment-row')
+        self.assertEqual(rows.count(), 2)
+        for index in range(rows.count()):
+            self.assert_fire_row(rows.nth(index))
 
     def test_achievements_header_uses_shared_toolbar_and_title(self):
         page = self.open('/world/achievements/')
         self.assert_toolbar_control(page.locator('.back-link'))
         title = page.locator('.lab-page-header h1')
         self.assertEqual(title.inner_text(), 'Achievements')
-        self.assertEqual(title.evaluate("el => getComputedStyle(el).fontSize"), '34px')
+        self.assert_fire_header_role(title)
 
-    def test_world_phase_one_uses_exact_frozen_toolbar(self):
+    def test_world_phase_one_uses_frozen_toolbar_and_fixed_rows(self):
         page = self.open('/world/context-loop/')
         self.assert_toolbar_control(page.locator('.context-topbar .back-link'))
         self.assert_info_control(page.locator('.context-topbar .context-info-btn'))
+        self.assertEqual(page.locator('.fire-finish-identity h1').evaluate("el => getComputedStyle(el).fontSize"), '34px')
+
+        page.locator('[data-action="open-world"]').click()
+        page.locator('[data-action="choose-even-album"]').click()
+        orientation = page.locator('.orientation-copy')
+        self.assertEqual(orientation.evaluate("el => el.getBoundingClientRect().height"), 64)
+        decision_title = page.locator('.decision-card h2')
+        self.assertEqual(decision_title.evaluate("el => el.getBoundingClientRect().height"), 64)
+        decision_reason = page.locator('.decision-card p')
+        self.assertEqual(decision_reason.evaluate("el => el.getBoundingClientRect().height"), 64)
+        alternative = page.locator('.alternative-line')
+        self.assertEqual(alternative.evaluate("el => el.getBoundingClientRect().height"), 64)
 
 
 if __name__ == '__main__':

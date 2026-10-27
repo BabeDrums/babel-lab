@@ -21,26 +21,32 @@ Read `BABEL_TRUTH.md` first. This file owns only Lab's current structure, experi
 
 The frozen FIRE G7 runtime `4a258c5170dd1d96dcbc0f2b0a9c35b283cec489` remains the implementation reference for currently proven generic shell behavior.
 
-Shell Gallery status:
-- **Proven** — already validated shared behavior with a canonical reference.
-- **Candidate** — reusable-looking pattern under test; not Truth yet.
-- **Experimental** — exploratory/product-specific expression.
+Physical review established that Lab had only partially translated that reference: toolbar geometry matched, but page typography, spacing tokens, navigation composition, row geometry, footer placement, and large-card consumers had drifted into a second visual language.
 
-Current Gallery focus:
-- Proven header / toolbar composition.
-- Proven rows + ordinary action hierarchy.
-- Candidate large-card family: **Destination / Orientation / Decision**.
-- Candidate progress/status treatment.
+The current shared-shell pass therefore uses FIRE directly as the baseline:
+- `34px / 1.04` large page title role.
+- `14px / 1.35` metadata immediately below the title; related metadata uses `·` separators.
+- `44px` toolbar interaction host + one centered `36px` visible circle.
+- `64px` grouped navigation/state rows with `16px` primary label and `12px` supporting metadata.
+- FIRE surface, border, radius, spacing, control-height, and safe-area values.
+- tiny fixed build/version footer when a build footer exists.
+- one stable page frame: toolbar → `8px` → title/meta → `20px` → content.
 
-Do not extract a universal shared component package yet. Shared implementation must be earned by repeated need across real products.
+The physically approved vector Info symbol is settled unless new device evidence contradicts it.
 
-### Minor physical-review gate
+The former generic **Destination / Orientation / Decision large-card family is retired**. Physical review showed that it made Lab feel like unrelated screens pasted together rather than one Babel shell. Product-specific expressive surfaces can still exist when their meaning earns them; they do not define generic Lab navigation.
 
-Toolbar circle geometry is settled unless new device evidence contradicts it: **44px interaction host + one centered 36px visible circle**.
+Shell Gallery now proves the shared FIRE-derived header, toolbar, rows/actions, and a bounded progress/status candidate. Do not extract a universal component/runtime package yet; shared implementation still has to be earned across real products.
 
-Physical iPhone review confirmed the corrected lowercase Info `i` is vertically seated correctly, but the font glyph does not visually belong to the same symbol family as Back / Plus / More. The current candidate keeps the approved geometry and centered artwork box while replacing the font-rendered `i` with purpose-built vector artwork using the same 2px rounded-stroke / filled-dot language as the existing symbols.
+### Current physical-review gate
 
-Remaining shell gate: physically confirm on iPhone that the vector Info symbol preserves the good seating **and** now reads as part of the same toolbar family. Do not reopen the circle geometry without new evidence.
+Review the deployed Lab on iPhone as one continuous system, not page-by-page mockups. Check that:
+- headers remain the same size and vertical position across Lab home, Fire Lab, World Lab, Shell Gallery, and experiment pages;
+- grouped rows remain the same height and text roles across navigation surfaces;
+- small metadata/footer roles no longer jump in scale or position;
+- WORLD Phase 1 reads as FIRE-family content rather than a separate card-based design system.
+
+Do not reopen already approved toolbar/icon geometry unless new physical evidence specifically contradicts it.
 
 ## FIRE Core incubation
 
@@ -84,10 +90,10 @@ WORLD earns a standalone repo only after physical use proves independent value, 
 
 ## Immediate gates
 
-1. Physically recheck the shared vector Info symbol on iPhone for both seating and family resemblance.
-2. Review/refine Shell Gallery large-card candidates and the Lab-home Destination-card consumer; do not canonize the current composition by default.
-3. Continue WORLD Phase 1 **one screen at a time**, judging whether WORLD genuinely improves larger-project orientation and next action.
-4. FIRE lane may build the bounded `fire/core/**` audition independently.
+1. Physically review the unified FIRE-derived Lab shell on iPhone across multiple pages; judge continuity before local polish.
+2. If the shared geometry holds, freeze it and return to WORLD Phase 1 one screen at a time.
+3. Continue judging WORLD by whether it improves larger-project orientation and next action without creating management work.
+4. FIRE lane may continue the bounded `fire/core/**` audition independently.
 
 Do not create a WORLD repo, backend/account/sync layer, universal schema, universal shared UI package, full Artist Development curriculum, generic notes database, full visual-identity builder, or production FIRE Core implementation from Lab without evidence earning it.
 
