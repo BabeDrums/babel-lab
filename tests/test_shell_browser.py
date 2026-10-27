@@ -60,11 +60,14 @@ class LabShellBrowser(unittest.TestCase):
 
     def assert_info_control(self, locator):
         self.assert_toolbar_control(locator)
-        # Physical iPhone evidence: the real button text seats correctly; generated pseudo text sat high.
+        # Keep the semantic fallback text in the DOM, but render a vector icon that matches the shared symbol family.
         self.assertEqual(locator.inner_text().strip(), 'i')
-        self.assertEqual(locator.evaluate("el => getComputedStyle(el).fontSize"), '15px')
-        self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::before').content"), 'none')
-        self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::after').zIndex"), '-1')
+        self.assertEqual(locator.evaluate("el => getComputedStyle(el).fontSize"), '0px')
+        self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::before').width"), '20px')
+        self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::before').height"), '20px')
+        self.assertNotEqual(locator.evaluate("el => getComputedStyle(el, '::before').webkitMaskImage"), 'none')
+        self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::before').zIndex"), '1')
+        self.assertEqual(locator.evaluate("el => getComputedStyle(el, '::after').zIndex"), '0')
 
     def test_root_header_uses_frozen_title_role(self):
         page = self.open('/')
