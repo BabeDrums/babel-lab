@@ -54,29 +54,20 @@ The Lab root build footer is not a manually maintained semantic version. Source 
 
 The former generic **Destination / Orientation / Decision large-card family is retired**. Physical review showed that it made Lab feel like unrelated screens pasted together rather than one Babel shell. Product-specific expressive surfaces can still exist when their meaning earns them; they do not define generic Lab navigation.
 
-### Latest physical falsification — the G7 tablet breakpoint was omitted
+### Physical shell baseline — confirmed
 
-Earlier Lab shell repair correctly unified route/depth geometry, rows, symbols, and FIRE Core width behavior. The remaining edge-spacing sequence had two distinct reference mistakes:
-- Lab PR #36 copied `clamp(18px, 3vw, 56px)` from FIRE root/V6 `styles.css` and treated it as frozen G7 geometry.
-- Lab PR #37 added another `16px` inset after physical screenshots still disagreed.
-- Lab PR #38 correctly returned to `v7-preview/styles.css`, but only copied G7's base `20px` inline padding and missed the later `@media (min-width: 700px)` override.
+The shared Lab shell is physically accepted on iPhone/iPad after the G7 cascade correction merged at Lab main `6a1a4b7a7cbf3495eeb274d043f426f6cc088774`.
 
-Side-by-side iPad screenshots then showed the decisive symptom: G7 content was consistently farther from both screen edges while Lab remained on the base/mobile inset. Re-reading the full frozen stylesheet exposed the missing `34px` tablet/desktop rule.
+That accepted baseline includes:
+- G7's final `20px` mobile / `34px` tablet inline frame;
+- G7 title/meta rhythm and fixed page frame;
+- `44px` host / `36px` visible toolbar controls;
+- shared vector Back / Plus / More / Info / forward-chevron family;
+- `64px` shared navigation/state rows;
+- FIRE Core remaining on the same centered frame at depth;
+- Git-stamped `LAB · <sha>` footer on the live Lab root.
 
-Current correction:
-- keep G7's base `20px` horizontal frame below `700px`;
-- apply G7's final `34px` inline / `54px` bottom frame at `>=700px`;
-- apply G7's `35px` tablet/desktop title size;
-- move the Lab build footer to G7's `20px` tablet/desktop bottom position;
-- shell regression asserts the final computed left/right padding, bottom padding, title size, content edge, and width at `390px`, `820px`, and `1024px`;
-- all current Lab routes load cache-busted shared shell assets;
-- FIRE Core content remains full-width inside the shared G7 frame at every depth and its navigation/choice/result rows remain `64px`;
-- the shared forward chevron remains purpose-built vector artwork reused by Lab rows, FIRE Core choices, WORLD relationship choices, and the WORLD doorway;
-- Info remains custom vector artwork with the current optical-weight correction;
-- WORLD doorway keeps only its earned material expression: no star glyph, no star field, no arrow glyph; it ends in the shared chevron;
-- WORLD Prototype Info remains a compact two-setting sheet rather than nested segmented-control cards.
-
-Do not call this shell physically confirmed until Babel compares the corrected deployed build directly against the frozen G7 preview on iPhone/iPad and verifies the live `LAB · <sha>` footer matches the deployed Git revision under review.
+Do **not** reopen shared shell geometry or toolbar/icon family during routine WORLD/FIRE experiment work unless new physical-device evidence contradicts this baseline.
 
 ## FIRE Core incubation
 
@@ -104,7 +95,7 @@ Current bounded flow:
 1. **FIRE finish** — `Even` / `You're done.`
 2. optional expressive **WORLD** doorway — `Want to take it further?`
 3. establish larger-project relationship only if genuinely unknown
-4. orient with only enough meaningful state to understand where the project is
+4. if relationship is already known, go directly to the relevant guidance state
 5. show **Required**, **Suggested**, or genuinely **Open** next direction
 6. stop; do not simulate the entire ecosystem
 
@@ -112,7 +103,36 @@ Guidance rule:
 
 > **Use what the work already tells us. Ask only when the answer would change the next step.**
 
-For suggestions, the strongest current pattern is **Recommended / Why / Alternative**. Current recommendation copy is hypothesis, not artist-development doctrine.
+### WORLD-local presentation grammar under audition
+
+The current Phase 1 hypothesis is:
+
+> **Show the state only when it adds information. Recommend the move. Explain only when asked.**
+
+For known project relationships, the page header already supplies the meaningful state (`Even` / `Album`). Do not repeat that fact in an orientation card.
+
+Suggested guidance uses one reusable WORLD-local grammar:
+- small `Suggested next` context;
+- one dominant direction;
+- one local inline `Why this?` disclosure, closed by default;
+- one secondary `Alternative` section with quieter supporting copy.
+
+The rationale is progressive disclosure, not a permanent explanation row, modal, or second card.
+
+Relationship and scope are different concepts. **`Song belongs to Album` does not imply a known or fixed album track count.** Album size may be unknown and may change. Do not require track-count metadata to create or attach to an album, and do not turn optional/planned track counts into completion percentages, ordered dots, or progress rails.
+
+Production order is not track order. WORLD must not visually imply that album songs are completed sequentially.
+
+When WORLD genuinely lacks the relationship, ask only `Where does this belong?` and offer existing project / create album / keep standalone. Creating a new album requires only the information needed now (currently the album name), not a forecast of final scope.
+
+Needs-context and Open states reuse the same guidance surface and typography but do not manufacture rationale or certainty:
+- Needs context asks the one question that changes the recommendation.
+- Open says `Choose where to go next.` and presents genuinely equivalent directions.
+- Standalone resolves quietly with `Kept standalone.` and no product-doctrine explanation.
+
+The real Even specimen defaults to the **known relationship** because Babel already knows Even is part of the album. Prototype Info can switch to `Unattached` to exercise the unknown branch.
+
+This grammar stays WORLD-local until repeated evidence elsewhere earns promotion. Do not force it onto Achievements, which is a separate collection/discovery product hypothesis.
 
 Visual identity is currently understood as layered **artist identity ↔ project/album identity**. It may be noticed, recommended, or clarified when relevant; do not build a full visual-identity workspace in Phase 1.
 
@@ -120,13 +140,13 @@ WORLD earns a standalone repo only after physical use proves independent value, 
 
 ## Immediate gates
 
-1. Physically compare Lab against the **frozen G7 preview** on the same iPad/iPhone orientation; do not compare against V6/root spacing tokens.
-2. On iPad/other `>=700px` viewports, verify that Lab now uses G7's `34px` content inset rather than the base `20px` inset.
-3. Verify the live footer reads `LAB · <7-char Git SHA>` and use that SHA to identify the exact deployed revision under review.
-4. Re-run Lab home → World Lab / Fire Lab / Shell Gallery / FIRE Core and verify there is no horizontal shift at any depth.
-5. Recheck the Info symbol, WORLD doorway chevron/no-glyph treatment, and the simplified WORLD Prototype Info sheet.
-6. If those shared-shell corrections survive physical review, stop shell work and return to WORLD Phase 1 one screen at a time.
-7. FIRE lane may continue the bounded `fire/core/**` audition independently, but shared shell/frame geometry remains owned here.
+1. Physically review the new WORLD Phase 1 known-relationship path on iPhone first: FIRE finish → WORLD doorway → `Even · Album` → Suggested guidance.
+2. Judge whether `Make the next musical anchor.` is instantly understandable or still too conceptual.
+3. Verify `Why this?` stays visually subordinate when closed, expands locally without creating another card/modal, and contains enough rationale when opened.
+4. Verify `Alternative` reads as clearly secondary and its header/supporting-copy hierarchy matches Babel's established title/meta grammar.
+5. Use Prototype Info to test `Unattached`, `Needs context`, and `Open`; confirm none reintroduces track counts, progress rails, redundant orientation, or product-doctrine copy.
+6. Leave Achievements untouched until its own product/physical review.
+7. Keep the physically accepted shared shell frozen unless new device evidence contradicts it.
 
 Do not create a WORLD repo, backend/account/sync layer, universal schema, universal shared UI package, full Artist Development curriculum, generic notes database, full visual-identity builder, or production FIRE Core implementation from Lab without evidence earning it.
 
