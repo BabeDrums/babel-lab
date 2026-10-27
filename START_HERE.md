@@ -25,6 +25,7 @@ Physical review established that Lab had only partially translated that referenc
 
 The shared shell therefore uses FIRE directly as the baseline:
 - one `760px` maximum canvas owned by `shared/lab.css`; experiments do not widen/narrow it;
+- FIRE's responsive outer gutter `clamp(18px, 3vw, 56px)` inside that stable canvas;
 - `34px / 1.04` large page title role;
 - `14px / 1.35` metadata immediately below the title; related metadata uses `·` separators;
 - `44px` toolbar interaction host + one centered `36px` visible circle;
@@ -35,7 +36,7 @@ The shared shell therefore uses FIRE directly as the baseline:
 
 The former generic **Destination / Orientation / Decision large-card family is retired**. Physical review showed that it made Lab feel like unrelated screens pasted together rather than one Babel shell. Product-specific expressive surfaces can still exist when their meaning earns them; they do not define generic Lab navigation.
 
-### Latest physical falsification — iPad / landscape
+### Latest physical falsification — iPad / portrait + landscape
 
 The first unification pass still failed as a system under broader physical review:
 - moving from Lab home into nested pages could produce a subtle row/frame width shift;
@@ -43,14 +44,18 @@ The first unification pass still failed as a system under broader physical revie
 - FIRE Core navigation/choice rows were still `72px` instead of the shared `64px` row contract;
 - WORLD Phase 1 still carried a visually weak Info symbol, a separate arrow glyph, a star badge/star-field treatment in the doorway, and an overbuilt nested-box Prototype Info dialog.
 
+Those faults were corrected in Lab PR #35, but the next physical iPad comparison against the real FIRE Projects screen exposed one remaining shell mismatch: **Lab's content was still too close to the viewport edge** in both orientations. The reason was concrete: Lab hard-coded a `20px` horizontal shell inset while frozen FIRE uses `--desktop-gutter: clamp(18px, 3vw, 56px)`.
+
 Current correction:
 - no experiment may override the shared `760px` canvas;
-- FIRE Core content is full-width inside that shared content frame at every depth and its navigation/choice/result rows use `64px` geometry;
+- Lab now uses the exact frozen FIRE responsive gutter `clamp(18px, 3vw, 56px)` inside that canvas instead of a fixed `20px` inset;
+- shell regression calculates the expected FIRE gutter at each CI viewport and verifies the Lab content edge/width against it;
+- FIRE Core content is full-width inside the shared content frame at every depth and its navigation/choice/result rows use `64px` geometry;
 - the shared forward chevron is purpose-built vector artwork and is reused by Lab rows, FIRE Core choices, WORLD relationship choices, and the WORLD doorway;
 - Info remains custom vector artwork but has been optically reweighted after the landscape review showed the previous candidate still read too thin;
 - WORLD doorway keeps only its earned material expression: no star glyph, no star field, no arrow glyph; it ends in the shared chevron;
 - WORLD Prototype Info is now a compact two-setting sheet rather than nested segmented-control cards;
-- shell regression now includes a `1024px` iPad-landscape lane and explicitly enters deep FIRE Core to verify the canvas/content left edge and width do not change.
+- shell regression includes `390px`, `820px`, and `1024px` lanes and explicitly enters deep FIRE Core to verify the canvas/content left edge and width do not change.
 
 Do not call this shell frozen until physical iPhone/iPad review confirms the corrected build.
 
@@ -96,11 +101,12 @@ WORLD earns a standalone repo only after physical use proves independent value, 
 
 ## Immediate gates
 
-1. Physically review the corrected Lab as one continuous app on iPhone **and iPad landscape**.
-2. Specifically verify that Lab home → World Lab / Fire Lab / Shell Gallery / FIRE Core keeps the exact same horizontal frame, and that deep FIRE Core no longer shifts left.
-3. Recheck the Info symbol, WORLD doorway chevron/no-glyph treatment, and the simplified WORLD Prototype Info sheet.
-4. If those shared-shell corrections survive physical review, stop shell work and return to WORLD Phase 1 one screen at a time.
-5. FIRE lane may continue the bounded `fire/core/**` audition independently, but shared shell/frame geometry remains owned here.
+1. Physically compare Lab against FIRE on iPad in both portrait and landscape after the responsive-gutter correction.
+2. Verify that the Lab header, top-right controls, and grouped rows now have the same edge breathing room as FIRE while the `760px` Lab canvas remains centered and stable.
+3. Re-run Lab home → World Lab / Fire Lab / Shell Gallery / FIRE Core and verify there is no horizontal shift at any depth.
+4. Recheck the Info symbol, WORLD doorway chevron/no-glyph treatment, and the simplified WORLD Prototype Info sheet.
+5. If those shared-shell corrections survive physical review, stop shell work and return to WORLD Phase 1 one screen at a time.
+6. FIRE lane may continue the bounded `fire/core/**` audition independently, but shared shell/frame geometry remains owned here.
 
 Do not create a WORLD repo, backend/account/sync layer, universal schema, universal shared UI package, full Artist Development curriculum, generic notes database, full visual-identity builder, or production FIRE Core implementation from Lab without evidence earning it.
 
