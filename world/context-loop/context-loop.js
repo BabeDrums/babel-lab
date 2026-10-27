@@ -1,15 +1,29 @@
-const STORAGE_KEY = 'babel-world-phase-1-v1';
+const STORAGE_KEY = 'babel-world-phase-1-v2';
 
-const TRACKS = ['Even', 'After', 'Fire', 'Fades', 'Embers', 'Still', 'Glow'];
 const OPEN_DIRECTIONS = [
   { id: 'music', label: 'Music', detail: 'Make another song.' },
-  { id: 'visual', label: 'Visual identity', detail: 'Start shaping how Even looks.' },
-  { id: 'story', label: 'Story / world', detail: 'Capture what the album is about.' }
+  { id: 'visual', label: 'Visual identity', detail: 'Shape how the album looks.' },
+  { id: 'story', label: 'Story / world', detail: 'Clarify what the album is about.' }
 ];
+
+const GUIDANCE = {
+  music: {
+    kicker: 'Suggested next',
+    title: 'Make the next musical anchor.',
+    rationale: 'Another finished song gives you another reference point for the album’s identity without asking one song to define it.',
+    alternative: 'Shape the album’s visual identity.'
+  },
+  visual: {
+    kicker: 'Suggested next',
+    title: 'Shape the album’s visual identity.',
+    rationale: 'The finished song gives the visual side something real to respond to while it’s still fresh.',
+    alternative: 'Make another song.'
+  }
+};
 
 const DEFAULT_STATE = {
   stage: 'fire-finish',
-  relationship: 'unknown',
+  relationship: 'known',
   projectName: 'Even',
   createdNewProject: false,
   decisionMode: 'suggested',
@@ -86,18 +100,9 @@ function shell(kicker, title, subtitle, body, extraClass = '') {
   return `${topbar()}${header(kicker, title, subtitle)}<main class="context-main ${extraClass}">${body}</main>`;
 }
 
-function objectRow(icon, name, type, status = '') {
-  return `<div class="object-row">
-    <div class="object-icon" aria-hidden="true">${icon}</div>
-    <div class="object-copy"><strong>${name}</strong><small>${type}</small></div>
-    ${status ? `<div class="object-state">${status}</div>` : ''}
-  </div>`;
-}
-
-function projectChoice(icon, name, type, detail, action) {
+function projectChoice(name, type, action) {
   return `<button class="project-choice" data-action="${action}">
-    <span class="object-icon" aria-hidden="true">${icon}</span>
-    <span class="object-copy"><strong>${name}</strong><small>${type}${detail ? ` · ${detail}` : ''}</small></span>
+    <span class="object-copy"><strong>${name}</strong><small>${type}</small></span>
     <span class="choice-chevron" aria-hidden="true">›</span>
   </button>`;
 }
@@ -142,7 +147,7 @@ function renderProjectChoice() {
 
       <div class="choice-group">
         <div class="choice-label">Existing project</div>
-        ${projectChoice('◫', 'Even', 'Album', '7 tracks', 'choose-even-album')}
+        ${projectChoice('Even', 'Album', 'choose-even-album')}
       </div>
 
       <div class="relationship-actions">
@@ -170,40 +175,21 @@ function renderNewAlbum() {
   );
 }
 
-function orientationSummary() {
-  const safeProjectName = escapeHTML(state.projectName);
-  const isEvenAlbum = state.projectName === 'Even' && !state.createdNewProject;
-  const trackLine = isEvenAlbum
-    ? `<div class="track-line" aria-label="Even is the first finished song in the seven-track album">
-        ${TRACKS.map((track, index) => `<span class="track-dot ${index === 0 ? 'is-finished' : ''}" title="${track}" aria-hidden="true"></span>`).join('')}
-      </div>`
-    : `<div class="track-line" aria-label="Even is the first finished song in this album"><span class="track-dot is-finished" aria-hidden="true"></span></div>`;
-
-  return `<section class="orientation-summary">
-    <div class="orientation-label">Where you are</div>
-    <div class="orientation-copy">
-      <strong>${isEvenAlbum ? `${safeProjectName} has its first finished song.` : `The first song is in ${safeProjectName}.`}</strong>
-      <span>${isEvenAlbum ? '1 finished · 7 tracks planned' : '1 finished song'}</span>
+function guidanceDecision(kind = 'music') {
+  const guidance = GUIDANCE[kind] || GUIDANCE.music;
+  return `<section class="guidance-card">
+    <div class="guidance-primary">
+      <div class="guidance-kicker">${guidance.kicker}</div>
+      <h2>${guidance.title}</h2>
+      <details class="guidance-why">
+        <summary><span>Why this?</span><span class="guidance-why-chevron" aria-hidden="true"></span></summary>
+        <p>${guidance.rationale}</p>
+      </details>
     </div>
-    ${trackLine}
-  </section>`;
-}
-
-function suggestedDecision(kind = 'music') {
-  if (kind === 'visual') {
-    return `<section class="decision-card">
-      <div class="decision-label">Suggested next</div>
-      <h2>Shape the album’s visual identity.</h2>
-      <p>Even is meant to set the direction, and it’s fresh enough to give the visual side something real to respond to.</p>
-      <div class="alternative-line"><span>Alternative</span><strong>Make the next song while the musical momentum is high.</strong></div>
-    </section>`;
-  }
-
-  return `<section class="decision-card">
-    <div class="decision-label">Suggested next</div>
-    <h2>Make the next musical anchor.</h2>
-    <p>A second finished song gives you more evidence about what the album is becoming before one track has to carry the whole direction.</p>
-    <div class="alternative-line"><span>Alternative</span><strong>Start shaping the album’s visual identity while Even is fresh.</strong></div>
+    <div class="guidance-alternative">
+      <h3>Alternative</h3>
+      <p>${guidance.alternative}</p>
+    </div>
   </section>`;
 }
 
@@ -212,8 +198,8 @@ function renderWorldSuggested() {
     'WORLD',
     escapeHTML(state.projectName),
     'Album',
-    `${orientationSummary()}${suggestedDecision('music')}`,
-    'orientation-main'
+    guidanceDecision('music'),
+    'guidance-main'
   );
 }
 
@@ -222,8 +208,8 @@ function renderWorldVisual() {
     'WORLD',
     escapeHTML(state.projectName),
     'Album',
-    `${orientationSummary()}${suggestedDecision('visual')}`,
-    'orientation-main'
+    guidanceDecision('visual'),
+    'guidance-main'
   );
 }
 
@@ -232,17 +218,17 @@ function renderContextQuestion() {
     'WORLD',
     escapeHTML(state.projectName),
     'Album',
-    `${orientationSummary()}
-    <section class="context-question">
-      <div class="decision-label">One thing before I point you somewhere</div>
-      <h2>Is Even meant to set the direction for the album?</h2>
+    `<section class="guidance-card context-question">
+      <div class="guidance-primary">
+        <h2>Is Even meant to set the direction for the album?</h2>
+      </div>
       <div class="question-options">
         <button class="question-option" data-context-answer="anchor">Yeah — it’s an anchor</button>
         <button class="question-option" data-context-answer="piece">It’s one piece of it</button>
         <button class="question-option" data-context-answer="unsure">I’m not sure yet</button>
       </div>
     </section>`,
-    'orientation-main'
+    'guidance-main'
   );
 }
 
@@ -263,19 +249,19 @@ function renderWorldOpen() {
     'WORLD',
     escapeHTML(state.projectName),
     'Album',
-    `${orientationSummary()}
-    <section class="open-decision">
-      <div class="decision-label">Open choice</div>
-      <h2>Nothing is blocking you.</h2>
+    `<section class="guidance-card open-decision">
+      <div class="guidance-primary">
+        <div class="guidance-kicker">Open</div>
+        <h2>Choose where to go next.</h2>
+      </div>
       <div class="direction-grid">
         ${OPEN_DIRECTIONS.map(directionButton).join('')}
       </div>
       <button class="random-picker" data-action="random-pick">
-        <span class="random-gravel" aria-hidden="true">···</span>
         <span data-random-label>${randomText}</span>
       </button>
     </section>`,
-    'orientation-main'
+    'guidance-main'
   );
 }
 
@@ -287,7 +273,6 @@ function renderStandalone() {
     `<section class="quiet-result">
       <div class="completion-mark small" aria-hidden="true">✓</div>
       <h2>Kept standalone.</h2>
-      <p>WORLD won’t invent a bigger project when you don’t need one.</p>
       <button class="context-secondary standalone-back" data-action="back-finish">Back to FIRE</button>
     </section>`
   );
@@ -305,8 +290,8 @@ function openPrototypeInfo() {
           <label for="prototype-relationship">Song relationship</label>
           <span class="prototype-select-wrap">
             <select id="prototype-relationship" class="prototype-select" data-prototype-relationship>
-              <option value="unknown" ${state.relationship === 'unknown' ? 'selected' : ''}>Unattached</option>
               <option value="known" ${state.relationship === 'known' ? 'selected' : ''}>Already in Even</option>
+              <option value="unknown" ${state.relationship === 'unknown' ? 'selected' : ''}>Unattached</option>
             </select>
           </span>
         </div>

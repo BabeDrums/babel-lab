@@ -55,7 +55,6 @@ class LabShellBrowser(unittest.TestCase):
             self.assertAlmostEqual(first[key], second[key], delta=delta, msg=f'{key}: {first[key]} != {second[key]}')
 
     def assert_toolbar_control(self, locator):
-        # Final frozen FIRE G7 cascade: 44px transparent interaction host + one 36px visible circle.
         self.assertEqual(locator.evaluate("el => getComputedStyle(el).width"), '44px')
         self.assertEqual(locator.evaluate("el => getComputedStyle(el).height"), '44px')
         self.assertEqual(locator.evaluate("el => getComputedStyle(el).backgroundColor"), 'rgba(0, 0, 0, 0)')
@@ -236,20 +235,63 @@ class LabShellBrowser(unittest.TestCase):
         self.assertEqual(page.locator('.scenario-option').count(), 0)
         self.assertEqual(page.locator('.prototype-setting-row').count(), 2)
         self.assertEqual(page.locator('.prototype-select').count(), 2)
+        self.assertEqual(page.locator('[data-prototype-relationship]').input_value(), 'known')
         sheet = self.rect(page.locator('.prototype-sheet'))
         self.assertLessEqual(sheet['width'], 420.1)
         page.locator('.prototype-sheet [data-dismiss]').click()
 
+    def test_world_phase_one_guidance_is_progressive_and_count_free(self):
+        page = self.open('/world/context-loop/')
         page.locator('[data-action="open-world"]').click()
-        page.locator('[data-action="choose-even-album"]').click()
-        orientation = page.locator('.orientation-copy')
-        self.assertEqual(orientation.evaluate("el => el.getBoundingClientRect().height"), 64)
-        decision_title = page.locator('.decision-card h2')
-        self.assertEqual(decision_title.evaluate("el => el.getBoundingClientRect().height"), 64)
-        decision_reason = page.locator('.decision-card p')
-        self.assertEqual(decision_reason.evaluate("el => el.getBoundingClientRect().height"), 64)
-        alternative = page.locator('.alternative-line')
-        self.assertEqual(alternative.evaluate("el => el.getBoundingClientRect().height"), 64)
+
+        self.assertEqual(page.locator('.context-header h1').inner_text(), 'Even')
+        self.assertEqual(page.locator('.context-header p').inner_text(), 'Album')
+        self.assertEqual(page.locator('.orientation-summary').count(), 0)
+        self.assertEqual(page.locator('.track-line').count(), 0)
+        self.assertEqual(page.get_by_text('7 tracks planned').count(), 0)
+        self.assertEqual(page.locator('.guidance-kicker').inner_text(), 'Suggested next')
+        self.assertEqual(page.locator('.guidance-primary h2').inner_text(), 'Make the next musical anchor.')
+
+        why = page.locator('.guidance-why')
+        self.assertFalse(why.evaluate('el => el.open'))
+        self.assertFalse(why.locator('p').is_visible())
+        why.locator('summary').click()
+        self.assertTrue(why.evaluate('el => el.open'))
+        self.assertTrue(why.locator('p').is_visible())
+
+        alternative = page.locator('.guidance-alternative')
+        self.assertEqual(alternative.locator('h3').inner_text(), 'Alternative')
+        self.assertEqual(alternative.locator('p').inner_text(), 'Shape the album’s visual identity.')
+        self.assertGreater(
+            float(alternative.locator('h3').evaluate('el => parseFloat(getComputedStyle(el).fontSize)')),
+            float(alternative.locator('p').evaluate('el => parseFloat(getComputedStyle(el).fontSize)')),
+        )
+
+    def test_world_unknown_open_and_standalone_states_stay_minimal(self):
+        page = self.open('/world/context-loop/')
+        page.evaluate("localStorage.setItem('babel-world-phase-1-v2', JSON.stringify({stage:'fire-finish',relationship:'unknown',projectName:'Even',createdNewProject:false,decisionMode:'suggested',contextAnswer:null,openChoice:null,randomChoice:null}))")
+        page.reload()
+        page.locator('[data-action="open-world"]').click()
+
+        self.assertEqual(page.locator('.relationship-step h2').inner_text(), 'Where does this belong?')
+        project = page.locator('.project-choice')
+        self.assertEqual(project.locator('strong').inner_text(), 'Even')
+        self.assertEqual(project.locator('small').inner_text(), 'Album')
+        self.assertEqual(page.get_by_text('7 tracks').count(), 0)
+        self.assertEqual(project.locator('.object-icon').count(), 0)
+        self.assert_forward_chevron(project.locator('.choice-chevron'))
+
+        page.locator('[data-action="standalone"]').click()
+        self.assertEqual(page.locator('.quiet-result h2').inner_text(), 'Kept standalone.')
+        self.assertEqual(page.locator('.quiet-result p').count(), 0)
+
+        page.evaluate("localStorage.setItem('babel-world-phase-1-v2', JSON.stringify({stage:'fire-finish',relationship:'known',projectName:'Even',createdNewProject:false,decisionMode:'open',contextAnswer:null,openChoice:null,randomChoice:null}))")
+        page.reload()
+        page.locator('[data-action="open-world"]').click()
+        self.assertEqual(page.locator('.open-decision .guidance-kicker').inner_text(), 'Open')
+        self.assertEqual(page.locator('.open-decision h2').inner_text(), 'Choose where to go next.')
+        self.assertEqual(page.get_by_text('Nothing is blocking you.').count(), 0)
+        self.assertEqual(page.locator('.direction-option').count(), 3)
 
 
 if __name__ == '__main__':
