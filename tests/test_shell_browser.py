@@ -158,19 +158,18 @@ class LabShellBrowser(unittest.TestCase):
         self.assertEqual(title.inner_text(), 'Achievements')
         self.assert_fire_header_role(title)
 
-    def test_shared_canvas_and_group_span_do_not_change_between_routes(self):
+    def test_shared_canvas_matches_exact_frozen_g7_page_frame(self):
         root = self.open('/')
         root_shell = self.rect(root.locator('.lab-shell'))
         root_group = self.rect(root.locator('.experiment-list'))
         viewport = root.evaluate('window.innerWidth')
         expected_width = min(viewport, 760)
-        expected_gutter = min(max(viewport * 0.03, 18), 56)
-        expected_inner_edge = expected_gutter + 16
         self.assertAlmostEqual(root_shell['width'], expected_width, delta=0.1)
         self.assertAlmostEqual(root_shell['x'], (viewport - expected_width) / 2, delta=0.1)
-        self.assertAlmostEqual(root.locator('.lab-shell').evaluate("el => parseFloat(getComputedStyle(el).paddingLeft)"), expected_inner_edge, delta=0.1)
-        self.assertAlmostEqual(root_group['x'], root_shell['x'] + expected_inner_edge, delta=0.1)
-        self.assertAlmostEqual(root_group['width'], expected_width - (expected_inner_edge * 2), delta=0.1)
+        self.assertAlmostEqual(root.locator('.lab-shell').evaluate("el => parseFloat(getComputedStyle(el).paddingLeft)"), 20, delta=0.1)
+        self.assertAlmostEqual(root.locator('.lab-shell').evaluate("el => parseFloat(getComputedStyle(el).paddingRight)"), 20, delta=0.1)
+        self.assertAlmostEqual(root_group['x'], root_shell['x'] + 20, delta=0.1)
+        self.assertAlmostEqual(root_group['width'], expected_width - 40, delta=0.1)
 
         for path in ('/world/', '/fire/', '/shell/'):
             page = self.open(path)
