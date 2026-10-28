@@ -71,17 +71,26 @@ Do **not** reopen shared shell geometry or toolbar/icon family during routine WO
 
 ## FIRE Core incubation
 
-FIRE doctrine and canonical behavior live in `babel-fire`. The first unproven interaction should be auditioned here under `fire/core/**` with fake/local isolated state.
+FIRE doctrine and canonical behavior live in `babel-fire`. Unproven interaction behavior may be auditioned here under `fire/core/**` with fake/local isolated state.
 
-Current Lab main has already advanced to the **FIRE Core V2** audition from Lab PR #34. That newer product interaction is authoritative for the Lab experiment; shared-shell work must preserve it rather than reconstructing the older screenshot state.
+The current Lab specimen is the **top-of-product FIRE Core heartbeat** merged in Lab PR #41 at `ee1214be831a8f880f54c9a1930608dd12c63532`. It supersedes the earlier V1/V2 interaction auditions; those remain rejected/superseded evidence and history, not behavior to reconstruct.
 
-Current interaction intent remains bounded: FIRE should earn enough project evidence to offer one useful DAW move, accept the result, and change direction from what actually happened.
+Current bounded heartbeat:
 
-Use the current proof pair:
-- `Creep` — Recreation/reference case.
-- `Even` — Original using already-known artist-authored context.
+**Songs → New Song → starting reality → earned Next → Update when meaningful → smarter Next → reopen/continue**
 
-The old FIRE PR #99 is closed seed/history, not a merge path or production implementation. If the Lab behavior survives physical use, implement it deliberately back in FIRE against real state/navigation/data.
+The current hypotheses are intentionally lightweight:
+- begin from a real Songs surface;
+- keep Original/Cover in one creation surface;
+- capture one factual starting-reality input rather than a rigid stage taxonomy or broad questionnaire;
+- persist one useful `Next` recommendation without task-status bookkeeping;
+- let the musician use `Update` only when there is meaningful new evidence;
+- use Move-specific outcomes, `Not sure`, unexpected evidence, and artist redirection to reconcile the next move;
+- preserve the project and current recommendation across return/reopen.
+
+Physical gate: iPhone first. Exercise the one-riff Original path (`+` → Original + title/optional album → `a guitar riff` → first `Next` → `Update` with a meaningful result → changed `Next` → Songs → reopen) and judge whether it feels like calm musical guidance rather than onboarding, chat, or task management.
+
+The old FIRE PR #99 is closed seed/history, not a merge path or production implementation. If the Lab behavior survives physical use, implement/reconcile the surviving behavior deliberately back in FIRE against real state/navigation/data.
 
 ## WORLD Phase 1
 
@@ -140,13 +149,14 @@ WORLD earns a standalone repo only after physical use proves independent value, 
 
 ## Immediate gates
 
-1. Physically review the new WORLD Phase 1 known-relationship path on iPhone first: FIRE finish → WORLD doorway → `Even · Album` → Suggested guidance.
-2. Judge whether `Make the next musical anchor.` is instantly understandable or still too conceptual.
-3. Verify `Why this?` stays visually subordinate when closed, expands locally without creating another card/modal, and contains enough rationale when opened.
-4. Verify `Alternative` reads as clearly secondary and its header/supporting-copy hierarchy matches Babel's established title/meta grammar.
-5. Use Prototype Info to test `Unattached`, `Needs context`, and `Open`; confirm none reintroduces track counts, progress rails, redundant orientation, or product-doctrine copy.
-6. Leave Achievements untouched until its own product/physical review.
-7. Keep the physically accepted shared shell frozen unless new device evidence contradicts it.
+1. Physically review the current FIRE Core top-of-product heartbeat on iPhone using the one-riff Original path; do not promote it into FIRE production merely because CI/deploy passed.
+2. Physically review the current WORLD Phase 1 known-relationship path: FIRE finish → WORLD doorway → `Even · Album` → Suggested guidance.
+3. Judge whether `Make the next musical anchor.` is instantly understandable or still too conceptual.
+4. Verify `Why this?` stays visually subordinate when closed, expands locally without creating another card/modal, and contains enough rationale when opened.
+5. Verify `Alternative` reads as clearly secondary and its header/supporting-copy hierarchy matches Babel's established title/meta grammar.
+6. Use Prototype Info to test `Unattached`, `Needs context`, and `Open`; confirm none reintroduces track counts, progress rails, redundant orientation, or product-doctrine copy.
+7. Leave Achievements untouched until its own product/physical review.
+8. Keep the physically accepted shared shell frozen unless new device evidence contradicts it.
 
 Do not create a WORLD repo, backend/account/sync layer, universal schema, universal shared UI package, full Artist Development curriculum, generic notes database, full visual-identity builder, or production FIRE Core implementation from Lab without evidence earning it.
 

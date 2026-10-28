@@ -3,7 +3,7 @@
 Babel Lab follows shared cross-app authority from:
 
 - Truth repo: `BabeDrums/babel-truth`
-- Last reconciled Truth commit: `21cb7307f8a1306101d7761f11da79b44752e13b`
+- Last reconciled Truth commit: `5858e544f2e61ceab4b0cae2a52d2c922b800d77`
 - Frozen shell implementation reference: Babel FIRE `4a258c5170dd1d96dcbc0f2b0a9c35b283cec489`
 - Unresolved durable continuity: Babel Truth Issue #1
 
