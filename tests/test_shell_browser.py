@@ -193,28 +193,45 @@ class LabShellBrowser(unittest.TestCase):
     def test_fire_core_never_changes_canvas_or_left_edge_at_depth(self):
         page = self.open('/fire/core/')
         shell_before = self.rect(page.locator('.lab-shell'))
-        list_before = self.rect(page.locator('.core-project-list'))
+        column_before = self.rect(page.locator('.core-column'))
+        self.assert_toolbar_control(page.locator('.lab-topbar > .back-link'))
+        self.assert_toolbar_control(page.locator('.lab-topbar > .core-add'))
+        title = page.locator('.lab-page-header h1')
+        self.assertEqual(title.inner_text(), 'FIRE')
+        self.assert_fire_header_role(title)
+
+        page.locator('[data-new-song]').first.click()
+        page.locator('#newTitle').fill('Test Song')
+        page.locator('[data-new-song-form] button[type="submit"]').click()
+
+        reality_column = self.rect(page.locator('.core-column'))
+        self.assert_same_rect_axis(column_before, reality_column)
+        page.locator('#startingReality').fill('a guitar riff')
+        page.locator('[data-starting-reality]').evaluate('form => form.requestSubmit()')
+
+        self.assertEqual(page.locator('.core-kicker').inner_text(), 'Next')
+        self.assertTrue(page.locator('.core-guidance h2').inner_text().startswith('Play the riff through a few times'))
+        self.assertEqual(page.locator('[data-update]').count(), 1)
+        self.assert_same_rect_axis(column_before, self.rect(page.locator('.core-column')))
+        self.assert_same_rect_axis(shell_before, self.rect(page.locator('.lab-shell')))
+
+        page.locator('[data-update]').click()
+        page.get_by_text('A variation came out naturally', exact=True).click()
+        self.assertEqual(page.locator('.core-guidance h2').inner_text(), 'Try moving between the original riff and the variation.')
+        self.assert_same_rect_axis(shell_before, self.rect(page.locator('.lab-shell')))
+
+        page.locator('[data-back-songs]').click()
         rows = page.locator('.core-project-row')
-        self.assertEqual(rows.count(), 2)
-        for index in range(rows.count()):
-            row = rows.nth(index)
-            self.assertEqual(row.evaluate("el => el.getBoundingClientRect().height"), 64)
-            self.assertEqual(row.locator('strong').evaluate("el => getComputedStyle(el).fontSize"), '16px')
-            self.assertEqual(row.locator('small').evaluate("el => getComputedStyle(el).fontSize"), '12px')
-            self.assert_forward_chevron(row.locator('.core-project-arrow'))
+        self.assertEqual(rows.count(), 1)
+        row = rows.first
+        self.assertEqual(row.evaluate("el => el.getBoundingClientRect().height"), 64)
+        self.assertEqual(row.locator('strong').evaluate("el => getComputedStyle(el).fontSize"), '16px')
+        self.assertEqual(row.locator('small').evaluate("el => getComputedStyle(el).fontSize"), '12px')
+        self.assert_forward_chevron(row.locator('.core-project-arrow'))
+        self.assert_same_rect_axis(column_before, self.rect(page.locator('.core-project-list')))
 
-        page.locator('[data-select-project="even"]').click()
-        first_choice = self.rect(page.locator('.core-choice-list'))
-        self.assert_same_rect_axis(list_before, first_choice)
-        self.assertEqual(page.locator('.core-choice').first.evaluate("el => el.getBoundingClientRect().height"), 64)
-
-        page.locator('[data-stage]').first.click()
-        second_choice = self.rect(page.locator('.core-choice-list'))
-        self.assert_same_rect_axis(list_before, second_choice)
-
-        page.locator('[data-need]').first.click()
-        focus = self.rect(page.locator('.core-focus-card'))
-        self.assert_same_rect_axis(list_before, focus)
+        row.click()
+        self.assertEqual(page.locator('.core-guidance h2').inner_text(), 'Try moving between the original riff and the variation.')
         self.assert_same_rect_axis(shell_before, self.rect(page.locator('.lab-shell')))
 
     def test_world_phase_one_uses_shared_symbols_and_clean_info_sheet(self):
